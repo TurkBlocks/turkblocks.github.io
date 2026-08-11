@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="TürkBlocks destek sayfası.">
+    <meta name="theme-color" content="#500000">
+
+    <title>Destek | TürkBlocks</title>
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        /* ==============================
+           Help Sayfası
+           ============================== */
+
+        .help-page {
+            min-height: 100vh;
+            padding-top: 72px;
+        }
+
+        .help-hero {
+            position: relative;
+            padding: 110px 0 80px;
+            overflow: hidden;
+        }
+
+        .help-glow {
+            position: absolute;
+
+            width: 500px;
+            height: 500px;
+
+            right: -180px;
+            top: 40px;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(80, 0, 0, 0.38),
+                    transparent 70%
+                );
+
+            filter: blur(15px);
+
+            animation:
+                helpGlow 7s ease-in-out infinite alternate;
+        }
+
+        @keyframes helpGlow {
+            from {
+                transform: scale(0.9);
+            }
+
+            to {
+                transform: scale(1.12);
+            }
+        }
+
+        .help-hero-content {
+            position: relative;
+            z-index: 2;
+
+            max-width: 800px;
+
+            animation:
+                helpEnter 0.8s ease both;
+        }
+
+        @keyframes helpEnter {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .help-label {
+            display: block;
+
+            margin-bottom: 18px;
+
+            color: #b65e5e;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            letter-spacing: 4px;
+        }
+
+        .help-hero h1 {
+            font-size:
+                clamp(48px, 8vw, 82px);
+
+            line-height: 1;
+
+            letter-spacing: -3px;
+        }
+
+        .help-hero h1 span {
+            color: var(--red-bright);
+        }
+
+        .help-description {
+            max-width: 650px;
+
+            margin-top: 25px;
+
+            color: var(--text-soft);
+
+            font-size: 18px;
+        }
+
+        /* Form bölümü */
+
+        .help-form-section {
+            padding: 80px 0 120px;
+
+            background: var(--background-light);
+
+            border-top:
+                1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .form-heading {
+            margin-bottom: 35px;
+        }
+
+        .form-heading span {
+            display: block;
+
+            margin-bottom: 9px;
+
+            color: #b65e5e;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            letter-spacing: 3px;
+        }
+
+        .form-heading h2 {
+            font-size:
+                clamp(30px, 5vw, 46px);
+
+            line-height: 1.1;
+        }
+
+        .form-heading p {
+            max-width: 650px;
+
+            margin-top: 12px;
+
+            color: var(--text-soft);
+        }
+
+        /* Google Forms kutusu */
+
+        .form-wrapper {
+            width: 100%;
+
+            min-height: 700px;
+
+            padding: 8px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #171717,
+                    #0d0d0d
+                );
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, 0.35);
+
+            overflow: hidden;
+
+            animation:
+                formEnter 0.9s ease both;
+        }
+
+        @keyframes formEnter {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-wrapper iframe {
+            display: block;
+
+            width: 100%;
+
+            min-height: 680px;
+
+            border: 0;
+
+            border-radius: 10px;
+
+            background: #ffffff;
+        }
+
+        /* Mobil */
+
+        @media (max-width: 700px) {
+
+            .help-page {
+                padding-top: 64px;
+            }
+
+            .help-hero {
+                padding: 80px 0 60px;
+            }
+
+            .help-hero h1 {
+                font-size:
+                    clamp(44px, 13vw, 65px);
+
+                letter-spacing: -2px;
+            }
+
+            .help-description {
+                font-size: 16px;
+            }
+
+            .help-form-section {
+                padding: 65px 0 80px;
+            }
+
+            .form-wrapper {
+                min-height: 650px;
+
+                padding: 4px;
+
+                border-radius: 12px;
+            }
+
+            .form-wrapper iframe {
+                min-height: 630px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigasyon -->
+
+    <header class="navbar">
+
+        <div class="nav-container">
+
+            <a href="../index.html" class="logo">
+                TürkBlocks
+            </a>
+
+            <nav class="nav-menu" id="navMenu">
+
+                <a href="../index.html">
+                    Ana Sayfa
+                </a>
+
+                <a href="../games/">
+                    Oyunlar
+                </a>
+
+                <a href="../blog/">
+                    Makaleler
+                </a>
+
+                <a href="../channels/">
+                    Kanallar
+                </a>
+
+                <a href="index.html" class="active">
+                    Destek
+                </a>
+
+            </nav>
+
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                aria-label="Menüyü aç"
+                aria-expanded="false"
+                type="button">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main class="help-page">
+
+        <!-- Başlık -->
+
+        <section class="help-hero">
+
+            <div class="help-glow"></div>
+
+            <div class="container">
+
+                <div class="help-hero-content">
+
+                    <span class="help-label">
+                        TÜRBLOCKS DESTEK
+                    </span>
+
+                    <h1>
+                        Nasıl
+                        <span>yardımcı olabiliriz?</span>
+                    </h1>
+
+                    <p class="help-description">
+                        TürkBlocks hakkında bir sorunun,
+                        önerinin veya bildirimin varsa
+                        aşağıdaki formu kullanarak bize iletebilirsin.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Form -->
+
+        <section class="help-form-section">
+
+            <div class="container">
+
+                <div class="form-heading">
+
+                    <span>
+                        DESTEK FORMU
+                    </span>
+
+                    <h2>
+                        Bize ulaş
+                    </h2>
+
+                    <p>
+                        Formu doldurarak mesajını TürkBlocks
+                        ekibine gönderebilirsin.
+                    </p>
+
+                </div>
+
+
+                <div class="form-wrapper">
+
+                    <!--
+                        BURAYA GOOGLE FORMS EMBED KODUNU KOY.
+
+                        Örnek:
+
+                        <iframe
+                            src="GOOGLE_FORMS_LINKİN"
+                            loading="lazy">
+                        </iframe>
+                    -->
+
+                    <iframe
+                        src="BURAYA_GOOGLE_FORMS_LINKİNİ_YAZ"
+                        loading="lazy"
+                        title="TürkBlocks Destek Formu">
+                    </iframe>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+
+    <footer class="footer">
+
+        <div class="container footer-container">
+
+            <div>
+
+                <strong>
+                    TürkBlocks
+                </strong>
+
+                <p>
+                    Oyunlar ve projeler.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="../index.html">
+                    Ana Sayfa
+                </a>
+
+                <a href="../games/">
+                    Oyunlar
+                </a>
+
+                <a href="../blog/">
+                    Makaleler
+                </a>
+
+                <a href="index.html">
+                    Destek
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+            © 2026 TürkBlocks. Tüm hakları saklıdır.
+        </div>
+
+    </footer>
+
+
+    <script src="../script.js"></script>
+
+</body>
+</html>
