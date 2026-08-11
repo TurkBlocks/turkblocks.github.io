@@ -14,174 +14,228 @@
 
 <body>
 
-    <!-- Üst Menü -->
+    <!-- Navigasyon -->
     <header class="navbar">
-        <div class="container navbar-content">
+        <div class="nav-container">
 
             <a href="index.html" class="logo">
                 TürkBlocks
             </a>
 
-            <nav class="nav-links">
-                <a href="index.html">Ana Sayfa</a>
+            <nav class="nav-menu" id="navMenu">
+                <a href="index.html" class="active">Ana Sayfa</a>
                 <a href="games/">Oyunlar</a>
                 <a href="blog/">Makaleler</a>
                 <a href="channels/">Kanallar</a>
                 <a href="help/">Destek</a>
             </nav>
 
-            <button class="menu-button" id="menuButton" type="button">
-                Menü
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                aria-label="Menüyü aç"
+                aria-expanded="false"
+                type="button">
+                <span></span>
+                <span></span>
+                <span></span>
             </button>
 
         </div>
     </header>
 
 
-    <!-- Ana Bölüm -->
     <main>
 
+        <!-- Hero -->
         <section class="hero">
-            <div class="container hero-content">
 
-                <div class="hero-text">
+            <div class="hero-glow"></div>
 
-                    <p class="hero-label">
-                        TÜRKBLOCKS
-                    </p>
+            <div class="container hero-container">
+
+                <div class="hero-content">
+
+                    <div class="hero-badge">
+                        TÜRBLOCKS
+                    </div>
 
                     <h1>
-                        Oyunlar ve projeler
-                        <span>tek yerde.</span>
+                        Oyunlar.
+                        <span>Projeler.</span>
+                        Daha fazlası.
                     </h1>
 
-                    <p class="hero-description">
+                    <p>
                         TürkBlocks'un oyunlarını, projelerini,
                         makalelerini ve diğer içeriklerini keşfet.
                     </p>
 
                     <div class="hero-buttons">
-                        <a href="games/" class="button primary">
-                            Oyunları Gör
+
+                        <a href="games/" class="button button-primary">
+                            Oyunları Keşfet
                         </a>
 
-                        <a href="help/" class="button secondary">
+                        <a href="help/" class="button button-secondary">
                             Destek
                         </a>
+
                     </div>
 
                 </div>
 
             </div>
+
+            <div class="scroll-indicator"></div>
+
         </section>
 
 
-        <!-- Hızlı Erişim -->
-        <section class="quick-access">
+        <!-- Bölümler -->
+        <section class="sections">
+
             <div class="container">
 
-                <div class="section-title">
-                    <p>BÖLÜMLER</p>
-                    <h2>TürkBlocks'u keşfet</h2>
+                <div class="section-heading">
+                    <span>KEŞFET</span>
+                    <h2>TürkBlocks dünyası</h2>
+                    <p>
+                        İhtiyacın olan bölüme hızlıca ulaş.
+                    </p>
                 </div>
+
 
                 <div class="cards">
 
                     <article class="card">
+                        <div class="card-number">01</div>
+
                         <h3>Oyunlar</h3>
 
                         <p>
                             TürkBlocks tarafından geliştirilen
-                            oyunlara göz at.
+                            oyunları keşfet ve oyna.
                         </p>
 
-                        <a href="games/" class="card-link">
+                        <a href="games/" class="card-button">
                             Oyunlara Git
+                            <span>→</span>
                         </a>
                     </article>
 
 
                     <article class="card">
+                        <div class="card-number">02</div>
+
                         <h3>Makaleler</h3>
 
                         <p>
-                            Oyun geliştirme ve projeler
-                            hakkında yazıları incele.
+                            Projeler, oyun geliştirme ve
+                            TürkBlocks hakkında yazılar.
                         </p>
 
-                        <a href="blog/" class="card-link">
+                        <a href="blog/" class="card-button">
                             Makalelere Git
+                            <span>→</span>
                         </a>
                     </article>
 
 
                     <article class="card">
+                        <div class="card-number">03</div>
+
                         <h3>Kanallar</h3>
 
                         <p>
-                            TürkBlocks'un sosyal medya
-                            kanallarını keşfet.
+                            TürkBlocks'un sosyal medya ve
+                            içerik kanallarını görüntüle.
                         </p>
 
-                        <a href="channels/" class="card-link">
+                        <a href="channels/" class="card-button">
                             Kanallara Git
+                            <span>→</span>
                         </a>
                     </article>
 
 
                     <article class="card">
+                        <div class="card-number">04</div>
+
                         <h3>Destek</h3>
 
                         <p>
                             Soruların, önerilerin veya
-                            sorunların varsa bize ulaş.
+                            sorunların için destek al.
                         </p>
 
-                        <a href="help/" class="card-link">
-                            Destek Al
+                        <a href="help/" class="card-button">
+                            Destek Sayfası
+                            <span>→</span>
                         </a>
                     </article>
 
                 </div>
 
             </div>
+
         </section>
 
 
         <!-- Hakkında -->
         <section class="about">
-            <div class="container about-content">
 
-                <div class="section-title">
-                    <p>TÜRBLOCKS</p>
-                    <h2>Hakkında</h2>
+            <div class="container about-container">
+
+                <div class="about-line"></div>
+
+                <div>
+                    <span class="about-label">HAKKINDA</span>
+
+                    <h2>
+                        TürkBlocks, bağımsız
+                        oyun ve proje geliştirme alanıdır.
+                    </h2>
+
+                    <p>
+                        Oyunlar, deneysel projeler ve çeşitli
+                        dijital içerikler burada bir araya geliyor.
+                    </p>
                 </div>
 
-                <p>
-                    TürkBlocks, oyunlar ve çeşitli dijital projeler
-                    geliştiren bağımsız bir projedir.
-                </p>
-
             </div>
+
         </section>
 
     </main>
 
 
-    <!-- Alt Bilgi -->
+    <!-- Footer -->
     <footer class="footer">
-        <div class="container footer-content">
 
-            <p>
-                © 2026 TürkBlocks. Tüm hakları saklıdır.
-            </p>
+        <div class="container footer-container">
+
+            <div>
+                <strong>TürkBlocks</strong>
+
+                <p>
+                    Oyunlar ve projeler.
+                </p>
+            </div>
 
             <div class="footer-links">
-                <a href="help/">Destek</a>
+                <a href="index.html">Ana Sayfa</a>
+                <a href="games/">Oyunlar</a>
                 <a href="blog/">Makaleler</a>
+                <a href="help/">Destek</a>
             </div>
 
         </div>
+
+        <div class="footer-bottom">
+            © 2026 TürkBlocks. Tüm hakları saklıdır.
+        </div>
+
     </footer>
 
 
