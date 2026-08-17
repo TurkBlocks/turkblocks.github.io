@@ -1,116 +1,74 @@
-/* =========================================================
-   TÜRKBLOCKS
-   SCRIPT
-========================================================= */
+const header =
+    document.querySelector(".site-header");
 
+const menuButton =
+    document.getElementById("menuButton");
 
-/* ELEMENTLER */
+const mobileMenu =
+    document.getElementById("mobileMenu");
 
-const loader =
-    document.getElementById("pageLoader");
+const themeButton =
+    document.getElementById("themeButton");
 
-const navbar =
-    document.getElementById("navbar");
-
-const themeToggle =
-    document.getElementById("themeToggle");
-
-const themeIcon =
-    document.getElementById("themeIcon");
-
-const mobileToggle =
-    document.getElementById("mobileToggle");
-
-const mobileNav =
-    document.getElementById("mobileNav");
-
-const scrollTop =
-    document.getElementById("scrollTop");
+const revealElements =
+    document.querySelectorAll(".reveal");
 
 const year =
     document.getElementById("year");
 
 
-/* =========================================================
-   LOADER
-========================================================= */
-
-window.addEventListener("load", () => {
-
-    setTimeout(() => {
-
-        loader.classList.add("hide");
-
-    }, 450);
-
-});
-
-
-/* =========================================================
-   YEAR
-========================================================= */
+/* YIL */
 
 year.textContent =
     new Date().getFullYear();
 
 
-/* =========================================================
-   NAVBAR
-========================================================= */
+/* HEADER */
 
-function navbarScroll() {
+function updateHeader() {
 
     if (window.scrollY > 20) {
 
-        navbar.classList.add("scrolled");
+        header.classList.add("scrolled");
 
     } else {
 
-        navbar.classList.remove("scrolled");
+        header.classList.remove("scrolled");
 
     }
 
 }
 
-
 window.addEventListener(
     "scroll",
-    navbarScroll,
+    updateHeader,
     { passive: true }
 );
 
-navbarScroll();
+updateHeader();
 
 
-/* =========================================================
-   MOBILE MENU
-========================================================= */
+/* MOBİL MENÜ */
 
-mobileToggle.addEventListener(
+menuButton.addEventListener(
     "click",
     () => {
 
-        mobileToggle.classList.toggle("open");
-
-        mobileNav.classList.toggle("open");
+        mobileMenu.classList.toggle("open");
 
     }
 );
 
 
 document
-    .querySelectorAll(".mobile-nav a")
+    .querySelectorAll(".mobile-menu a")
     .forEach(link => {
 
         link.addEventListener(
             "click",
             () => {
 
-                mobileToggle.classList.remove(
-                    "open"
-                );
-
-                mobileNav.classList.remove(
+                mobileMenu.classList.remove(
                     "open"
                 );
 
@@ -120,9 +78,7 @@ document
     });
 
 
-/* =========================================================
-   THEME
-========================================================= */
+/* TEMA */
 
 const savedTheme =
     localStorage.getItem(
@@ -130,49 +86,43 @@ const savedTheme =
     );
 
 
-if (savedTheme === "light") {
+if (savedTheme === "dark") {
 
-    document.body.classList.add("light");
+    document.body.classList.add("dark");
 
-    themeIcon.textContent = "☀";
+    themeButton.textContent = "☀";
 
 }
 
 
-themeToggle.addEventListener(
+themeButton.addEventListener(
     "click",
     () => {
 
         document.body.classList.toggle(
-            "light"
+            "dark"
         );
 
-        const light =
+        const isDark =
             document.body.classList.contains(
-                "light"
+                "dark"
             );
 
-        themeIcon.textContent =
-            light ? "☀" : "☾";
+        themeButton.textContent =
+            isDark ? "☀" : "☾";
 
         localStorage.setItem(
             "turkblocks-theme",
-            light ? "light" : "dark"
+            isDark ? "dark" : "light"
         );
 
     }
 );
 
 
-/* =========================================================
-   REVEAL ANIMATION
-========================================================= */
+/* YUMUŞAK GİRİŞ ANİMASYONLARI */
 
-const revealElements =
-    document.querySelectorAll(".reveal");
-
-
-const revealObserver =
+const observer =
     new IntersectionObserver(
         entries => {
 
@@ -186,7 +136,7 @@ const revealObserver =
                         "visible"
                     );
 
-                    revealObserver.unobserve(
+                    observer.unobserve(
                         entry.target
                     );
 
@@ -203,127 +153,12 @@ const revealObserver =
 
 revealElements.forEach(element => {
 
-    revealObserver.observe(element);
+    observer.observe(element);
 
 });
 
 
-/* =========================================================
-   SCROLL TOP
-========================================================= */
-
-function updateScrollTop() {
-
-    if (window.scrollY > 450) {
-
-        scrollTop.classList.add(
-            "visible"
-        );
-
-    } else {
-
-        scrollTop.classList.remove(
-            "visible"
-        );
-
-    }
-
-}
-
-
-window.addEventListener(
-    "scroll",
-    updateScrollTop,
-    { passive: true }
-);
-
-
-scrollTop.addEventListener(
-    "click",
-    () => {
-
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
-
-    }
-);
-
-
-/* =========================================================
-   ACTIVE NAV
-========================================================= */
-
-const sections =
-    document.querySelectorAll(
-        "main section[id]"
-    );
-
-const navLinks =
-    document.querySelectorAll(
-        ".desktop-nav a"
-    );
-
-
-function updateActiveNav() {
-
-    let current = "home";
-
-    sections.forEach(section => {
-
-        const top =
-            section.offsetTop - 180;
-
-        if (
-            window.scrollY >= top
-        ) {
-
-            current =
-                section.id;
-
-        }
-
-    });
-
-
-    navLinks.forEach(link => {
-
-        link.classList.remove(
-            "active"
-        );
-
-        if (
-            link.getAttribute("href") ===
-            `#${current}`
-        ) {
-
-            link.classList.add(
-                "active"
-            );
-
-        }
-
-    });
-
-}
-
-
-window.addEventListener(
-    "scroll",
-    updateActiveNav,
-    { passive: true }
-);
-
-updateActiveNav();
-
-
-/* =========================================================
-   ESCAPE
-========================================================= */
+/* ESC */
 
 document.addEventListener(
     "keydown",
@@ -331,11 +166,7 @@ document.addEventListener(
 
         if (event.key === "Escape") {
 
-            mobileToggle.classList.remove(
-                "open"
-            );
-
-            mobileNav.classList.remove(
+            mobileMenu.classList.remove(
                 "open"
             );
 
