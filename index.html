@@ -1,431 +1,345 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+/* =========================================================
+   TÜRKBLOCKS
+   SCRIPT
+========================================================= */
 
-    <meta name="description" content="TürkBlocks — Oyun ve teknoloji geliştirme.">
-    <meta name="theme-color" content="#500000">
 
-    <title>TürkBlocks</title>
+/* ELEMENTLER */
 
-    <link rel="icon" href="assets/favicon.png">
-    <link rel="stylesheet" href="style.css">
-</head>
+const loader =
+    document.getElementById("pageLoader");
 
-<body>
+const navbar =
+    document.getElementById("navbar");
 
-    <div class="page-loader" id="pageLoader">
-        <div class="loader-logo">TB</div>
-    </div>
+const themeToggle =
+    document.getElementById("themeToggle");
 
+const themeIcon =
+    document.getElementById("themeIcon");
 
-    <header class="navbar" id="navbar">
+const mobileToggle =
+    document.getElementById("mobileToggle");
 
-        <div class="container nav-inner">
+const mobileNav =
+    document.getElementById("mobileNav");
 
-            <a href="#home" class="brand">
+const scrollTop =
+    document.getElementById("scrollTop");
 
-                <div class="brand-logo">
-                    TB
-                </div>
+const year =
+    document.getElementById("year");
 
-                <span>TürkBlocks</span>
 
-            </a>
+/* =========================================================
+   LOADER
+========================================================= */
 
+window.addEventListener("load", () => {
 
-            <nav class="desktop-nav">
+    setTimeout(() => {
 
-                <a href="#home" class="active">
-                    Ana Sayfa
-                </a>
+        loader.classList.add("hide");
 
-                <a href="#about">
-                    Hakkımızda
-                </a>
+    }, 450);
 
-                <a href="#contact">
-                    İletişim
-                </a>
+});
 
-            </nav>
 
+/* =========================================================
+   YEAR
+========================================================= */
 
-            <div class="nav-right">
+year.textContent =
+    new Date().getFullYear();
 
-                <button
-                    class="theme-toggle"
-                    id="themeToggle"
-                    aria-label="Tema değiştir"
-                >
-                    <span id="themeIcon">☾</span>
-                </button>
 
-                <button
-                    class="mobile-toggle"
-                    id="mobileToggle"
-                    aria-label="Menüyü aç"
-                >
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+/* =========================================================
+   NAVBAR
+========================================================= */
 
-            </div>
+function navbarScroll() {
 
-        </div>
+    if (window.scrollY > 20) {
 
-    </header>
+        navbar.classList.add("scrolled");
 
+    } else {
 
-    <div class="mobile-nav" id="mobileNav">
+        navbar.classList.remove("scrolled");
 
-        <a href="#home">Ana Sayfa</a>
-        <a href="#about">Hakkımızda</a>
-        <a href="#contact">İletişim</a>
+    }
 
-    </div>
+}
 
 
-    <main id="home">
+window.addEventListener(
+    "scroll",
+    navbarScroll,
+    { passive: true }
+);
 
-        <!-- HERO -->
+navbarScroll();
 
-        <section class="hero">
 
-            <div class="container hero-grid">
+/* =========================================================
+   MOBILE MENU
+========================================================= */
 
-                <div class="hero-content reveal">
+mobileToggle.addEventListener(
+    "click",
+    () => {
 
-                    <div class="eyebrow">
-                        <span></span>
-                        TÜRKBLOCKS
-                    </div>
+        mobileToggle.classList.toggle("open");
 
+        mobileNav.classList.toggle("open");
 
-                    <h1>
-                        Oyun ve teknoloji
-                        <strong>üretiyoruz.</strong>
-                    </h1>
+    }
+);
 
 
-                    <p>
-                        TürkBlocks, oyun geliştirme ve yazılım
-                        alanında özgün projeler geliştiren bağımsız
-                        bir markadır.
-                    </p>
+document
+    .querySelectorAll(".mobile-nav a")
+    .forEach(link => {
 
+        link.addEventListener(
+            "click",
+            () => {
 
-                    <div class="hero-buttons">
+                mobileToggle.classList.remove(
+                    "open"
+                );
 
-                        <a
-                            href="#about"
-                            class="button primary"
-                        >
-                            TürkBlocks hakkında
-                            <span>→</span>
-                        </a>
+                mobileNav.classList.remove(
+                    "open"
+                );
 
-                        <a
-                            href="#contact"
-                            class="button secondary"
-                        >
-                            İletişim
-                        </a>
+            }
+        );
 
-                    </div>
+    });
 
-                </div>
 
+/* =========================================================
+   THEME
+========================================================= */
 
-                <!-- PC'DE GÖRÜNEN LINK FOTOĞRAF -->
+const savedTheme =
+    localStorage.getItem(
+        "turkblocks-theme"
+    );
 
-                <a
-                    href="https://turkblocks.github.io/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="hero-link-card reveal"
-                    aria-label="TürkBlocks sitesini aç"
-                >
 
-                    <div class="hero-link-image">
+if (savedTheme === "light") {
 
-                        <div class="link-image-logo">
-                            TB
-                        </div>
+    document.body.classList.add("light");
 
-                        <div class="link-image-glow"></div>
+    themeIcon.textContent = "☀";
 
-                    </div>
+}
 
-                    <div class="hero-link-info">
 
-                        <div>
-                            <small>WEB SİTESİ</small>
+themeToggle.addEventListener(
+    "click",
+    () => {
 
-                            <strong>
-                                TürkBlocks
-                            </strong>
-                        </div>
+        document.body.classList.toggle(
+            "light"
+        );
 
-                        <span class="external">
-                            ↗
-                        </span>
+        const light =
+            document.body.classList.contains(
+                "light"
+            );
 
-                    </div>
+        themeIcon.textContent =
+            light ? "☀" : "☾";
 
-                </a>
+        localStorage.setItem(
+            "turkblocks-theme",
+            light ? "light" : "dark"
+        );
 
-            </div>
+    }
+);
 
-        </section>
 
+/* =========================================================
+   REVEAL ANIMATION
+========================================================= */
 
-        <!-- ABOUT -->
+const revealElements =
+    document.querySelectorAll(".reveal");
 
-        <section
-            class="section about"
-            id="about"
-        >
 
-            <div class="container">
+const revealObserver =
+    new IntersectionObserver(
+        entries => {
 
-                <div class="section-title reveal">
+            entries.forEach(entry => {
 
-                    <span>
-                        HAKKIMIZDA
-                    </span>
+                if (
+                    entry.isIntersecting
+                ) {
 
-                    <div></div>
+                    entry.target.classList.add(
+                        "visible"
+                    );
 
-                </div>
+                    revealObserver.unobserve(
+                        entry.target
+                    );
 
+                }
 
-                <div class="about-grid">
+            });
 
-                    <h2 class="reveal">
-                        Fikirleri
-                        <span>gerçeğe</span>
-                        dönüştürüyoruz.
-                    </h2>
+        },
+        {
+            threshold: 0.12
+        }
+    );
 
 
-                    <div class="about-text reveal">
+revealElements.forEach(element => {
 
-                        <p>
-                            TürkBlocks; oyun, yazılım ve teknoloji
-                            alanlarında çalışmalar yapan bağımsız
-                            bir geliştirme markasıdır.
-                        </p>
+    revealObserver.observe(element);
 
-                        <p>
-                            Amacımız yeni fikirler üretmek,
-                            bunları kullanılabilir projelere
-                            dönüştürmek ve her projede daha iyi
-                            bir deneyim ortaya koymaktır.
-                        </p>
+});
 
-                    </div>
 
-                </div>
+/* =========================================================
+   SCROLL TOP
+========================================================= */
 
-            </div>
+function updateScrollTop() {
 
-        </section>
+    if (window.scrollY > 450) {
 
+        scrollTop.classList.add(
+            "visible"
+        );
 
-        <!-- SIMPLE BRAND SECTION -->
+    } else {
 
-        <section class="brand-section">
+        scrollTop.classList.remove(
+            "visible"
+        );
 
-            <div class="container">
+    }
 
-                <div class="brand-card reveal">
+}
 
-                    <div class="brand-card-logo">
-                        TB
-                    </div>
 
-                    <div class="brand-card-text">
+window.addEventListener(
+    "scroll",
+    updateScrollTop,
+    { passive: true }
+);
 
-                        <span>TÜRKBLOCKS</span>
 
-                        <h2>
-                            Üret.
-                            <strong>Geliştir.</strong>
-                        </h2>
+scrollTop.addEventListener(
+    "click",
+    () => {
 
-                        <p>
-                            Teknolojiyle fikirleri birleştiriyoruz.
-                        </p>
+        window.scrollTo({
 
-                    </div>
+            top: 0,
 
-                </div>
+            behavior: "smooth"
 
-            </div>
+        });
 
-        </section>
+    }
+);
 
 
-        <!-- CONTACT -->
+/* =========================================================
+   ACTIVE NAV
+========================================================= */
 
-        <section
-            class="section contact"
-            id="contact"
-        >
+const sections =
+    document.querySelectorAll(
+        "main section[id]"
+    );
 
-            <div class="container">
+const navLinks =
+    document.querySelectorAll(
+        ".desktop-nav a"
+    );
 
-                <div class="section-title reveal">
 
-                    <span>
-                        İLETİŞİM
-                    </span>
+function updateActiveNav() {
 
-                    <div></div>
+    let current = "home";
 
-                </div>
+    sections.forEach(section => {
 
+        const top =
+            section.offsetTop - 180;
 
-                <div class="contact-grid">
+        if (
+            window.scrollY >= top
+        ) {
 
-                    <div class="contact-heading reveal">
+            current =
+                section.id;
 
-                        <h2>
-                            TürkBlocks'u
-                            <span>takip et.</span>
-                        </h2>
+        }
 
-                        <p>
-                            Projeler, geliştirme süreci ve yeni
-                            içerikler için sosyal hesaplarımızı
-                            takip edebilirsin.
-                        </p>
+    });
 
-                    </div>
 
+    navLinks.forEach(link => {
 
-                    <div class="social-list reveal">
+        link.classList.remove(
+            "active"
+        );
 
-                        <a
-                            href="https://github.com/salih-turkblocks"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
+        if (
+            link.getAttribute("href") ===
+            `#${current}`
+        ) {
 
-                            <div class="social-left">
+            link.classList.add(
+                "active"
+            );
 
-                                <span class="social-icon">
-                                    GH
-                                </span>
+        }
 
-                                <div>
-                                    <strong>GitHub</strong>
-                                    <small>
-                                        Projeler
-                                    </small>
-                                </div>
+    });
 
-                            </div>
+}
 
-                            <span>↗</span>
 
-                        </a>
+window.addEventListener(
+    "scroll",
+    updateActiveNav,
+    { passive: true }
+);
 
+updateActiveNav();
 
-                        <a href="#" target="_blank">
 
-                            <div class="social-left">
+/* =========================================================
+   ESCAPE
+========================================================= */
 
-                                <span class="social-icon">
-                                    YT
-                                </span>
+document.addEventListener(
+    "keydown",
+    event => {
 
-                                <div>
-                                    <strong>YouTube</strong>
-                                    <small>
-                                        Videolar
-                                    </small>
-                                </div>
+        if (event.key === "Escape") {
 
-                            </div>
+            mobileToggle.classList.remove(
+                "open"
+            );
 
-                            <span>↗</span>
+            mobileNav.classList.remove(
+                "open"
+            );
 
-                        </a>
+        }
 
-
-                        <a href="#" target="_blank">
-
-                            <div class="social-left">
-
-                                <span class="social-icon">
-                                    X
-                                </span>
-
-                                <div>
-                                    <strong>X</strong>
-                                    <small>
-                                        Güncellemeler
-                                    </small>
-                                </div>
-
-                            </div>
-
-                            <span>↗</span>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <footer>
-
-        <div class="container footer-inner">
-
-            <div class="footer-brand">
-
-                <div class="brand-logo">
-                    TB
-                </div>
-
-                <strong>
-                    TürkBlocks
-                </strong>
-
-            </div>
-
-
-            <span>
-                © <span id="year"></span>
-                TürkBlocks
-            </span>
-
-        </div>
-
-    </footer>
-
-
-    <button
-        class="scroll-top"
-        id="scrollTop"
-        aria-label="Yukarı çık"
-    >
-        ↑
-    </button>
-
-
-    <script src="script.js"></script>
-
-</body>
-</html>
+    }
+);
