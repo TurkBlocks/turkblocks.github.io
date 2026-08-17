@@ -1,51 +1,47 @@
 /* =========================================================
    TÜRKBLOCKS
-   MAIN JAVASCRIPT
+   SCRIPT
 ========================================================= */
 
 
-/* =========================================================
-   ELEMENTS
-========================================================= */
+/* ELEMENTLER */
 
-const body = document.body;
+const loader =
+    document.getElementById("pageLoader");
 
 const navbar =
     document.getElementById("navbar");
 
-const preloader =
-    document.getElementById("preloader");
-
-const themeButton =
-    document.getElementById("themeButton");
+const themeToggle =
+    document.getElementById("themeToggle");
 
 const themeIcon =
     document.getElementById("themeIcon");
 
-const mobileMenuButton =
-    document.getElementById("mobileMenuButton");
+const mobileToggle =
+    document.getElementById("mobileToggle");
 
-const mobileNavigation =
-    document.getElementById("mobileNavigation");
+const mobileNav =
+    document.getElementById("mobileNav");
 
-const scrollTopButton =
+const scrollTop =
     document.getElementById("scrollTop");
 
-const currentYear =
-    document.getElementById("currentYear");
+const year =
+    document.getElementById("year");
 
 
 /* =========================================================
-   PAGE LOADING
+   LOADER
 ========================================================= */
 
 window.addEventListener("load", () => {
 
     setTimeout(() => {
 
-        preloader.classList.add("hidden");
+        loader.classList.add("hide");
 
-    }, 500);
+    }, 450);
 
 });
 
@@ -54,21 +50,17 @@ window.addEventListener("load", () => {
    YEAR
 ========================================================= */
 
-if (currentYear) {
-
-    currentYear.textContent =
-        new Date().getFullYear();
-
-}
+year.textContent =
+    new Date().getFullYear();
 
 
 /* =========================================================
-   NAVBAR SCROLL
+   NAVBAR
 ========================================================= */
 
-function updateNavbar() {
+function navbarScroll() {
 
-    if (window.scrollY > 30) {
+    if (window.scrollY > 20) {
 
         navbar.classList.add("scrolled");
 
@@ -83,59 +75,47 @@ function updateNavbar() {
 
 window.addEventListener(
     "scroll",
-    updateNavbar,
+    navbarScroll,
     { passive: true }
 );
 
-updateNavbar();
+navbarScroll();
 
 
 /* =========================================================
    MOBILE MENU
 ========================================================= */
 
-function toggleMobileMenu() {
-
-    const isOpen =
-        mobileNavigation.classList.toggle("open");
-
-    mobileMenuButton.classList.toggle(
-        "open",
-        isOpen
-    );
-
-    mobileMenuButton.setAttribute(
-        "aria-expanded",
-        String(isOpen)
-    );
-
-}
-
-
-mobileMenuButton.addEventListener(
+mobileToggle.addEventListener(
     "click",
-    toggleMobileMenu
+    () => {
+
+        mobileToggle.classList.toggle("open");
+
+        mobileNav.classList.toggle("open");
+
+    }
 );
 
 
-/* Menü linkine tıklanınca kapat */
-
 document
-    .querySelectorAll(".mobile-navigation a")
+    .querySelectorAll(".mobile-nav a")
     .forEach(link => {
 
-        link.addEventListener("click", () => {
+        link.addEventListener(
+            "click",
+            () => {
 
-            mobileNavigation.classList.remove("open");
+                mobileToggle.classList.remove(
+                    "open"
+                );
 
-            mobileMenuButton.classList.remove("open");
+                mobileNav.classList.remove(
+                    "open"
+                );
 
-            mobileMenuButton.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-        });
+            }
+        );
 
     });
 
@@ -145,102 +125,47 @@ document
 ========================================================= */
 
 const savedTheme =
-    localStorage.getItem("turkblocks-theme");
+    localStorage.getItem(
+        "turkblocks-theme"
+    );
+
 
 if (savedTheme === "light") {
 
-    body.classList.add("light-theme");
+    document.body.classList.add("light");
 
     themeIcon.textContent = "☀";
 
 }
 
 
-function updateThemeIcon() {
-
-    if (
-        body.classList.contains("light-theme")
-    ) {
-
-        themeIcon.textContent = "☀";
-
-    } else {
-
-        themeIcon.textContent = "☾";
-
-    }
-
-}
-
-
-themeButton.addEventListener(
+themeToggle.addEventListener(
     "click",
     () => {
 
-        body.classList.toggle("light-theme");
+        document.body.classList.toggle(
+            "light"
+        );
 
-        const isLight =
-            body.classList.contains("light-theme");
+        const light =
+            document.body.classList.contains(
+                "light"
+            );
+
+        themeIcon.textContent =
+            light ? "☀" : "☾";
 
         localStorage.setItem(
             "turkblocks-theme",
-            isLight ? "light" : "dark"
+            light ? "light" : "dark"
         );
-
-        updateThemeIcon();
 
     }
 );
 
 
 /* =========================================================
-   SCROLL TOP
-========================================================= */
-
-function updateScrollTop() {
-
-    if (window.scrollY > 500) {
-
-        scrollTopButton.classList.add(
-            "visible"
-        );
-
-    } else {
-
-        scrollTopButton.classList.remove(
-            "visible"
-        );
-
-    }
-
-}
-
-
-window.addEventListener(
-    "scroll",
-    updateScrollTop,
-    { passive: true }
-);
-
-
-scrollTopButton.addEventListener(
-    "click",
-    () => {
-
-        window.scrollTo({
-
-            top: 0,
-
-            behavior: "smooth"
-
-        });
-
-    }
-);
-
-
-/* =========================================================
-   SCROLL REVEAL
+   REVEAL ANIMATION
 ========================================================= */
 
 const revealElements =
@@ -253,17 +178,19 @@ const revealObserver =
 
             entries.forEach(entry => {
 
-                if (!entry.isIntersecting) {
-                    return;
+                if (
+                    entry.isIntersecting
+                ) {
+
+                    entry.target.classList.add(
+                        "visible"
+                    );
+
+                    revealObserver.unobserve(
+                        entry.target
+                    );
+
                 }
-
-                entry.target.classList.add(
-                    "visible"
-                );
-
-                revealObserver.unobserve(
-                    entry.target
-                );
 
             });
 
@@ -282,38 +209,81 @@ revealElements.forEach(element => {
 
 
 /* =========================================================
-   ACTIVE NAVIGATION
+   SCROLL TOP
+========================================================= */
+
+function updateScrollTop() {
+
+    if (window.scrollY > 450) {
+
+        scrollTop.classList.add(
+            "visible"
+        );
+
+    } else {
+
+        scrollTop.classList.remove(
+            "visible"
+        );
+
+    }
+
+}
+
+
+window.addEventListener(
+    "scroll",
+    updateScrollTop,
+    { passive: true }
+);
+
+
+scrollTop.addEventListener(
+    "click",
+    () => {
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth"
+
+        });
+
+    }
+);
+
+
+/* =========================================================
+   ACTIVE NAV
 ========================================================= */
 
 const sections =
-    document.querySelectorAll("section[id]");
+    document.querySelectorAll(
+        "main section[id]"
+    );
 
 const navLinks =
     document.querySelectorAll(
-        ".desktop-navigation .nav-link"
+        ".desktop-nav a"
     );
 
 
-function updateActiveNavigation() {
+function updateActiveNav() {
 
-    let currentSection = "";
+    let current = "home";
 
     sections.forEach(section => {
 
-        const sectionTop =
-            section.offsetTop - 160;
-
-        const sectionHeight =
-            section.offsetHeight;
+        const top =
+            section.offsetTop - 180;
 
         if (
-            window.scrollY >= sectionTop &&
-            window.scrollY <
-            sectionTop + sectionHeight
+            window.scrollY >= top
         ) {
 
-            currentSection =
-                section.getAttribute("id");
+            current =
+                section.id;
 
         }
 
@@ -322,16 +292,18 @@ function updateActiveNavigation() {
 
     navLinks.forEach(link => {
 
-        link.classList.remove("active");
-
-        const target =
-            link.getAttribute("href");
+        link.classList.remove(
+            "active"
+        );
 
         if (
-            target === `#${currentSection}`
+            link.getAttribute("href") ===
+            `#${current}`
         ) {
 
-            link.classList.add("active");
+            link.classList.add(
+                "active"
+            );
 
         }
 
@@ -342,13 +314,15 @@ function updateActiveNavigation() {
 
 window.addEventListener(
     "scroll",
-    updateActiveNavigation,
+    updateActiveNav,
     { passive: true }
 );
 
+updateActiveNav();
+
 
 /* =========================================================
-   KEYBOARD ACCESSIBILITY
+   ESCAPE
 ========================================================= */
 
 document.addEventListener(
@@ -357,71 +331,15 @@ document.addEventListener(
 
         if (event.key === "Escape") {
 
-            mobileNavigation.classList.remove(
+            mobileToggle.classList.remove(
                 "open"
             );
 
-            mobileMenuButton.classList.remove(
+            mobileNav.classList.remove(
                 "open"
-            );
-
-            mobileMenuButton.setAttribute(
-                "aria-expanded",
-                "false"
             );
 
         }
 
     }
 );
-
-
-/* =========================================================
-   CLOSE MOBILE MENU OUTSIDE
-========================================================= */
-
-document.addEventListener(
-    "click",
-    event => {
-
-        const clickedInsideMenu =
-            mobileNavigation.contains(
-                event.target
-            );
-
-        const clickedButton =
-            mobileMenuButton.contains(
-                event.target
-            );
-
-        if (
-            !clickedInsideMenu &&
-            !clickedButton
-        ) {
-
-            mobileNavigation.classList.remove(
-                "open"
-            );
-
-            mobileMenuButton.classList.remove(
-                "open"
-            );
-
-            mobileMenuButton.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-        }
-
-    }
-);
-
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
-updateThemeIcon();
-updateScrollTop();
-updateActiveNavigation();
