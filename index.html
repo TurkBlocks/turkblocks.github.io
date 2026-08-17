@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="TürkBlocks — Oyun geliştirme, yazılım ve teknoloji projeleri.">
+    <meta name="description" content="TürkBlocks — Oyun ve teknoloji geliştirme.">
     <meta name="theme-color" content="#500000">
 
-    <title>TürkBlocks — Oyun & Teknoloji</title>
+    <title>TürkBlocks</title>
 
     <link rel="icon" href="assets/favicon.png">
     <link rel="stylesheet" href="style.css">
@@ -15,84 +15,57 @@
 
 <body>
 
-    <!-- Sayfa yükleme ekranı -->
-    <div class="preloader" id="preloader">
+    <div class="page-loader" id="pageLoader">
         <div class="loader-logo">TB</div>
-        <div class="loader-line">
-            <span></span>
-        </div>
     </div>
 
 
-    <!-- Arka plan -->
-    <div class="background-effects" aria-hidden="true">
-        <div class="background-grid"></div>
-        <div class="background-glow glow-one"></div>
-        <div class="background-glow glow-two"></div>
-    </div>
-
-
-    <!-- NAVBAR -->
     <header class="navbar" id="navbar">
 
-        <div class="container navbar-inner">
+        <div class="container nav-inner">
 
-            <a href="#home" class="logo" aria-label="TürkBlocks ana sayfa">
+            <a href="#home" class="brand">
 
-                <div class="logo-mark">
+                <div class="brand-logo">
                     TB
                 </div>
 
-                <div class="logo-text">
-                    <strong>TürkBlocks</strong>
-                    <span>OYUN & TEKNOLOJİ</span>
-                </div>
+                <span>TürkBlocks</span>
 
             </a>
 
 
-            <nav class="desktop-navigation">
+            <nav class="desktop-nav">
 
-                <a href="#home" class="nav-link active">
+                <a href="#home" class="active">
                     Ana Sayfa
                 </a>
 
-                <a href="#about" class="nav-link">
+                <a href="#about">
                     Hakkımızda
                 </a>
 
-                <a href="#vision" class="nav-link">
-                    Vizyon
-                </a>
-
-                <a href="#technology" class="nav-link">
-                    Teknoloji
-                </a>
-
-                <a href="#contact" class="nav-link">
+                <a href="#contact">
                     İletişim
                 </a>
 
             </nav>
 
 
-            <div class="navbar-actions">
+            <div class="nav-right">
 
                 <button
-                    class="theme-button"
-                    id="themeButton"
-                    aria-label="Temayı değiştir"
-                    title="Temayı değiştir"
+                    class="theme-toggle"
+                    id="themeToggle"
+                    aria-label="Tema değiştir"
                 >
                     <span id="themeIcon">☾</span>
                 </button>
 
-
                 <button
-                    class="mobile-menu-button"
-                    id="mobileMenuButton"
+                    class="mobile-toggle"
+                    id="mobileToggle"
                     aria-label="Menüyü aç"
-                    aria-expanded="false"
                 >
                     <span></span>
                     <span></span>
@@ -106,155 +79,151 @@
     </header>
 
 
-    <!-- MOBİL MENÜ -->
-    <div class="mobile-navigation" id="mobileNavigation">
+    <div class="mobile-nav" id="mobileNav">
 
         <a href="#home">Ana Sayfa</a>
         <a href="#about">Hakkımızda</a>
-        <a href="#vision">Vizyon</a>
-        <a href="#technology">Teknoloji</a>
         <a href="#contact">İletişim</a>
 
     </div>
 
 
-    <main>
-
+    <main id="home">
 
         <!-- HERO -->
-        <section class="hero" id="home">
 
-            <div class="container hero-container">
+        <section class="hero">
+
+            <div class="container hero-grid">
 
                 <div class="hero-content reveal">
 
-                    <div class="hero-label">
+                    <div class="eyebrow">
                         <span></span>
                         TÜRKBLOCKS
                     </div>
 
 
                     <h1>
-                        Fikirleri
-                        <span>deneyime</span>
-                        dönüştürüyoruz.
+                        Oyun ve teknoloji
+                        <strong>üretiyoruz.</strong>
                     </h1>
 
 
-                    <p class="hero-description">
-                        TürkBlocks; oyun geliştirme, yazılım ve teknoloji
-                        alanlarında özgün projeler geliştiren bağımsız
-                        bir marka.
+                    <p>
+                        TürkBlocks, oyun geliştirme ve yazılım
+                        alanında özgün projeler geliştiren bağımsız
+                        bir markadır.
                     </p>
 
 
-                    <div class="hero-actions">
+                    <div class="hero-buttons">
 
-                        <a href="#about" class="button button-primary">
-                            TürkBlocks'u Tanı
+                        <a
+                            href="#about"
+                            class="button primary"
+                        >
+                            TürkBlocks hakkında
                             <span>→</span>
                         </a>
 
-                        <a href="#contact" class="button button-secondary">
+                        <a
+                            href="#contact"
+                            class="button secondary"
+                        >
                             İletişim
                         </a>
 
                     </div>
 
-
-                    <div class="hero-meta">
-
-                        <div class="meta-item">
-                            <span class="meta-line"></span>
-                            <span>Bağımsız geliştirme</span>
-                        </div>
-
-                        <div class="meta-item">
-                            <span class="meta-line"></span>
-                            <span>Oyun & teknoloji</span>
-                        </div>
-
-                    </div>
-
                 </div>
 
 
-                <!-- SADE MARKA GÖRSELİ -->
-                <div class="hero-brand reveal">
+                <!-- PC'DE GÖRÜNEN LINK FOTOĞRAF -->
 
-                    <div class="brand-orbit orbit-one"></div>
-                    <div class="brand-orbit orbit-two"></div>
+                <a
+                    href="https://turkblocks.github.io/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hero-link-card reveal"
+                    aria-label="TürkBlocks sitesini aç"
+                >
 
-                    <div class="brand-core">
+                    <div class="hero-link-image">
 
-                        <div class="brand-core-inner">
+                        <div class="link-image-logo">
                             TB
                         </div>
 
+                        <div class="link-image-glow"></div>
+
                     </div>
 
-                    <div class="brand-caption">
-                        <span>TÜRK</span>
-                        <strong>BLOCKS</strong>
+                    <div class="hero-link-info">
+
+                        <div>
+                            <small>WEB SİTESİ</small>
+
+                            <strong>
+                                TürkBlocks
+                            </strong>
+                        </div>
+
+                        <span class="external">
+                            ↗
+                        </span>
+
                     </div>
 
-                </div>
+                </a>
 
             </div>
 
         </section>
 
 
-        <!-- HAKKIMIZDA -->
-        <section class="section about-section" id="about">
+        <!-- ABOUT -->
+
+        <section
+            class="section about"
+            id="about"
+        >
 
             <div class="container">
 
-                <div class="section-header reveal">
+                <div class="section-title reveal">
 
-                    <div>
-                        <span class="section-number">01</span>
-                        <span class="section-label">
-                            HAKKIMIZDA
-                        </span>
-                    </div>
+                    <span>
+                        HAKKIMIZDA
+                    </span>
 
-                    <div class="section-line"></div>
+                    <div></div>
 
                 </div>
 
 
                 <div class="about-grid">
 
-                    <div class="about-title reveal">
-
-                        <h2>
-                            Teknolojiyle
-                            <span>üretmek.</span>
-                        </h2>
-
-                    </div>
+                    <h2 class="reveal">
+                        Fikirleri
+                        <span>gerçeğe</span>
+                        dönüştürüyoruz.
+                    </h2>
 
 
                     <div class="about-text reveal">
 
-                        <p class="large-text">
-                            TürkBlocks, oyun ve teknoloji alanında
-                            üretim yapmayı amaçlayan bağımsız bir
-                            geliştirme markasıdır.
+                        <p>
+                            TürkBlocks; oyun, yazılım ve teknoloji
+                            alanlarında çalışmalar yapan bağımsız
+                            bir geliştirme markasıdır.
                         </p>
 
                         <p>
-                            Fikirleri gerçek projelere dönüştürmek,
-                            yeni teknolojileri denemek ve kullanıcıya
-                            kaliteli deneyimler sunmak temel
-                            yaklaşımımızdır.
-                        </p>
-
-                        <p>
-                            Oyunlardan web projelerine kadar farklı
-                            alanlarda geliştirilen çalışmalar,
-                            TürkBlocks çatısı altında bir araya gelir.
+                            Amacımız yeni fikirler üretmek,
+                            bunları kullanılabilir projelere
+                            dönüştürmek ve her projede daha iyi
+                            bir deneyim ortaya koymaktır.
                         </p>
 
                     </div>
@@ -266,217 +235,30 @@
         </section>
 
 
-        <!-- VİZYON -->
-        <section class="section vision-section" id="vision">
+        <!-- SIMPLE BRAND SECTION -->
+
+        <section class="brand-section">
 
             <div class="container">
 
-                <div class="section-header reveal">
+                <div class="brand-card reveal">
 
-                    <div>
-                        <span class="section-number">02</span>
-                        <span class="section-label">
-                            VİZYON
-                        </span>
+                    <div class="brand-card-logo">
+                        TB
                     </div>
 
-                    <div class="section-line"></div>
+                    <div class="brand-card-text">
 
-                </div>
-
-
-                <div class="vision-content reveal">
-
-                    <div class="vision-title">
-
-                        <span class="quote-mark">“</span>
+                        <span>TÜRKBLOCKS</span>
 
                         <h2>
-                            Sürekli üret,
-                            <span>sürekli geliştir.</span>
-                        </h2>
-
-                    </div>
-
-
-                    <div class="vision-description">
-
-                        <p>
-                            TürkBlocks'un amacı yalnızca proje
-                            geliştirmek değil; her projede yeni
-                            şeyler öğrenmek ve daha iyi bir deneyim
-                            ortaya çıkarmaktır.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <div class="principles">
-
-                    <div class="principle reveal">
-
-                        <span class="principle-number">
-                            01
-                        </span>
-
-                        <div>
-                            <h3>Üret</h3>
-
-                            <p>
-                                Yeni fikirleri gerçek projelere
-                                dönüştür.
-                            </p>
-                        </div>
-
-                    </div>
-
-
-                    <div class="principle reveal">
-
-                        <span class="principle-number">
-                            02
-                        </span>
-
-                        <div>
-                            <h3>Geliştir</h3>
-
-                            <p>
-                                Projeleri sürekli iyileştir ve
-                                geliştir.
-                            </p>
-                        </div>
-
-                    </div>
-
-
-                    <div class="principle reveal">
-
-                        <span class="principle-number">
-                            03
-                        </span>
-
-                        <div>
-                            <h3>Keşfet</h3>
-
-                            <p>
-                                Yeni teknolojileri ve yöntemleri
-                                dene.
-                            </p>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- TEKNOLOJİ -->
-        <section class="section technology-section" id="technology">
-
-            <div class="container">
-
-                <div class="section-header reveal">
-
-                    <div>
-                        <span class="section-number">03</span>
-                        <span class="section-label">
-                            TEKNOLOJİ
-                        </span>
-                    </div>
-
-                    <div class="section-line"></div>
-
-                </div>
-
-
-                <div class="technology-grid">
-
-                    <div class="technology-intro reveal">
-
-                        <h2>
-                            Araçlar
-                            <span>değişir.</span>
-                            Üretme isteği
-                            <span>değişmez.</span>
+                            Üret.
+                            <strong>Geliştir.</strong>
                         </h2>
 
                         <p>
-                            Projeye göre farklı teknolojiler ve
-                            geliştirme araçları kullanıyoruz.
+                            Teknolojiyle fikirleri birleştiriyoruz.
                         </p>
-
-                    </div>
-
-
-                    <div class="technology-list reveal">
-
-                        <div class="technology-item">
-
-                            <span class="technology-icon">
-                                G
-                            </span>
-
-                            <div>
-                                <strong>Godot</strong>
-                                <span>
-                                    Oyun geliştirme
-                                </span>
-                            </div>
-
-                        </div>
-
-
-                        <div class="technology-item">
-
-                            <span class="technology-icon">
-                                H
-                            </span>
-
-                            <div>
-                                <strong>HTML / CSS</strong>
-                                <span>
-                                    Web geliştirme
-                                </span>
-                            </div>
-
-                        </div>
-
-
-                        <div class="technology-item">
-
-                            <span class="technology-icon">
-                                JS
-                            </span>
-
-                            <div>
-                                <strong>JavaScript</strong>
-                                <span>
-                                    Etkileşimli web deneyimleri
-                                </span>
-                            </div>
-
-                        </div>
-
-
-                        <div class="technology-item">
-
-                            <span class="technology-icon">
-                                P
-                            </span>
-
-                            <div>
-                                <strong>Python</strong>
-                                <span>
-                                    Araçlar ve sistemler
-                                </span>
-                            </div>
-
-                        </div>
 
                     </div>
 
@@ -487,137 +269,112 @@
         </section>
 
 
-        <!-- MARKA MESAJI -->
-        <section class="statement-section">
+        <!-- CONTACT -->
+
+        <section
+            class="section contact"
+            id="contact"
+        >
 
             <div class="container">
 
-                <div class="statement reveal">
+                <div class="section-title reveal">
 
-                    <span class="statement-small">
-                        TÜRKBLOCKS
+                    <span>
+                        İLETİŞİM
                     </span>
 
-                    <h2>
-                        Fikirden
-                        <span>gerçeğe.</span>
-                    </h2>
-
-                    <div class="statement-line"></div>
-
-                    <p>
-                        Oyun. Yazılım. Teknoloji.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- İLETİŞİM -->
-        <section class="section contact-section" id="contact">
-
-            <div class="container">
-
-                <div class="section-header reveal">
-
-                    <div>
-                        <span class="section-number">04</span>
-                        <span class="section-label">
-                            İLETİŞİM
-                        </span>
-                    </div>
-
-                    <div class="section-line"></div>
+                    <div></div>
 
                 </div>
 
 
                 <div class="contact-grid">
 
-                    <div class="contact-title reveal">
+                    <div class="contact-heading reveal">
 
                         <h2>
-                            Bir fikrin mi
-                            <span>var?</span>
+                            TürkBlocks'u
+                            <span>takip et.</span>
                         </h2>
 
                         <p>
-                            TürkBlocks ve projeler hakkında bilgi
-                            almak veya iletişime geçmek için
-                            aşağıdaki kanalları kullanabilirsin.
+                            Projeler, geliştirme süreci ve yeni
+                            içerikler için sosyal hesaplarımızı
+                            takip edebilirsin.
                         </p>
 
                     </div>
 
 
-                    <div class="contact-links reveal">
-
-                        <!-- URL'LERİ BURADA KENDİ HESAPLARINLA DEĞİŞTİR -->
+                    <div class="social-list reveal">
 
                         <a
                             href="https://github.com/salih-turkblocks"
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="contact-link"
                         >
 
-                            <div>
-                                <span class="contact-icon">GH</span>
+                            <div class="social-left">
+
+                                <span class="social-icon">
+                                    GH
+                                </span>
 
                                 <div>
                                     <strong>GitHub</strong>
-                                    <span>
-                                        Projeler ve kaynak kodları
-                                    </span>
+                                    <small>
+                                        Projeler
+                                    </small>
                                 </div>
+
                             </div>
 
-                            <span class="arrow">↗</span>
+                            <span>↗</span>
 
                         </a>
 
 
-                        <a
-                            href="#"
-                            class="contact-link"
-                        >
+                        <a href="#" target="_blank">
 
-                            <div>
-                                <span class="contact-icon">YT</span>
+                            <div class="social-left">
+
+                                <span class="social-icon">
+                                    YT
+                                </span>
 
                                 <div>
                                     <strong>YouTube</strong>
-                                    <span>
-                                        Videolar ve içerikler
-                                    </span>
+                                    <small>
+                                        Videolar
+                                    </small>
                                 </div>
+
                             </div>
 
-                            <span class="arrow">↗</span>
+                            <span>↗</span>
 
                         </a>
 
 
-                        <a
-                            href="#"
-                            class="contact-link"
-                        >
+                        <a href="#" target="_blank">
 
-                            <div>
-                                <span class="contact-icon">X</span>
+                            <div class="social-left">
+
+                                <span class="social-icon">
+                                    X
+                                </span>
 
                                 <div>
                                     <strong>X</strong>
-                                    <span>
+                                    <small>
                                         Güncellemeler
-                                    </span>
+                                    </small>
                                 </div>
+
                             </div>
 
-                            <span class="arrow">↗</span>
+                            <span>↗</span>
 
                         </a>
 
@@ -632,67 +389,33 @@
     </main>
 
 
-    <!-- FOOTER -->
-    <footer class="footer">
+    <footer>
 
-        <div class="container">
+        <div class="container footer-inner">
 
-            <div class="footer-top">
+            <div class="footer-brand">
 
-                <a href="#home" class="footer-brand">
-
-                    <div class="logo-mark">
-                        TB
-                    </div>
-
-                    <div>
-                        <strong>TürkBlocks</strong>
-                        <span>
-                            OYUN & TEKNOLOJİ
-                        </span>
-                    </div>
-
-                </a>
-
-
-                <p>
-                    Fikirleri deneyime dönüştürüyoruz.
-                </p>
-
-            </div>
-
-
-            <div class="footer-bottom">
-
-                <span>
-                    © <span id="currentYear"></span>
-                    TürkBlocks. Tüm hakları saklıdır.
-                </span>
-
-                <div class="footer-links">
-
-                    <a href="#home">
-                        Ana Sayfa
-                    </a>
-
-                    <a href="#about">
-                        Hakkımızda
-                    </a>
-
-                    <a href="#contact">
-                        İletişim
-                    </a>
-
+                <div class="brand-logo">
+                    TB
                 </div>
 
+                <strong>
+                    TürkBlocks
+                </strong>
+
             </div>
+
+
+            <span>
+                © <span id="year"></span>
+                TürkBlocks
+            </span>
 
         </div>
 
     </footer>
 
 
-    <!-- Yukarı çık -->
     <button
         class="scroll-top"
         id="scrollTop"
