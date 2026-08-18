@@ -4,9 +4,10 @@ document.addEventListener("DOMContentLoaded", () => {
        ELEMENTS
        ===================================================== */
 
-    const menuToggle = document.querySelector(".menu-toggle");
+    const menuButton = document.querySelector(".menu-button");
     const mobileMenu = document.querySelector(".mobile-menu");
     const mobileLinks = document.querySelectorAll(".mobile-menu a");
+    const year = document.getElementById("year");
 
 
     /* =====================================================
@@ -14,39 +15,53 @@ document.addEventListener("DOMContentLoaded", () => {
        ===================================================== */
 
     function openMenu() {
-        if (!menuToggle || !mobileMenu) return;
 
-        menuToggle.classList.add("active");
+        if (!menuButton || !mobileMenu) {
+            return;
+        }
+
+        menuButton.classList.add("active");
         mobileMenu.classList.add("open");
 
-        menuToggle.setAttribute("aria-expanded", "true");
-        mobileMenu.setAttribute("aria-hidden", "false");
+        menuButton.setAttribute(
+            "aria-expanded",
+            "true"
+        );
 
         document.body.classList.add("menu-open");
     }
 
 
     function closeMenu() {
-        if (!menuToggle || !mobileMenu) return;
 
-        menuToggle.classList.remove("active");
+        if (!menuButton || !mobileMenu) {
+            return;
+        }
+
+        menuButton.classList.remove("active");
         mobileMenu.classList.remove("open");
 
-        menuToggle.setAttribute("aria-expanded", "false");
-        mobileMenu.setAttribute("aria-hidden", "true");
+        menuButton.setAttribute(
+            "aria-expanded",
+            "false"
+        );
 
         document.body.classList.remove("menu-open");
     }
 
 
     function toggleMenu() {
-        if (!mobileMenu) return;
+
+        if (!mobileMenu) {
+            return;
+        }
 
         if (mobileMenu.classList.contains("open")) {
             closeMenu();
         } else {
             openMenu();
         }
+
     }
 
 
@@ -54,19 +69,26 @@ document.addEventListener("DOMContentLoaded", () => {
        MENU BUTTON
        ===================================================== */
 
-    if (menuToggle) {
-        menuToggle.addEventListener("click", toggleMenu);
+    if (menuButton) {
+
+        menuButton.addEventListener(
+            "click",
+            toggleMenu
+        );
+
     }
 
 
     /* =====================================================
-       CLOSE AFTER CLICKING A MOBILE LINK
+       MOBILE LINKS
        ===================================================== */
 
     mobileLinks.forEach(link => {
+
         link.addEventListener("click", () => {
             closeMenu();
         });
+
     });
 
 
@@ -74,140 +96,114 @@ document.addEventListener("DOMContentLoaded", () => {
        ESC KEY
        ===================================================== */
 
-    document.addEventListener("keydown", event => {
+    document.addEventListener(
+        "keydown",
+        event => {
 
-        if (event.key === "Escape") {
-            closeMenu();
+            if (event.key === "Escape") {
+                closeMenu();
+            }
+
         }
-
-    });
-
-
-    /* =====================================================
-       CLOSE WHEN CLICKING OUTSIDE
-       ===================================================== */
-
-    document.addEventListener("click", event => {
-
-        if (!mobileMenu || !menuToggle) return;
-
-        const menuIsOpen = mobileMenu.classList.contains("open");
-
-        if (!menuIsOpen) return;
-
-        const clickedInsideMenu = mobileMenu.contains(event.target);
-        const clickedToggle = menuToggle.contains(event.target);
-
-        if (!clickedInsideMenu && !clickedToggle) {
-            closeMenu();
-        }
-
-    });
-
-
-    /* =====================================================
-       DESKTOP'TA MENÜYÜ TEMİZLE
-       ===================================================== */
-
-    window.addEventListener("resize", () => {
-
-        if (window.innerWidth > 950) {
-            closeMenu();
-        }
-
-    });
-
-
-    /* =====================================================
-       ANCHOR LINKS
-       ===================================================== */
-
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-
-        link.addEventListener("click", event => {
-
-            const targetId = link.getAttribute("href");
-
-            if (!targetId || targetId === "#") return;
-
-            const target = document.querySelector(targetId);
-
-            if (!target) return;
-
-            event.preventDefault();
-
-            target.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-
-        });
-
-    });
-
-
-    /* =====================================================
-       ACTIVE SECTION
-       ===================================================== */
-
-    const sections = document.querySelectorAll("main section[id]");
-
-    const desktopLinks = document.querySelectorAll(
-        '.main-nav a[href^="#"]'
     );
 
 
-    if ("IntersectionObserver" in window) {
+    /* =====================================================
+       CLICK OUTSIDE
+       ===================================================== */
 
-        const observer = new IntersectionObserver(
-            entries => {
+    document.addEventListener(
+        "click",
+        event => {
 
-                entries.forEach(entry => {
+            if (!mobileMenu || !menuButton) {
+                return;
+            }
 
-                    if (!entry.isIntersecting) return;
+            if (!mobileMenu.classList.contains("open")) {
+                return;
+            }
 
-                    const id = entry.target.getAttribute("id");
+            const insideMenu =
+                mobileMenu.contains(event.target);
 
-                    desktopLinks.forEach(link => {
+            const insideButton =
+                menuButton.contains(event.target);
 
-                        const linkTarget =
-                            link.getAttribute("href");
+            if (!insideMenu && !insideButton) {
+                closeMenu();
+            }
 
-                        link.classList.toggle(
-                            "active",
-                            linkTarget === `#${id}`
-                        );
+        }
+    );
 
-                    });
 
+    /* =====================================================
+       WINDOW RESIZE
+       ===================================================== */
+
+    window.addEventListener(
+        "resize",
+        () => {
+
+            if (window.innerWidth > 1000) {
+                closeMenu();
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       SMOOTH ANCHOR SCROLL
+       ===================================================== */
+
+    document.querySelectorAll(
+        'a[href^="#"]'
+    ).forEach(link => {
+
+        link.addEventListener(
+            "click",
+            event => {
+
+                const targetId =
+                    link.getAttribute("href");
+
+                if (
+                    !targetId ||
+                    targetId === "#"
+                ) {
+                    return;
+                }
+
+                const target =
+                    document.querySelector(targetId);
+
+                if (!target) {
+                    return;
+                }
+
+                event.preventDefault();
+
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
                 });
 
-            },
-            {
-                rootMargin: "-35% 0px -55% 0px",
-                threshold: 0
             }
         );
 
-
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-
-    }
+    });
 
 
     /* =====================================================
        CURRENT YEAR
        ===================================================== */
 
-    const yearElements = document.querySelectorAll(
-        "[data-current-year]"
-    );
-
-    yearElements.forEach(element => {
-        element.textContent = new Date().getFullYear();
-    });
+    if (year) {
+        year.textContent =
+            new Date().getFullYear();
+    }
 
 
     /* =====================================================
@@ -227,9 +223,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       PAGE READY
+       ESCAPE HASH JUMP
        ===================================================== */
 
-    document.documentElement.classList.add("js-ready");
+    if (window.location.hash) {
+
+        window.setTimeout(() => {
+
+            const target =
+                document.querySelector(
+                    window.location.hash
+                );
+
+            if (target) {
+
+                target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            }
+
+        }, 100);
+
+    }
 
 });
