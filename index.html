@@ -2,107 +2,175 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="TürkBlocks — Oyunlar, projeler ve daha fazlası.">
-    <meta name="theme-color" content="#000000">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>TürkBlocks — Oyun & Projeler</title>
+    <meta
+        name="description"
+        content="TürkBlocks — Oyunlar, projeler ve yazılımlar."
+    >
 
-    <link rel="stylesheet" href="css/style.css">
+    <meta
+        name="theme-color"
+        content="#000000"
+    >
+
+    <title>TürkBlocks</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- HEADER -->
-    <header class="site-header">
+    <!-- ==================================================
+         HEADER
+         ================================================== -->
+
+    <header class="header">
+
         <div class="container header-inner">
 
-            <a href="index.html" class="brand" aria-label="TürkBlocks Ana Sayfa">
-                <span class="brand-mark">TB</span>
-                <span class="brand-name">TürkBlocks</span>
+            <a href="#anasayfa" class="logo">
+                <span class="logo-box">TB</span>
+                <span class="logo-text">TürkBlocks</span>
             </a>
 
-            <nav class="main-nav" aria-label="Ana navigasyon">
-                <a href="#anasayfa">Ana Sayfa</a>
-                <a href="#oyunlar">Oyunlar</a>
-                <a href="#projeler">Projeler</a>
-                <a href="#hakkimizda">Hakkımızda</a>
-                <a href="#iletisim">İletişim</a>
+            <nav class="desktop-nav">
+
+                <a href="#anasayfa">
+                    Ana Sayfa
+                </a>
+
+                <a href="#oyunlar">
+                    Oyunlar
+                </a>
+
+                <a href="#projeler">
+                    Projeler
+                </a>
+
+                <a href="#hakkimizda">
+                    Hakkımızda
+                </a>
+
+                <a href="#iletisim">
+                    İletişim
+                </a>
+
             </nav>
 
-            <a href="https://github.com/salih-turkblocks"
-               class="header-button"
-               target="_blank"
-               rel="noopener noreferrer">
+            <a
+                href="https://github.com/salih-turkblocks"
+                class="header-link"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
                 GitHub
             </a>
 
-            <button class="menu-toggle"
-                    type="button"
-                    aria-label="Menüyü aç"
-                    aria-expanded="false">
+            <button
+                class="menu-button"
+                type="button"
+                aria-label="Menüyü aç"
+                aria-expanded="false"
+            >
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
 
         </div>
+
     </header>
 
 
-    <!-- MOBILE MENU -->
-    <aside class="mobile-menu" aria-hidden="true">
+    <!-- ==================================================
+         MOBILE MENU
+         ================================================== -->
 
-        <nav aria-label="Mobil navigasyon">
-            <a href="#anasayfa">Ana Sayfa</a>
-            <a href="#oyunlar">Oyunlar</a>
-            <a href="#projeler">Projeler</a>
-            <a href="#hakkimizda">Hakkımızda</a>
-            <a href="#iletisim">İletişim</a>
+    <div class="mobile-menu">
 
-            <a href="https://github.com/salih-turkblocks"
-               target="_blank"
-               rel="noopener noreferrer">
+        <nav>
+
+            <a href="#anasayfa">
+                Ana Sayfa
+            </a>
+
+            <a href="#oyunlar">
+                Oyunlar
+            </a>
+
+            <a href="#projeler">
+                Projeler
+            </a>
+
+            <a href="#hakkimizda">
+                Hakkımızda
+            </a>
+
+            <a href="#iletisim">
+                İletişim
+            </a>
+
+            <a
+                href="https://github.com/salih-turkblocks"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
                 GitHub
             </a>
+
         </nav>
 
-    </aside>
+    </div>
 
 
     <main>
 
-        <!-- HERO -->
-        <section id="anasayfa" class="hero">
+        <!-- ==================================================
+             HERO
+             ================================================== -->
+
+        <section
+            id="anasayfa"
+            class="hero"
+        >
 
             <div class="container hero-content">
 
-                <div class="hero-label">
+                <span class="eyebrow">
                     TÜRKBLOCKS
-                </div>
+                </span>
 
                 <h1>
-                    Oyunlar.
-                    <br>
-                    Projeler.
-                    <br>
-                    <span>Özgürce üret.</span>
+                    Oyunlar,
+                    <span>projeler</span>
+                    ve özgür fikirler.
                 </h1>
 
-                <p class="hero-description">
-                    TürkBlocks; oyunlar, yazılımlar ve deneysel projeler
-                    geliştiren bağımsız bir üretim platformudur.
+                <p>
+                    TürkBlocks; oyunlar, yazılımlar,
+                    web projeleri ve deneysel fikirler
+                    geliştiren bağımsız bir platformdur.
                 </p>
 
-                <div class="hero-actions">
+                <div class="hero-buttons">
 
-                    <a href="#oyunlar" class="button button-primary">
+                    <a
+                        href="#oyunlar"
+                        class="button button-red"
+                    >
                         Oyunları Keşfet
                     </a>
 
-                    <a href="#projeler" class="button button-secondary">
-                        Projelere Bak
+                    <a
+                        href="#projeler"
+                        class="button button-outline"
+                    >
+                        Projeler
                     </a>
 
                 </div>
@@ -112,33 +180,44 @@
         </section>
 
 
-        <!-- INTRO -->
-        <section class="intro-section">
+        <!-- ==================================================
+             INTRO
+             ================================================== -->
+
+        <section class="intro section">
 
             <div class="container intro-grid">
 
                 <div>
-                    <span class="section-label">TÜRKBLOCKS</span>
+
+                    <span class="section-label">
+                        TÜRK BLOCKS
+                    </span>
 
                     <h2>
                         Fikirleri
-                        <span>gerçeğe</span>
+                        <span>üretime</span>
                         dönüştürüyoruz.
                     </h2>
+
                 </div>
 
                 <div class="intro-text">
+
                     <p>
-                        Küçük fikirlerden büyük projelere kadar,
-                        farklı teknolojileri deneyerek yeni şeyler
-                        üretmeye çalışıyoruz.
+                        TürkBlocks farklı fikirleri
+                        denemek, geliştirmek ve paylaşmak
+                        için oluşturulmuş bağımsız bir
+                        üretim alanıdır.
                     </p>
 
                     <p>
-                        Oyun geliştirme, web projeleri, araçlar ve
-                        deneysel yazılımlar TürkBlocks'ın çalışma
-                        alanlarından bazılarıdır.
+                        Oyun geliştirmeden web projelerine,
+                        araçlardan deneysel sistemlere kadar
+                        birçok farklı alanda çalışmalar
+                        gerçekleştiriyoruz.
                     </p>
+
                 </div>
 
             </div>
@@ -146,94 +225,129 @@
         </section>
 
 
-        <!-- GAMES -->
-        <section id="oyunlar" class="content-section">
+        <!-- ==================================================
+             GAMES
+             ================================================== -->
+
+        <section
+            id="oyunlar"
+            class="section"
+        >
 
             <div class="container">
 
-                <div class="section-heading">
+                <div class="section-top">
 
                     <div>
-                        <span class="section-label">OYUNLAR</span>
+
+                        <span class="section-label">
+                            OYUNLAR
+                        </span>
 
                         <h2>
-                            Oyun dünyası
+                            Oyun dünyası.
                         </h2>
+
                     </div>
 
-                    <a href="games.html" class="text-link">
+                    <a
+                        href="destek/oyunlar.html"
+                        class="simple-link"
+                    >
                         Tüm oyunlar →
                     </a>
 
                 </div>
 
 
-                <div class="games-grid">
+                <div class="game-grid">
 
-                    <article class="game-card">
+                    <a
+                        href="destek/oyunlar.html"
+                        class="game-card"
+                    >
 
-                        <div class="card-number">01</div>
+                        <span class="card-number">
+                            01
+                        </span>
 
-                        <div class="card-content">
+                        <div>
 
-                            <h3>TürkBlocks Games</h3>
+                            <h3>
+                                TürkBlocks Games
+                            </h3>
 
                             <p>
-                                TürkBlocks tarafından geliştirilen
-                                oyunları keşfet.
+                                TürkBlocks tarafından
+                                geliştirilen oyunları
+                                keşfet.
                             </p>
-
-                            <a href="games.html" class="card-link">
-                                Oyunu incele →
-                            </a>
 
                         </div>
 
-                    </article>
+                        <span class="card-arrow">
+                            →
+                        </span>
+
+                    </a>
 
 
-                    <article class="game-card">
+                    <a
+                        href="destek/oyunlar.html"
+                        class="game-card"
+                    >
 
-                        <div class="card-number">02</div>
+                        <span class="card-number">
+                            02
+                        </span>
 
-                        <div class="card-content">
+                        <div>
 
-                            <h3>Yeni Projeler</h3>
+                            <h3>
+                                Yeni Oyunlar
+                            </h3>
 
                             <p>
-                                Geliştirme aşamasındaki yeni oyunlar
-                                ve deneysel çalışmalar.
+                                Geliştirme aşamasındaki
+                                yeni oyunlar ve fikirler.
                             </p>
-
-                            <a href="projects.html" class="card-link">
-                                Projeleri gör →
-                            </a>
 
                         </div>
 
-                    </article>
+                        <span class="card-arrow">
+                            →
+                        </span>
+
+                    </a>
 
 
-                    <article class="game-card">
+                    <a
+                        href="destek/oyunlar.html"
+                        class="game-card"
+                    >
 
-                        <div class="card-number">03</div>
+                        <span class="card-number">
+                            03
+                        </span>
 
-                        <div class="card-content">
+                        <div>
 
-                            <h3>Yakında</h3>
+                            <h3>
+                                Yakında
+                            </h3>
 
                             <p>
-                                Yeni oyunlar ve güncellemeler
+                                Yeni projeler ve oyunlar
                                 üzerinde çalışıyoruz.
                             </p>
 
-                            <a href="#iletisim" class="card-link">
-                                Daha fazla bilgi →
-                            </a>
-
                         </div>
 
-                    </article>
+                        <span class="card-arrow">
+                            →
+                        </span>
+
+                    </a>
 
                 </div>
 
@@ -242,73 +356,120 @@
         </section>
 
 
-        <!-- PROJECTS -->
-        <section id="projeler" class="content-section projects-section">
+        <!-- ==================================================
+             PROJECTS
+             ================================================== -->
+
+        <section
+            id="projeler"
+            class="section projects"
+        >
 
             <div class="container">
 
-                <div class="section-heading">
+                <div class="section-top">
 
                     <div>
-                        <span class="section-label">PROJELER</span>
+
+                        <span class="section-label">
+                            PROJELER
+                        </span>
 
                         <h2>
-                            Sadece oyunlarla sınırlı değiliz.
+                            Daha fazlasını
+                            <span>üret.</span>
                         </h2>
+
                     </div>
 
                 </div>
 
 
-                <div class="projects-list">
+                <div class="project-list">
 
-                    <a href="projects.html" class="project-item">
+                    <a
+                        href="destek/projeler.html"
+                        class="project"
+                    >
 
-                        <span class="project-number">01</span>
+                        <span>
+                            01
+                        </span>
 
                         <div>
-                            <h3>LocalNET</h3>
+
+                            <h3>
+                                LocalNET
+                            </h3>
+
                             <p>
-                                Yerel sistemler ve ağ tabanlı
-                                deneysel projeler.
+                                Yerel sistemler ve ağ
+                                tabanlı projeler.
                             </p>
+
                         </div>
 
-                        <span class="project-arrow">→</span>
+                        <b>
+                            →
+                        </b>
 
                     </a>
 
 
-                    <a href="projects.html" class="project-item">
+                    <a
+                        href="destek/projeler.html"
+                        class="project"
+                    >
 
-                        <span class="project-number">02</span>
+                        <span>
+                            02
+                        </span>
 
                         <div>
-                            <h3>LocalChat</h3>
+
+                            <h3>
+                                LocalChat
+                            </h3>
+
                             <p>
-                                Yerel iletişim ve mesajlaşma
-                                üzerine geliştirilen proje.
+                                Yerel iletişim ve
+                                mesajlaşma projesi.
                             </p>
+
                         </div>
 
-                        <span class="project-arrow">→</span>
+                        <b>
+                            →
+                        </b>
 
                     </a>
 
 
-                    <a href="projects.html" class="project-item">
+                    <a
+                        href="destek/projeler.html"
+                        class="project"
+                    >
 
-                        <span class="project-number">03</span>
+                        <span>
+                            03
+                        </span>
 
                         <div>
-                            <h3>Diğer Projeler</h3>
+
+                            <h3>
+                                Diğer Projeler
+                            </h3>
+
                             <p>
-                                Geliştirilen ve geliştirilecek
-                                diğer deneysel çalışmalar.
+                                Yeni fikirler ve deneysel
+                                çalışmalar.
                             </p>
+
                         </div>
 
-                        <span class="project-arrow">→</span>
+                        <b>
+                            →
+                        </b>
 
                     </a>
 
@@ -319,8 +480,14 @@
         </section>
 
 
-        <!-- ABOUT -->
-        <section id="hakkimizda" class="about-section">
+        <!-- ==================================================
+             ABOUT
+             ================================================== -->
+
+        <section
+            id="hakkimizda"
+            class="section about"
+        >
 
             <div class="container about-grid">
 
@@ -331,24 +498,26 @@
                     </span>
 
                     <h2>
-                        Üret,
-                        <span>deneyle</span>,
-                        geliştir.
+                        Yap.
+                        <span>Dene.</span>
+                        Geliştir.
                     </h2>
 
                 </div>
 
                 <div>
 
-                    <p class="large-text">
-                        TürkBlocks, farklı fikirleri denemek ve
-                        kendi projelerini geliştirmek için oluşturulmuş
-                        bağımsız bir platformdur.
+                    <p class="about-large">
+                        TürkBlocks, kendi oyunlarını,
+                        yazılımlarını ve fikirlerini
+                        geliştirmek isteyen bağımsız
+                        bir üretim platformudur.
                     </p>
 
                     <p>
-                        Amacımız mümkün olduğunca sade, erişilebilir
-                        ve özgür projeler ortaya çıkarmak.
+                        Amacımız gereksiz karmaşadan
+                        uzak, kullanışlı ve özgün
+                        projeler ortaya çıkarmaktır.
                     </p>
 
                 </div>
@@ -358,42 +527,53 @@
         </section>
 
 
-        <!-- SOCIAL -->
-        <section class="social-section">
+        <!-- ==================================================
+             SOCIAL
+             ================================================== -->
+
+        <section class="section social">
 
             <div class="container">
 
                 <span class="section-label">
-                    TAKİP ET
+                    SOSYAL
                 </span>
 
                 <h2>
-                    TürkBlocks'ı takip et.
+                    Bizi takip et.
                 </h2>
 
-                <div class="social-links">
+                <div class="social-grid">
 
-                    <a href="https://www.youtube.com/@Salih_TurkBlocks"
-                       target="_blank"
-                       rel="noopener noreferrer">
+                    <a
+                        href="https://www.youtube.com/@Salih_TurkBlocks"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         YouTube
                     </a>
 
-                    <a href="https://github.com/salih-turkblocks"
-                       target="_blank"
-                       rel="noopener noreferrer">
+                    <a
+                        href="https://github.com/salih-turkblocks"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         GitHub
                     </a>
 
-                    <a href="https://x.com/SalihTurkBlocks"
-                       target="_blank"
-                       rel="noopener noreferrer">
+                    <a
+                        href="https://x.com/SalihTurkBlocks"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         X
                     </a>
 
-                    <a href="https://www.instagram.com/salih_turkblocks/"
-                       target="_blank"
-                       rel="noopener noreferrer">
+                    <a
+                        href="https://www.instagram.com/salih_turkblocks/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         Instagram
                     </a>
 
@@ -404,8 +584,14 @@
         </section>
 
 
-        <!-- CONTACT -->
-        <section id="iletisim" class="contact-section">
+        <!-- ==================================================
+             CONTACT
+             ================================================== -->
+
+        <section
+            id="iletisim"
+            class="contact section"
+        >
 
             <div class="container contact-box">
 
@@ -418,24 +604,17 @@
                 </h2>
 
                 <p>
-                    TürkBlocks ile iletişime geçmek için
-                    aşağıdaki bağlantıları kullanabilirsin.
+                    TürkBlocks ile iletişime geçmek
+                    için iletişim sayfamızı ziyaret
+                    edebilirsin.
                 </p>
 
-                <div class="contact-actions">
-
-                    <a href="contact.html" class="button button-primary">
-                        İletişim
-                    </a>
-
-                    <a href="https://github.com/salih-turkblocks"
-                       class="button button-secondary"
-                       target="_blank"
-                       rel="noopener noreferrer">
-                        GitHub
-                    </a>
-
-                </div>
+                <a
+                    href="destek/iletisim.html"
+                    class="button button-red"
+                >
+                    İletişime Geç
+                </a>
 
             </div>
 
@@ -444,14 +623,20 @@
     </main>
 
 
-    <!-- FOOTER -->
-    <footer class="site-footer">
+    <!-- ==================================================
+         FOOTER
+         ================================================== -->
 
-        <div class="container footer-inner">
+    <footer class="footer">
+
+        <div class="container footer-main">
 
             <div>
 
-                <a href="index.html" class="footer-brand">
+                <a
+                    href="#anasayfa"
+                    class="footer-logo"
+                >
                     TürkBlocks
                 </a>
 
@@ -461,24 +646,36 @@
 
             </div>
 
-
             <div class="footer-links">
 
-                <a href="">Ana Sayfa</a>
-                <a href="oyunlar/">Oyunlar</a>
-                <a href="#projeler/">Projeler</a>
-                <a href="hakkimizda/">Hakkımızda</a>
-                <a href="destek/">İletişim</a>
+                <a href="#anasayfa">
+                    Ana Sayfa
+                </a>
+
+                <a href="#oyunlar">
+                    Oyunlar
+                </a>
+
+                <a href="#projeler">
+                    Projeler
+                </a>
+
+                <a href="#hakkimizda">
+                    Hakkımızda
+                </a>
+
+                <a href="#iletisim">
+                    İletişim
+                </a>
 
             </div>
 
         </div>
 
-
         <div class="container footer-bottom">
 
             <span>
-                © 2026 TürkBlocks
+                © <span id="year"></span> TürkBlocks
             </span>
 
             <span>
@@ -490,7 +687,7 @@
     </footer>
 
 
-    <script src="js/script.js"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>
