@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="TürkBlocks Yardım Merkezi"
+    >
+
+    <meta
+        name="theme-color"
+        content="#000000"
+    >
+
+    <title>Yardım Merkezi — TürkBlocks</title>
+
+
+    <style>
+
+        /* ==================================================
+           RESET
+           ================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            min-height: 100vh;
+
+            background: #000000;
+
+            color: #ffffff;
+
+            font-family:
+                Inter,
+                "Segoe UI",
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                sans-serif;
+
+            line-height: 1.6;
+
+            overflow-x: hidden;
+        }
+
+
+        a {
+            color: inherit;
+
+            text-decoration: none;
+        }
+
+
+        button,
+        input {
+            font: inherit;
+        }
+
+
+        /* ==================================================
+           CONTAINER
+           ================================================== */
+
+        .container {
+            width: min(
+                calc(100% - 40px),
+                1120px
+            );
+
+            margin: 0 auto;
+        }
+
+
+        /* ==================================================
+           HEADER
+           ================================================== */
+
+        .header {
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            background:
+                rgba(0, 0, 0, 0.94);
+
+            border-bottom:
+                1px solid #222222;
+
+            backdrop-filter:
+                blur(14px);
+
+            -webkit-backdrop-filter:
+                blur(14px);
+        }
+
+
+        .header-inner {
+            min-height: 74px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+
+        /* LOGO */
+
+        .logo {
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            font-size: 17px;
+
+            font-weight: 900;
+        }
+
+
+        .logo-box {
+            width: 38px;
+            height: 38px;
+
+            display: grid;
+
+            place-items: center;
+
+            background: #500000;
+
+            color: #ffffff;
+
+            font-size: 11px;
+
+            font-weight: 950;
+        }
+
+
+        /* HEADER RIGHT */
+
+        .header-actions {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .home-link {
+            color: #999999;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        /* SEARCH BUTTON */
+
+        .search-button {
+            width: 42px;
+            height: 42px;
+
+            display: grid;
+
+            place-items: center;
+
+            background: transparent;
+
+            border:
+                1px solid #292929;
+
+            color: #ffffff;
+
+            cursor: pointer;
+
+            transition:
+                background-color 250ms ease,
+                border-color 250ms ease;
+        }
+
+
+        .search-button:hover {
+            background: #500000;
+
+            border-color: #500000;
+        }
+
+
+        .search-icon {
+            width: 17px;
+            height: 17px;
+
+            border:
+                2px solid currentColor;
+
+            border-radius: 50%;
+
+            position: relative;
+        }
+
+
+        .search-icon::after {
+            content: "";
+
+            position: absolute;
+
+            width: 7px;
+            height: 2px;
+
+            background: currentColor;
+
+            right: -5px;
+            bottom: -3px;
+
+            transform: rotate(45deg);
+
+            border-radius: 2px;
+        }
+
+
+        /* ==================================================
+           SEARCH PANEL
+           ================================================== */
+
+        .search-panel {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 2000;
+
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: center;
+
+            padding:
+                110px
+                20px
+                20px;
+
+            background:
+                rgba(0, 0, 0, 0.72);
+
+            backdrop-filter:
+                blur(12px);
+
+            -webkit-backdrop-filter:
+                blur(12px);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+
+            transition:
+                opacity 250ms ease,
+                visibility 250ms ease;
+        }
+
+
+        .search-panel.active {
+            opacity: 1;
+
+            visibility: visible;
+
+            pointer-events: auto;
+        }
+
+
+        .search-box {
+            width: min(
+                100%,
+                720px
+            );
+
+            background: #080808;
+
+            border:
+                1px solid #333333;
+
+            box-shadow:
+                0 30px 100px
+                rgba(0, 0, 0, 0.65);
+
+            transform:
+                translateY(-12px);
+
+            transition:
+                transform 300ms ease;
+        }
+
+
+        .search-panel.active
+        .search-box {
+            transform:
+                translateY(0);
+        }
+
+
+        .search-top {
+            display: flex;
+
+            align-items: center;
+
+            border-bottom:
+                1px solid #222222;
+        }
+
+
+        .search-input {
+            flex: 1;
+
+            min-width: 0;
+
+            padding:
+                20px
+                22px;
+
+            background: transparent;
+
+            border: 0;
+
+            outline: 0;
+
+            color: #ffffff;
+
+            font-size: 17px;
+        }
+
+
+        .search-input::placeholder {
+            color: #666666;
+        }
+
+
+        .close-search {
+            width: 55px;
+
+            align-self: stretch;
+
+            border: 0;
+
+            background: transparent;
+
+            color: #888888;
+
+            cursor: pointer;
+
+            font-size: 22px;
+        }
+
+
+        .close-search:hover {
+            color: #ffffff;
+        }
+
+
+        .search-results {
+            max-height: 420px;
+
+            overflow-y: auto;
+        }
+
+
+        .search-result {
+            display: block;
+
+            padding:
+                18px
+                22px;
+
+            border-bottom:
+                1px solid #181818;
+
+            transition:
+                background-color 200ms ease;
+        }
+
+
+        .search-result:hover {
+            background: #500000;
+        }
+
+
+        .search-result strong {
+            display: block;
+
+            font-size: 15px;
+        }
+
+
+        .search-result span {
+            display: block;
+
+            margin-top: 3px;
+
+            color: #888888;
+
+            font-size: 13px;
+        }
+
+
+        .search-result:hover span {
+            color: #dddddd;
+        }
+
+
+        .no-results {
+            padding: 30px;
+
+            color: #777777;
+
+            text-align: center;
+
+            font-size: 14px;
+        }
+
+
+        /* ==================================================
+           HERO
+           ================================================== */
+
+        .hero {
+            padding:
+                115px
+                0
+                90px;
+
+            background:
+                radial-gradient(
+                    circle at 75% 20%,
+                    rgba(80, 0, 0, 0.22),
+                    transparent 35%
+                ),
+                #000000;
+
+            border-bottom:
+                1px solid #222222;
+        }
+
+
+        .label {
+            display: block;
+
+            margin-bottom: 20px;
+
+            color: #500000;
+
+            font-size: 11px;
+
+            font-weight: 950;
+
+            letter-spacing: 2px;
+        }
+
+
+        h1 {
+            max-width: 900px;
+
+            font-size:
+                clamp(52px, 9vw, 105px);
+
+            line-height: .9;
+
+            letter-spacing: -5px;
+
+            font-weight: 950;
+        }
+
+
+        h1 span {
+            color: #500000;
+        }
+
+
+        .hero-description {
+            max-width: 670px;
+
+            margin-top: 30px;
+
+            color: #999999;
+
+            font-size: 17px;
+
+            line-height: 1.8;
+        }
+
+
+        /* ==================================================
+           CARDS
+           ================================================== */
+
+        .topics {
+            padding:
+                85px
+                0
+                110px;
+        }
+
+
+        .section-heading {
+            margin-bottom: 28px;
+        }
+
+
+        .section-heading h2 {
+            font-size:
+                clamp(30px, 5vw, 48px);
+
+            line-height: 1;
+
+            letter-spacing: -2px;
+        }
+
+
+        .section-heading p {
+            margin-top: 10px;
+
+            color: #777777;
+
+            font-size: 14px;
+        }
+
+
+        .topic-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 14px;
+        }
+
+
+        .topic-card {
+            min-height: 205px;
+
+            padding: 26px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: space-between;
+
+            background: #080808;
+
+            border:
+                1px solid #222222;
+
+            transition:
+                border-color 250ms ease,
+                transform 250ms ease,
+                background-color 250ms ease;
+        }
+
+
+        .topic-card:hover {
+            background: #0b0b0b;
+
+            border-color: #500000;
+
+            transform:
+                translateY(-4px);
+        }
+
+
+        .topic-number {
+            color: #500000;
+
+            font-size: 11px;
+
+            font-weight: 950;
+
+            letter-spacing: 1px;
+        }
+
+
+        .topic-card h3 {
+            margin-top: 25px;
+
+            font-size: 21px;
+
+            line-height: 1.1;
+        }
+
+
+        .topic-card p {
+            margin-top: 9px;
+
+            color: #888888;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        .topic-arrow {
+            margin-top: 22px;
+
+            color: #500000;
+
+            font-size: 13px;
+
+            font-weight: 900;
+        }
+
+
+        /* ==================================================
+           FOOTER
+           ================================================== */
+
+        footer {
+            padding:
+                35px
+                0;
+
+            border-top:
+                1px solid #222222;
+
+            background: #000000;
+        }
+
+
+        .footer-inner {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .footer-text,
+        .footer-link {
+            color: #666666;
+
+            font-size: 12px;
+        }
+
+
+        .footer-link:hover {
+            color: #ffffff;
+        }
+
+
+        /* ==================================================
+           LIGHT THEME
+           ================================================== */
+
+        @media (prefers-color-scheme: light) {
+
+            body {
+                background: #ffffff;
+
+                color: #000000;
+            }
+
+
+            .header {
+                background:
+                    rgba(255, 255, 255, 0.94);
+
+                border-color: #dddddd;
+            }
+
+
+            .home-link {
+                color: #666666;
+            }
+
+
+            .search-button {
+                color: #000000;
+
+                border-color: #dddddd;
+            }
+
+
+            .search-panel {
+                background:
+                    rgba(255, 255, 255, 0.72);
+            }
+
+
+            .search-box {
+                background: #ffffff;
+
+                border-color: #dddddd;
+
+                box-shadow:
+                    0 30px 100px
+                    rgba(0, 0, 0, 0.18);
+            }
+
+
+            .search-top {
+                border-color: #dddddd;
+            }
+
+
+            .search-input {
+                color: #000000;
+            }
+
+
+            .search-result {
+                border-color: #eeeeee;
+            }
+
+
+            .search-result:hover {
+                background: #500000;
+
+                color: #ffffff;
+            }
+
+
+            .hero {
+                background: #ffffff;
+
+                border-color: #dddddd;
+            }
+
+
+            .hero-description {
+                color: #666666;
+            }
+
+
+            .topic-card {
+                background: #f7f7f7;
+
+                border-color: #dddddd;
+            }
+
+
+            .topic-card:hover {
+                background: #ffffff;
+
+                border-color: #500000;
+            }
+
+
+            .topic-card p,
+            .section-heading p {
+                color: #666666;
+            }
+
+
+            footer {
+                background: #ffffff;
+
+                border-color: #dddddd;
+            }
+
+
+            .footer-link:hover {
+                color: #000000;
+            }
+
+        }
+
+
+        /* ==================================================
+           TABLET
+           ================================================== */
+
+        @media (max-width: 850px) {
+
+            .topic-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        /* ==================================================
+           MOBILE
+           ================================================== */
+
+        @media (max-width: 600px) {
+
+            .container {
+                width:
+                    calc(100% - 30px);
+            }
+
+
+            .header-inner {
+                min-height: 66px;
+            }
+
+
+            .home-link {
+                display: none;
+            }
+
+
+            .hero {
+                padding:
+                    80px
+                    0
+                    65px;
+            }
+
+
+            h1 {
+                font-size: 52px;
+
+                letter-spacing: -3px;
+            }
+
+
+            .hero-description {
+                font-size: 15px;
+            }
+
+
+            .topics {
+                padding:
+                    60px
+                    0
+                    80px;
+            }
+
+
+            .topic-grid {
+                grid-template-columns: 1fr;
+
+                gap: 12px;
+            }
+
+
+            .topic-card {
+                min-height: 175px;
+            }
+
+
+            .search-panel {
+                padding:
+                    85px
+                    12px
+                    12px;
+            }
+
+
+            .search-box {
+                width: 100%;
+            }
+
+
+            .footer-inner {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+        }
+
+
+        /* ==================================================
+           REDUCED MOTION
+           ================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+
+                transition: none !important;
+
+                animation: none !important;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ==================================================
+     HEADER
+     ================================================== -->
+
+<header class="header">
+
+    <div class="container header-inner">
+
+
+        <a
+            href="../index.html"
+            class="logo"
+        >
+
+            <span class="logo-box">
+                TB
+            </span>
+
+            <span>
+                TürkBlocks
+            </span>
+
+        </a>
+
+
+        <div class="header-actions">
+
+            <a
+                href="../index.html"
+                class="home-link"
+            >
+                Ana Site
+            </a>
+
+
+            <button
+                type="button"
+                class="search-button"
+                id="searchButton"
+                aria-label="Yardım konularında ara"
+            >
+
+                <span class="search-icon"></span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ==================================================
+     SEARCH
+     ================================================== -->
+
+<div
+    class="search-panel"
+    id="searchPanel"
+>
+
+    <div class="search-box">
+
+        <div class="search-top">
+
+            <input
+                type="search"
+                id="searchInput"
+                class="search-input"
+                placeholder="Yardım konusunda ara..."
+                autocomplete="off"
+            >
+
+
+            <button
+                type="button"
+                class="close-search"
+                id="closeSearch"
+                aria-label="Aramayı kapat"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            class="search-results"
+            id="searchResults"
+        ></div>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+     MAIN
+     ================================================== -->
+
+<main>
+
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="container">
+
+            <span class="label">
+                TÜRKBLOCKS DESTEK
+            </span>
+
+
+            <h1>
+                Nasıl
+                <span>yardımcı</span>
+                olabiliriz?
+            </h1>
+
+
+            <p class="hero-description">
+                TürkBlocks platformu hakkında
+                bilgi, destek ve sık kullanılan
+                konular için yardım merkezine
+                göz at.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- TOPICS -->
+
+    <section class="topics">
+
+        <div class="container">
+
+
+            <div class="section-heading">
+
+                <h2>
+                    Yardım konuları
+                </h2>
+
+                <p>
+                    Aradığın konuya ulaşmak için
+                    bir kategori seç.
+                </p>
+
+            </div>
+
+
+            <div class="topic-grid">
+
+
+                <!-- 01 -->
+
+                <a
+                    href="./aciklama.html"
+                    class="topic-card"
+                    data-title="TürkBlocks hakkında"
+                    data-description="TürkBlocks platformu hakkında genel bilgiler."
+                >
+
+                    <div>
+
+                        <span class="topic-number">
+                            01
+                        </span>
+
+                        <h3>
+                            TürkBlocks Hakkında
+                        </h3>
+
+                        <p>
+                            Platformun amacı ve
+                            çalışma yapısı hakkında
+                            genel bilgiler.
+                        </p>
+
+                    </div>
+
+                    <span class="topic-arrow">
+                        İncele →
+                    </span>
+
+                </a>
+
+
+                <!-- 02 -->
+
+                <a
+                    href="./aciklama.html"
+                    class="topic-card"
+                    data-title="Hesap ve güvenlik"
+                    data-description="Hesap güvenliği ve hesapla ilgili bilgiler."
+                >
+
+                    <div>
+
+                        <span class="topic-number">
+                            02
+                        </span>
+
+                        <h3>
+                            Hesap ve Güvenlik
+                        </h3>
+
+                        <p>
+                            Hesap kullanımı ve
+                            güvenlik hakkında
+                            bilgiler.
+                        </p>
+
+                    </div>
+
+                    <span class="topic-arrow">
+                        İncele →
+                    </span>
+
+                </a>
+
+
+                <!-- 03 -->
+
+                <a
+                    href="./aciklama.html"
+                    class="topic-card"
+                    data-title="Gizlilik"
+                    data-description="TürkBlocks gizlilik ve veri kullanımı."
+                >
+
+                    <div>
+
+                        <span class="topic-number">
+                            03
+                        </span>
+
+                        <h3>
+                            Gizlilik
+                        </h3>
+
+                        <p>
+                            Gizlilik ve verilerin
+                            kullanımı hakkında
+                            bilgiler.
+                        </p>
+
+                    </div>
+
+                    <span class="topic-arrow">
+                        İncele →
+                    </span>
+
+                </a>
+
+
+                <!-- 04 -->
+
+                <a
+                    href="./aciklama.html"
+                    class="topic-card"
+                    data-title="Site kullanımı"
+                    data-description="TürkBlocks web sitesinin kullanımı."
+                >
+
+                    <div>
+
+                        <span class="topic-number">
+                            04
+                        </span>
+
+                        <h3>
+                            Site Kullanımı
+                        </h3>
+
+                        <p>
+                            TürkBlocks web sitesini
+                            kullanırken bilmen gerekenler.
+                        </p>
+
+                    </div>
+
+                    <span class="topic-arrow">
+                        İncele →
+                    </span>
+
+                </a>
+
+
+                <!-- 05 -->
+
+                <a
+                    href="./aciklama.html"
+                    class="topic-card"
+                    data-title="Sorun giderme"
+                    data-description="Karşılaşılan sorunlar ve çözümleri."
+                >
+
+                    <div>
+
+                        <span class="topic-number">
+                            05
+                        </span>
+
+                        <h3>
+                            Sorun Giderme
+                        </h3>
+
+                        <p>
+                            Karşılaştığın yaygın
+                            sorunlar için çözümler.
+                        </p>
+
+                    </div>
+
+                    <span class="topic-arrow">
+                        İncele →
+                    </span>
+
+                </a>
+
+
+                <!-- 06 -->
+
+                <a
+                    href="./aciklama.html"
+                    class="topic-card"
+                    data-title="Sık sorulan sorular"
+                    data-description="TürkBlocks hakkında sık sorulan sorular."
+                >
+
+                    <div>
+
+                        <span class="topic-number">
+                            06
+                        </span>
+
+                        <h3>
+                            Sık Sorulan Sorular
+                        </h3>
+
+                        <p>
+                            En çok sorulan sorular
+                            ve cevapları.
+                        </p>
+
+                    </div>
+
+                    <span class="topic-arrow">
+                        İncele →
+                    </span>
+
+                </a>
+
+
+                <!-- 07 -->
+
+                <a
+                    href="./aciklama.html"
+                    class="topic-card"
+                    data-title="Geri bildirim"
+                    data-description="Öneri ve geri bildirim gönderme."
+                >
+
+                    <div>
+
+                        <span class="topic-number">
+                            07
+                        </span>
+
+                        <h3>
+                            Geri Bildirim
+                        </h3>
+
+                        <p>
+                            Önerilerini ve fikirlerini
+                            TürkBlocks'a ilet.
+                        </p>
+
+                    </div>
+
+                    <span class="topic-arrow">
+                        İncele →
+                    </span>
+
+                </a>
+
+
+                <!-- 08 -->
+
+                <a
+                    href="./aciklama.html"
+                    class="topic-card"
+                    data-title="İletişim"
+                    data-description="TürkBlocks ile iletişim kurma."
+                >
+
+                    <div>
+
+                        <span class="topic-number">
+                            08
+                        </span>
+
+                        <h3>
+                            İletişim
+                        </h3>
+
+                        <p>
+                            Destek almak veya
+                            iletişime geçmek için.
+                        </p>
+
+                    </div>
+
+                    <span class="topic-arrow">
+                        İletişime geç →
+                    </span>
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ==================================================
+     FOOTER
+     ================================================== -->
+
+<footer>
+
+    <div class="container footer-inner">
+
+        <span class="footer-text">
+            © 2026 TürkBlocks
+        </span>
+
+
+        <a
+            href="../index.html"
+            class="footer-link"
+        >
+            TürkBlocks Ana Sitesi →
+        </a>
+
+    </div>
+
+</footer>
+
+
+<!-- ==================================================
+     JAVASCRIPT
+     ================================================== -->
+
+<script>
+
+    const searchButton =
+        document.getElementById(
+            "searchButton"
+        );
+
+    const searchPanel =
+        document.getElementById(
+            "searchPanel"
+        );
+
+    const closeSearch =
+        document.getElementById(
+            "closeSearch"
+        );
+
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+
+    const searchResults =
+        document.getElementById(
+            "searchResults"
+        );
+
+
+    const cards = [
+        ...document.querySelectorAll(
+            ".topic-card"
+        )
+    ];
+
+
+    /* SEARCH OPEN */
+
+    searchButton.addEventListener(
+        "click",
+        function () {
+
+            searchPanel.classList.add(
+                "active"
+            );
+
+            setTimeout(
+                function () {
+
+                    searchInput.focus();
+
+                },
+                200
+            );
+
+            showAllResults();
+
+        }
+    );
+
+
+    /* SEARCH CLOSE */
+
+    function closeSearchPanel() {
+
+        searchPanel.classList.remove(
+            "active"
+        );
+
+        searchInput.value = "";
+
+    }
+
+
+    closeSearch.addEventListener(
+        "click",
+        closeSearchPanel
+    );
+
+
+    /* CLICK OUTSIDE */
+
+    searchPanel.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                event.target ===
+                searchPanel
+            ) {
+
+                closeSearchPanel();
+
+            }
+
+        }
+    );
+
+
+    /* ESC */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                closeSearchPanel();
+
+            }
+
+        }
+    );
+
+
+    /* ALL RESULTS */
+
+    function showAllResults() {
+
+        searchResults.innerHTML = "";
+
+        cards.forEach(
+            function (card) {
+
+                addResult(card);
+
+            }
+        );
+
+    }
+
+
+    /* RESULT */
+
+    function addResult(card) {
+
+        const result =
+            document.createElement("a");
+
+        result.href =
+            card.href;
+
+        result.className =
+            "search-result";
+
+        result.innerHTML = `
+            <strong>
+                ${card.dataset.title}
+            </strong>
+
+            <span>
+                ${card.dataset.description}
+            </span>
+        `;
+
+        searchResults.appendChild(
+            result
+        );
+
+    }
+
+
+    /* SEARCH */
+
+    searchInput.addEventListener(
+        "input",
+        function () {
+
+            const query =
+                searchInput.value
+                    .toLowerCase()
+                    .trim();
+
+
+            searchResults.innerHTML = "";
+
+
+            const matches =
+                cards.filter(
+                    function (card) {
+
+                        const title =
+                            card.dataset.title
+                                .toLowerCase();
+
+                        const description =
+                            card.dataset.description
+                                .toLowerCase();
+
+                        return (
+                            title.includes(query) ||
+                            description.includes(query)
+                        );
+
+                    }
+                );
+
+
+            if (
+                query === ""
+            ) {
+
+                showAllResults();
+
+                return;
+
+            }
+
+
+            if (
+                matches.length === 0
+            ) {
+
+                searchResults.innerHTML = `
+                    <div class="no-results">
+                        Bu konu için sonuç bulunamadı.
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            matches.forEach(
+                function (card) {
+
+                    addResult(card);
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>
