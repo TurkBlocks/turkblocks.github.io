@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -19,6 +21,15 @@
     >
 
     <title>Yardım Merkezi — TürkBlocks</title>
+
+
+    <!-- GOOGLE RECAPTCHA V2 -->
+
+    <script
+        src="https://www.google.com/recaptcha/api.js"
+        async
+        defer
+    ></script>
 
 
     <style>
@@ -60,6 +71,11 @@
         }
 
 
+        body.captcha-locked {
+            overflow: hidden;
+        }
+
+
         a {
             color: inherit;
 
@@ -95,9 +111,14 @@
             background:
                 rgba(0, 0, 0, 0.94);
 
-            border-bottom: 1px solid #222222;
+            border-bottom:
+                1px solid #222222;
 
-            backdrop-filter: blur(14px);
+            backdrop-filter:
+                blur(14px);
+
+            -webkit-backdrop-filter:
+                blur(14px);
         }
 
 
@@ -187,7 +208,8 @@
                 ),
                 #000000;
 
-            border-bottom: 1px solid #222222;
+            border-bottom:
+                1px solid #222222;
         }
 
 
@@ -283,11 +305,16 @@
 
 
         .form-box {
+            width: 100%;
+
             padding: 10px;
 
             background: #050505;
 
-            border: 1px solid #222222;
+            border:
+                1px solid #222222;
+
+            overflow: hidden;
         }
 
 
@@ -315,7 +342,8 @@
 
             background: #500000;
 
-            border-top: 1px solid #500000;
+            border-top:
+                1px solid #500000;
         }
 
 
@@ -363,7 +391,8 @@
 
             background: #000000;
 
-            border: 1px solid #000000;
+            border:
+                1px solid #000000;
 
             color: #ffffff;
 
@@ -395,7 +424,8 @@
 
             background: #000000;
 
-            border-top: 1px solid #222222;
+            border-top:
+                1px solid #222222;
         }
 
 
@@ -433,6 +463,140 @@
 
         .footer-link:hover {
             color: #ffffff;
+        }
+
+
+        /* ==================================================
+           CAPTCHA OVERLAY
+           ================================================== */
+
+        .captcha-overlay {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 99999;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(0, 0, 0, 0.76);
+
+            backdrop-filter:
+                blur(16px);
+
+            -webkit-backdrop-filter:
+                blur(16px);
+
+            opacity: 1;
+
+            visibility: visible;
+
+            transition:
+                opacity 400ms ease,
+                visibility 400ms ease;
+        }
+
+
+        .captcha-overlay.hidden {
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+        }
+
+
+        .captcha-card {
+            width: min(
+                100%,
+                430px
+            );
+
+            padding: 34px;
+
+            background: #080808;
+
+            border:
+                1px solid #333333;
+
+            box-shadow:
+                0 30px 100px
+                rgba(0, 0, 0, 0.75);
+
+            transform:
+                translateY(0);
+
+            transition:
+                transform 400ms ease;
+        }
+
+
+        .captcha-overlay.hidden
+        .captcha-card {
+            transform:
+                translateY(-12px);
+        }
+
+
+        .captcha-label {
+            display: block;
+
+            margin-bottom: 14px;
+
+            color: #500000;
+
+            font-size: 11px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+        }
+
+
+        .captcha-card h2 {
+            color: #ffffff;
+
+            font-size: 30px;
+
+            line-height: 1.1;
+
+            letter-spacing: -1px;
+
+            font-weight: 900;
+        }
+
+
+        .captcha-card p {
+            margin:
+                15px
+                0
+                26px;
+
+            color: #999999;
+
+            font-size: 14px;
+
+            line-height: 1.65;
+        }
+
+
+        .captcha-wrapper {
+            min-height: 78px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-start;
+
+            overflow: hidden;
         }
 
 
@@ -514,6 +678,33 @@
                 color: #000000;
             }
 
+
+            .captcha-overlay {
+                background:
+                    rgba(255, 255, 255, 0.72);
+            }
+
+
+            .captcha-card {
+                background: #ffffff;
+
+                border-color: #dddddd;
+
+                box-shadow:
+                    0 30px 100px
+                    rgba(0, 0, 0, 0.18);
+            }
+
+
+            .captcha-card h2 {
+                color: #000000;
+            }
+
+
+            .captcha-card p {
+                color: #666666;
+            }
+
         }
 
 
@@ -587,6 +778,11 @@
                 flex-direction: column;
             }
 
+
+            .captcha-card {
+                padding: 26px;
+            }
+
         }
 
 
@@ -641,6 +837,16 @@
                 width: 100%;
             }
 
+
+            .captcha-card {
+                padding: 22px;
+            }
+
+
+            .captcha-card h2 {
+                font-size: 25px;
+            }
+
         }
 
 
@@ -663,10 +869,54 @@
         }
 
     </style>
+
 </head>
 
 
-<body>
+<body class="captcha-locked">
+
+
+    <!-- ==================================================
+         CAPTCHA
+         ================================================== -->
+
+    <div
+        id="captcha-overlay"
+        class="captcha-overlay"
+    >
+
+        <div class="captcha-card">
+
+            <span class="captcha-label">
+                GÜVENLİK DOĞRULAMASI
+            </span>
+
+
+            <h2>
+                Devam etmek için doğrula.
+            </h2>
+
+
+            <p>
+                TürkBlocks Yardım Merkezi'ne
+                erişmek için aşağıdaki
+                doğrulamayı tamamla.
+            </p>
+
+
+            <div class="captcha-wrapper">
+
+                <div
+                    class="g-recaptcha"
+                    data-sitekey="6LeAx4stAAAAAPsj2GFzwrVEZkSpQUvyIwoYzc31"
+                    data-callback="captchaSuccess"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 
     <!-- ==================================================
@@ -694,7 +944,7 @@
 
 
             <a
-                href="../"
+                href="../index.html"
                 class="home-link"
             >
                 Ana Site →
@@ -765,17 +1015,11 @@
 
                 <div class="form-box">
 
-                  <div class="form-box">
-
-    <iframe
-        src="https://docs.google.com/forms/d/e/1FAIpQLSftughd-LQZxzZlYPS_dWfk_9BSezt_VOcvi16Sct2zDE1ajQ/viewform?embedded=true"
-        title="TürkBlocks Destek Formu"
-        loading="lazy"
-    >
-        Yükleniyor…
-    </iframe>
-
-</div>
+                    <iframe
+                        src="https://docs.google.com/forms/d/e/1FAIpQLSftughd-LQZxzZlYPS_dWfk_9BSezt_VOcvi16Sct2zDE1ajQ/viewform?embedded=true"
+                        title="TürkBlocks Destek Formu"
+                        loading="lazy"
+                    ></iframe>
 
                 </div>
 
@@ -784,7 +1028,7 @@
         </section>
 
 
-        <!-- MAIL -->
+        <!-- CONTACT -->
 
         <section class="contact">
 
@@ -842,5 +1086,41 @@
     </footer>
 
 
+    <!-- ==================================================
+         CAPTCHA SCRIPT
+         ================================================== -->
+
+    <script>
+
+        function captchaSuccess() {
+
+            const overlay =
+                document.getElementById(
+                    "captcha-overlay"
+                );
+
+
+            document.body.classList.remove(
+                "captcha-locked"
+            );
+
+
+            overlay.classList.add(
+                "hidden"
+            );
+
+
+            setTimeout(function () {
+
+                overlay.remove();
+
+            }, 450);
+
+        }
+
+    </script>
+
+
 </body>
+
 </html>
