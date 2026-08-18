@@ -2,40 +2,20 @@
 
 /*
  * TürkBlocks - script.js
- * Ana sayfadaki etkileşimler
+ * Sade ve gerekli JavaScript.
+ * Tema seçimi YOKTUR.
+ * Tema, işletim sisteminin tercihine CSS tarafından göre otomatik belirlenir.
  */
-
-
-/* =========================================
-   ELEMENTLER
-========================================= */
-
-const siteHeader =
-    document.getElementById("siteHeader");
-
-const themeButton =
-    document.getElementById("themeButton");
-
-const mobileMenuButton =
-    document.getElementById("mobileMenuButton");
-
-const mobileNavigation =
-    document.getElementById("mobileNavigation");
-
-const yearElement =
-    document.getElementById("year");
-
-const revealElements =
-    document.querySelectorAll(".reveal");
 
 
 /* =========================================
    YIL
 ========================================= */
 
+const yearElement = document.getElementById("year");
+
 if (yearElement) {
-    yearElement.textContent =
-        new Date().getFullYear();
+    yearElement.textContent = new Date().getFullYear();
 }
 
 
@@ -43,29 +23,22 @@ if (yearElement) {
    HEADER SCROLL
 ========================================= */
 
-function updateHeader() {
+const header = document.querySelector(".site-header");
 
-    if (!siteHeader) {
-        return;
-    }
+function updateHeader() {
+    if (!header) return;
 
     if (window.scrollY > 20) {
-
-        siteHeader.classList.add("scrolled");
-
+        header.classList.add("scrolled");
     } else {
-
-        siteHeader.classList.remove("scrolled");
-
+        header.classList.remove("scrolled");
     }
 }
 
 window.addEventListener(
     "scroll",
     updateHeader,
-    {
-        passive: true
-    }
+    { passive: true }
 );
 
 updateHeader();
@@ -75,67 +48,92 @@ updateHeader();
    MOBİL MENÜ
 ========================================= */
 
-function openMobileMenu() {
+const menuButton =
+    document.getElementById("mobileMenuButton");
 
-    if (!mobileNavigation || !mobileMenuButton) {
+const mobileNavigation =
+    document.getElementById("mobileNavigation");
+
+
+function openMenu() {
+
+    if (!mobileNavigation || !menuButton) {
         return;
     }
 
     mobileNavigation.classList.add("open");
 
-    mobileMenuButton.setAttribute(
+    menuButton.setAttribute(
         "aria-expanded",
         "true"
+    );
+
+    menuButton.setAttribute(
+        "aria-label",
+        "Menüyü kapat"
+    );
+
+    document.body.classList.add(
+        "menu-open"
     );
 }
 
 
-function closeMobileMenu() {
+function closeMenu() {
 
-    if (!mobileNavigation || !mobileMenuButton) {
+    if (!mobileNavigation || !menuButton) {
         return;
     }
 
     mobileNavigation.classList.remove("open");
 
-    mobileMenuButton.setAttribute(
+    menuButton.setAttribute(
         "aria-expanded",
         "false"
+    );
+
+    menuButton.setAttribute(
+        "aria-label",
+        "Menüyü aç"
+    );
+
+    document.body.classList.remove(
+        "menu-open"
     );
 }
 
 
-function toggleMobileMenu() {
+function toggleMenu() {
 
     if (!mobileNavigation) {
         return;
     }
 
     if (
-        mobileNavigation.classList.contains("open")
+        mobileNavigation.classList.contains(
+            "open"
+        )
     ) {
-
-        closeMobileMenu();
-
+        closeMenu();
     } else {
-
-        openMobileMenu();
-
+        openMenu();
     }
 }
 
 
-if (mobileMenuButton) {
+if (menuButton) {
 
-    mobileMenuButton.addEventListener(
+    menuButton.addEventListener(
         "click",
-        toggleMobileMenu
+        toggleMenu
     );
 
 }
 
 
-/* Mobil menü bağlantıları */
+/* =========================================
+   MOBİL LİNKLER
+========================================= */
 
 if (mobileNavigation) {
 
@@ -146,7 +144,7 @@ if (mobileNavigation) {
 
         link.addEventListener(
             "click",
-            closeMobileMenu
+            closeMenu
         );
 
     });
@@ -155,7 +153,7 @@ if (mobileNavigation) {
 
 
 /* =========================================
-   ESC İLE MENÜYÜ KAPAT
+   ESC İLE MENÜ KAPATMA
 ========================================= */
 
 document.addEventListener(
@@ -163,9 +161,7 @@ document.addEventListener(
     event => {
 
         if (event.key === "Escape") {
-
-            closeMobileMenu();
-
+            closeMenu();
         }
 
     }
@@ -173,7 +169,7 @@ document.addEventListener(
 
 
 /* =========================================
-   DIŞARI TIKLAYINCA MENÜYÜ KAPAT
+   MENÜ DIŞINA TIKLAMA
 ========================================= */
 
 document.addEventListener(
@@ -182,28 +178,34 @@ document.addEventListener(
 
         if (
             !mobileNavigation ||
-            !mobileMenuButton
+            !menuButton
         ) {
             return;
         }
 
-        const clickedInsideMenu =
+        if (
+            !mobileNavigation.classList.contains(
+                "open"
+            )
+        ) {
+            return;
+        }
+
+        const clickedMenu =
             mobileNavigation.contains(
                 event.target
             );
 
         const clickedButton =
-            mobileMenuButton.contains(
+            menuButton.contains(
                 event.target
             );
 
         if (
-            !clickedInsideMenu &&
+            !clickedMenu &&
             !clickedButton
         ) {
-
-            closeMobileMenu();
-
+            closeMenu();
         }
 
     }
@@ -211,137 +213,42 @@ document.addEventListener(
 
 
 /* =========================================
-   TEMA
+   EKRAN BOYUTU
 ========================================= */
 
-const THEME_KEY =
-    "turkblocks-theme";
+window.addEventListener(
+    "resize",
+    () => {
 
+        /*
+         * Masaüstüne dönüldüğünde
+         * mobil menüyü kapat.
+         */
 
-function applyTheme(theme) {
-
-    if (theme === "dark") {
-
-        document.body.classList.add("dark");
-
-        if (themeButton) {
-            themeButton.textContent = "☀";
-            themeButton.setAttribute(
-                "aria-label",
-                "Açık temaya geç"
-            );
-        }
-
-    } else {
-
-        document.body.classList.remove("dark");
-
-        if (themeButton) {
-            themeButton.textContent = "☾";
-            themeButton.setAttribute(
-                "aria-label",
-                "Koyu temaya geç"
-            );
+        if (window.innerWidth > 950) {
+            closeMenu();
         }
 
     }
-}
-
-
-/* Kayıtlı temayı oku */
-
-let savedTheme = null;
-
-try {
-
-    savedTheme =
-        localStorage.getItem(
-            THEME_KEY
-        );
-
-} catch (error) {
-
-    savedTheme = null;
-
-}
-
-
-/* Sistem temasını kontrol et */
-
-const systemPrefersDark =
-    window.matchMedia &&
-    window.matchMedia(
-        "(prefers-color-scheme: dark)"
-    ).matches;
-
-
-if (savedTheme === "dark") {
-
-    applyTheme("dark");
-
-} else if (savedTheme === "light") {
-
-    applyTheme("light");
-
-} else if (systemPrefersDark) {
-
-    applyTheme("dark");
-
-} else {
-
-    applyTheme("light");
-
-}
-
-
-/* Tema düğmesi */
-
-if (themeButton) {
-
-    themeButton.addEventListener(
-        "click",
-        () => {
-
-            const isDark =
-                document.body.classList.contains(
-                    "dark"
-                );
-
-            const newTheme =
-                isDark ? "light" : "dark";
-
-            applyTheme(newTheme);
-
-            try {
-
-                localStorage.setItem(
-                    THEME_KEY,
-                    newTheme
-                );
-
-            } catch (error) {
-
-                /* localStorage kullanılamıyorsa
-                   tema yine çalışmaya devam eder. */
-
-            }
-
-        }
-    );
-
-}
+);
 
 
 /* =========================================
-   YUMUŞAK REVEAL ANİMASYONLARI
+   SCROLL REVEAL
 ========================================= */
 
+const revealElements =
+    document.querySelectorAll(
+        ".reveal"
+    );
+
+
 if (
-    "IntersectionObserver" in window &&
-    revealElements.length > 0
+    revealElements.length > 0 &&
+    "IntersectionObserver" in window
 ) {
 
-    const revealObserver =
+    const observer =
         new IntersectionObserver(
             entries => {
 
@@ -355,7 +262,7 @@ if (
                             "visible"
                         );
 
-                        revealObserver.unobserve(
+                        observer.unobserve(
                             entry.target
                         );
 
@@ -366,7 +273,8 @@ if (
             },
             {
                 threshold: 0.12,
-                rootMargin: "0px 0px -30px 0px"
+                rootMargin:
+                    "0px 0px -35px 0px"
             }
         );
 
@@ -374,7 +282,7 @@ if (
     revealElements.forEach(
         element => {
 
-            revealObserver.observe(
+            observer.observe(
                 element
             );
 
@@ -384,8 +292,8 @@ if (
 } else {
 
     /*
-     * IntersectionObserver desteklenmiyorsa
-     * içerikler görünmez kalmasın.
+     * Eski tarayıcılarda içerik
+     * görünmez kalmasın.
      */
 
     revealElements.forEach(
@@ -402,67 +310,28 @@ if (
 
 
 /* =========================================
-   ANCHOR GEÇİŞLERİ
+   DIŞ LİNKLER
 ========================================= */
 
-document
-    .querySelectorAll('a[href^="#"]')
-    .forEach(link => {
-
-        link.addEventListener(
-            "click",
-            event => {
-
-                const targetId =
-                    link.getAttribute("href");
-
-                if (
-                    !targetId ||
-                    targetId === "#"
-                ) {
-                    return;
-                }
-
-                const target =
-                    document.querySelector(
-                        targetId
-                    );
-
-                if (!target) {
-                    return;
-                }
-
-                event.preventDefault();
-
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-
-            }
-        );
-
-    });
+const externalLinks =
+    document.querySelectorAll(
+        'a[target="_blank"]'
+    );
 
 
-/* =========================================
-   EKRAN BOYUTU DEĞİŞİNCE
-========================================= */
+externalLinks.forEach(link => {
 
-window.addEventListener(
-    "resize",
-    () => {
+    /*
+     * Güvenlik için target="_blank"
+     * bağlantılarına noopener ekle.
+     */
 
-        if (
-            window.innerWidth > 900
-        ) {
+    link.setAttribute(
+        "rel",
+        "noopener noreferrer"
+    );
 
-            closeMobileMenu();
-
-        }
-
-    }
-);
+});
 
 
 /* =========================================
