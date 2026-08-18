@@ -1,348 +1,235 @@
-"use strict";
+document.addEventListener("DOMContentLoaded", () => {
 
-/*
- * TürkBlocks - script.js
- * Sade ve gerekli JavaScript.
- * Tema seçimi YOKTUR.
- * Tema, işletim sisteminin tercihine CSS tarafından göre otomatik belirlenir.
- */
+    /* =====================================================
+       ELEMENTS
+       ===================================================== */
 
-
-/* =========================================
-   YIL
-========================================= */
-
-const yearElement = document.getElementById("year");
-
-if (yearElement) {
-    yearElement.textContent = new Date().getFullYear();
-}
+    const menuToggle = document.querySelector(".menu-toggle");
+    const mobileMenu = document.querySelector(".mobile-menu");
+    const mobileLinks = document.querySelectorAll(".mobile-menu a");
 
 
-/* =========================================
-   HEADER SCROLL
-========================================= */
+    /* =====================================================
+       MOBILE MENU
+       ===================================================== */
 
-const header = document.querySelector(".site-header");
+    function openMenu() {
+        if (!menuToggle || !mobileMenu) return;
 
-function updateHeader() {
-    if (!header) return;
+        menuToggle.classList.add("active");
+        mobileMenu.classList.add("open");
 
-    if (window.scrollY > 20) {
-        header.classList.add("scrolled");
-    } else {
-        header.classList.remove("scrolled");
-    }
-}
+        menuToggle.setAttribute("aria-expanded", "true");
+        mobileMenu.setAttribute("aria-hidden", "false");
 
-window.addEventListener(
-    "scroll",
-    updateHeader,
-    { passive: true }
-);
-
-updateHeader();
-
-
-/* =========================================
-   MOBİL MENÜ
-========================================= */
-
-const menuButton =
-    document.getElementById("mobileMenuButton");
-
-const mobileNavigation =
-    document.getElementById("mobileNavigation");
-
-
-function openMenu() {
-
-    if (!mobileNavigation || !menuButton) {
-        return;
+        document.body.classList.add("menu-open");
     }
 
-    mobileNavigation.classList.add("open");
 
-    menuButton.setAttribute(
-        "aria-expanded",
-        "true"
-    );
+    function closeMenu() {
+        if (!menuToggle || !mobileMenu) return;
 
-    menuButton.setAttribute(
-        "aria-label",
-        "Menüyü kapat"
-    );
+        menuToggle.classList.remove("active");
+        mobileMenu.classList.remove("open");
 
-    document.body.classList.add(
-        "menu-open"
-    );
-}
+        menuToggle.setAttribute("aria-expanded", "false");
+        mobileMenu.setAttribute("aria-hidden", "true");
 
-
-function closeMenu() {
-
-    if (!mobileNavigation || !menuButton) {
-        return;
+        document.body.classList.remove("menu-open");
     }
 
-    mobileNavigation.classList.remove("open");
 
-    menuButton.setAttribute(
-        "aria-expanded",
-        "false"
-    );
+    function toggleMenu() {
+        if (!mobileMenu) return;
 
-    menuButton.setAttribute(
-        "aria-label",
-        "Menüyü aç"
-    );
-
-    document.body.classList.remove(
-        "menu-open"
-    );
-}
-
-
-function toggleMenu() {
-
-    if (!mobileNavigation) {
-        return;
+        if (mobileMenu.classList.contains("open")) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
     }
 
-    if (
-        mobileNavigation.classList.contains(
-            "open"
-        )
-    ) {
-        closeMenu();
-    } else {
-        openMenu();
+
+    /* =====================================================
+       MENU BUTTON
+       ===================================================== */
+
+    if (menuToggle) {
+        menuToggle.addEventListener("click", toggleMenu);
     }
-}
 
 
-if (menuButton) {
-
-    menuButton.addEventListener(
-        "click",
-        toggleMenu
-    );
-
-}
-
-
-/* =========================================
-   MOBİL LİNKLER
-========================================= */
-
-if (mobileNavigation) {
-
-    const mobileLinks =
-        mobileNavigation.querySelectorAll("a");
+    /* =====================================================
+       CLOSE AFTER CLICKING A MOBILE LINK
+       ===================================================== */
 
     mobileLinks.forEach(link => {
-
-        link.addEventListener(
-            "click",
-            closeMenu
-        );
-
+        link.addEventListener("click", () => {
+            closeMenu();
+        });
     });
 
-}
 
+    /* =====================================================
+       ESC KEY
+       ===================================================== */
 
-/* =========================================
-   ESC İLE MENÜ KAPATMA
-========================================= */
-
-document.addEventListener(
-    "keydown",
-    event => {
+    document.addEventListener("keydown", event => {
 
         if (event.key === "Escape") {
             closeMenu();
         }
 
-    }
-);
+    });
 
 
-/* =========================================
-   MENÜ DIŞINA TIKLAMA
-========================================= */
+    /* =====================================================
+       CLOSE WHEN CLICKING OUTSIDE
+       ===================================================== */
 
-document.addEventListener(
-    "click",
-    event => {
+    document.addEventListener("click", event => {
 
-        if (
-            !mobileNavigation ||
-            !menuButton
-        ) {
-            return;
-        }
+        if (!mobileMenu || !menuToggle) return;
 
-        if (
-            !mobileNavigation.classList.contains(
-                "open"
-            )
-        ) {
-            return;
-        }
+        const menuIsOpen = mobileMenu.classList.contains("open");
 
-        const clickedMenu =
-            mobileNavigation.contains(
-                event.target
-            );
+        if (!menuIsOpen) return;
 
-        const clickedButton =
-            menuButton.contains(
-                event.target
-            );
+        const clickedInsideMenu = mobileMenu.contains(event.target);
+        const clickedToggle = menuToggle.contains(event.target);
 
-        if (
-            !clickedMenu &&
-            !clickedButton
-        ) {
+        if (!clickedInsideMenu && !clickedToggle) {
             closeMenu();
         }
 
-    }
-);
+    });
 
 
-/* =========================================
-   EKRAN BOYUTU
-========================================= */
+    /* =====================================================
+       DESKTOP'TA MENÜYÜ TEMİZLE
+       ===================================================== */
 
-window.addEventListener(
-    "resize",
-    () => {
-
-        /*
-         * Masaüstüne dönüldüğünde
-         * mobil menüyü kapat.
-         */
+    window.addEventListener("resize", () => {
 
         if (window.innerWidth > 950) {
             closeMenu();
         }
 
-    }
-);
+    });
 
 
-/* =========================================
-   SCROLL REVEAL
-========================================= */
+    /* =====================================================
+       ANCHOR LINKS
+       ===================================================== */
 
-const revealElements =
-    document.querySelectorAll(
-        ".reveal"
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+
+        link.addEventListener("click", event => {
+
+            const targetId = link.getAttribute("href");
+
+            if (!targetId || targetId === "#") return;
+
+            const target = document.querySelector(targetId);
+
+            if (!target) return;
+
+            event.preventDefault();
+
+            target.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        });
+
+    });
+
+
+    /* =====================================================
+       ACTIVE SECTION
+       ===================================================== */
+
+    const sections = document.querySelectorAll("main section[id]");
+
+    const desktopLinks = document.querySelectorAll(
+        '.main-nav a[href^="#"]'
     );
 
 
-if (
-    revealElements.length > 0 &&
-    "IntersectionObserver" in window
-) {
+    if ("IntersectionObserver" in window) {
 
-    const observer =
-        new IntersectionObserver(
+        const observer = new IntersectionObserver(
             entries => {
 
                 entries.forEach(entry => {
 
-                    if (
-                        entry.isIntersecting
-                    ) {
+                    if (!entry.isIntersecting) return;
 
-                        entry.target.classList.add(
-                            "visible"
+                    const id = entry.target.getAttribute("id");
+
+                    desktopLinks.forEach(link => {
+
+                        const linkTarget =
+                            link.getAttribute("href");
+
+                        link.classList.toggle(
+                            "active",
+                            linkTarget === `#${id}`
                         );
 
-                        observer.unobserve(
-                            entry.target
-                        );
-
-                    }
+                    });
 
                 });
 
             },
             {
-                threshold: 0.12,
-                rootMargin:
-                    "0px 0px -35px 0px"
+                rootMargin: "-35% 0px -55% 0px",
+                threshold: 0
             }
         );
 
 
-    revealElements.forEach(
-        element => {
-
-            observer.observe(
-                element
-            );
-
-        }
-    );
-
-} else {
-
-    /*
-     * Eski tarayıcılarda içerik
-     * görünmez kalmasın.
-     */
-
-    revealElements.forEach(
-        element => {
-
-            element.classList.add(
-                "visible"
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================
-   DIŞ LİNKLER
-========================================= */
-
-const externalLinks =
-    document.querySelectorAll(
-        'a[target="_blank"]'
-    );
-
-
-externalLinks.forEach(link => {
-
-    /*
-     * Güvenlik için target="_blank"
-     * bağlantılarına noopener ekle.
-     */
-
-    link.setAttribute(
-        "rel",
-        "noopener noreferrer"
-    );
-
-});
-
-
-/* =========================================
-   SAYFA YÜKLENDİ
-========================================= */
-
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
-
-        updateHeader();
+        sections.forEach(section => {
+            observer.observe(section);
+        });
 
     }
-);
+
+
+    /* =====================================================
+       CURRENT YEAR
+       ===================================================== */
+
+    const yearElements = document.querySelectorAll(
+        "[data-current-year]"
+    );
+
+    yearElements.forEach(element => {
+        element.textContent = new Date().getFullYear();
+    });
+
+
+    /* =====================================================
+       EXTERNAL LINKS
+       ===================================================== */
+
+    document.querySelectorAll(
+        'a[target="_blank"]'
+    ).forEach(link => {
+
+        link.setAttribute(
+            "rel",
+            "noopener noreferrer"
+        );
+
+    });
+
+
+    /* =====================================================
+       PAGE READY
+       ===================================================== */
+
+    document.documentElement.classList.add("js-ready");
+
+});
