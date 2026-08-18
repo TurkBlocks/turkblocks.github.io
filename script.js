@@ -1,173 +1,222 @@
-document.addEventListener("DOMContentLoaded", () => {
+"use strict";
 
-    /* =====================================================
-       ELEMENTS
-       ===================================================== */
-
-    const menuButton = document.querySelector(".menu-button");
-    const mobileMenu = document.querySelector(".mobile-menu");
-    const mobileLinks = document.querySelectorAll(".mobile-menu a");
-    const year = document.getElementById("year");
+/* ==================================================
+   TÜRKBLOCKS - SCRIPT
+   ================================================== */
 
 
-    /* =====================================================
-       MOBILE MENU
-       ===================================================== */
+/* ==================================================
+   ELEMENTLER
+   ================================================== */
 
-    function openMenu() {
+const menuButton = document.querySelector(".menu-button");
+const mobileMenu = document.querySelector(".mobile-menu");
+const mobileLinks = document.querySelectorAll(".mobile-menu a");
+const yearElement = document.querySelector("#year");
 
-        if (!menuButton || !mobileMenu) {
-            return;
-        }
 
-        menuButton.classList.add("active");
-        mobileMenu.classList.add("open");
+/* ==================================================
+   MOBİL MENÜ
+   ================================================== */
 
-        menuButton.setAttribute(
-            "aria-expanded",
-            "true"
-        );
+function openMenu() {
 
-        document.body.classList.add("menu-open");
+    if (!menuButton || !mobileMenu) {
+        return;
     }
 
+    mobileMenu.classList.add("open");
 
-    function closeMenu() {
+    menuButton.classList.add("active");
 
-        if (!menuButton || !mobileMenu) {
-            return;
-        }
-
-        menuButton.classList.remove("active");
-        mobileMenu.classList.remove("open");
-
-        menuButton.setAttribute(
-            "aria-expanded",
-            "false"
-        );
-
-        document.body.classList.remove("menu-open");
-    }
-
-
-    function toggleMenu() {
-
-        if (!mobileMenu) {
-            return;
-        }
-
-        if (mobileMenu.classList.contains("open")) {
-            closeMenu();
-        } else {
-            openMenu();
-        }
-
-    }
-
-
-    /* =====================================================
-       MENU BUTTON
-       ===================================================== */
-
-    if (menuButton) {
-
-        menuButton.addEventListener(
-            "click",
-            toggleMenu
-        );
-
-    }
-
-
-    /* =====================================================
-       MOBILE LINKS
-       ===================================================== */
-
-    mobileLinks.forEach(link => {
-
-        link.addEventListener("click", () => {
-            closeMenu();
-        });
-
-    });
-
-
-    /* =====================================================
-       ESC KEY
-       ===================================================== */
-
-    document.addEventListener(
-        "keydown",
-        event => {
-
-            if (event.key === "Escape") {
-                closeMenu();
-            }
-
-        }
+    menuButton.setAttribute(
+        "aria-expanded",
+        "true"
     );
 
+    menuButton.setAttribute(
+        "aria-label",
+        "Menüyü kapat"
+    );
+}
 
-    /* =====================================================
-       CLICK OUTSIDE
-       ===================================================== */
 
-    document.addEventListener(
+function closeMenu() {
+
+    if (!menuButton || !mobileMenu) {
+        return;
+    }
+
+    mobileMenu.classList.remove("open");
+
+    menuButton.classList.remove("active");
+
+    menuButton.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+    menuButton.setAttribute(
+        "aria-label",
+        "Menüyü aç"
+    );
+}
+
+
+function toggleMenu() {
+
+    if (!mobileMenu) {
+        return;
+    }
+
+    if (mobileMenu.classList.contains("open")) {
+
+        closeMenu();
+
+    } else {
+
+        openMenu();
+
+    }
+}
+
+
+/* ==================================================
+   MENÜ BUTONU
+   ================================================== */
+
+if (menuButton) {
+
+    menuButton.addEventListener(
         "click",
-        event => {
-
-            if (!mobileMenu || !menuButton) {
-                return;
-            }
-
-            if (!mobileMenu.classList.contains("open")) {
-                return;
-            }
-
-            const insideMenu =
-                mobileMenu.contains(event.target);
-
-            const insideButton =
-                menuButton.contains(event.target);
-
-            if (!insideMenu && !insideButton) {
-                closeMenu();
-            }
-
-        }
+        toggleMenu
     );
 
+}
 
-    /* =====================================================
-       WINDOW RESIZE
-       ===================================================== */
 
-    window.addEventListener(
-        "resize",
+/* ==================================================
+   MOBİL MENÜ LİNKLERİ
+   ================================================== */
+
+mobileLinks.forEach((link) => {
+
+    link.addEventListener(
+        "click",
         () => {
 
-            if (window.innerWidth > 1000) {
-                closeMenu();
-            }
+            closeMenu();
 
         }
     );
 
+});
 
-    /* =====================================================
-       SMOOTH ANCHOR SCROLL
-       ===================================================== */
 
-    document.querySelectorAll(
+/* ==================================================
+   ESC TUŞU
+   ================================================== */
+
+document.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (event.key === "Escape") {
+
+            closeMenu();
+
+        }
+
+    }
+);
+
+
+/* ==================================================
+   EKRAN BOYUTU DEĞİŞİNCE
+   ================================================== */
+
+window.addEventListener(
+    "resize",
+    () => {
+
+        if (
+            window.innerWidth > 950
+        ) {
+
+            closeMenu();
+
+        }
+
+    }
+);
+
+
+/* ==================================================
+   DIŞARI TIKLAYINCA MENÜYÜ KAPAT
+   ================================================== */
+
+document.addEventListener(
+    "click",
+    (event) => {
+
+        if (
+            !mobileMenu ||
+            !menuButton
+        ) {
+            return;
+        }
+
+
+        const clickedInsideMenu =
+            mobileMenu.contains(event.target);
+
+
+        const clickedButton =
+            menuButton.contains(event.target);
+
+
+        if (
+            !clickedInsideMenu &&
+            !clickedButton
+        ) {
+
+            closeMenu();
+
+        }
+
+    }
+);
+
+
+/* ==================================================
+   OTOMATİK YIL
+   ================================================== */
+
+if (yearElement) {
+
+    yearElement.textContent =
+        new Date().getFullYear();
+
+}
+
+
+/* ==================================================
+   SAYFA İÇİ LİNKLER
+   ================================================== */
+
+document
+    .querySelectorAll(
         'a[href^="#"]'
-    ).forEach(link => {
+    )
+    .forEach((link) => {
 
         link.addEventListener(
             "click",
-            event => {
+            (event) => {
 
                 const targetId =
                     link.getAttribute("href");
+
 
                 if (
                     !targetId ||
@@ -176,19 +225,52 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
 
+
                 const target =
-                    document.querySelector(targetId);
+                    document.querySelector(
+                        targetId
+                    );
+
 
                 if (!target) {
                     return;
                 }
 
+
                 event.preventDefault();
 
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
+
+                const header =
+                    document.querySelector(
+                        ".header"
+                    );
+
+
+                const headerHeight =
+                    header
+                        ? header.offsetHeight
+                        : 0;
+
+
+                const targetPosition =
+                    target.getBoundingClientRect()
+                        .top
+                    +
+                    window.scrollY
+                    -
+                    headerHeight;
+
+
+                window.scrollTo({
+
+                    top: targetPosition,
+
+                    behavior: "smooth"
+
                 });
+
+
+                closeMenu();
 
             }
         );
@@ -196,56 +278,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    /* =====================================================
-       CURRENT YEAR
-       ===================================================== */
+/* ==================================================
+   SAYFA YÜKLENDİ
+   ================================================== */
 
-    if (year) {
-        year.textContent =
-            new Date().getFullYear();
-    }
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
 
-
-    /* =====================================================
-       EXTERNAL LINKS
-       ===================================================== */
-
-    document.querySelectorAll(
-        'a[target="_blank"]'
-    ).forEach(link => {
-
-        link.setAttribute(
-            "rel",
-            "noopener noreferrer"
-        );
-
-    });
-
-
-    /* =====================================================
-       ESCAPE HASH JUMP
-       ===================================================== */
-
-    if (window.location.hash) {
-
-        window.setTimeout(() => {
-
-            const target =
-                document.querySelector(
-                    window.location.hash
-                );
-
-            if (target) {
-
-                target.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-
-            }
-
-        }, 100);
+        closeMenu();
 
     }
-
-});
+);
