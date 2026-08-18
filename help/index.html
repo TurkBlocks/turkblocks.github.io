@@ -2,395 +2,470 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="TürkBlocks destek sayfası.">
-    <meta name="theme-color" content="#500000">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>Destek | TürkBlocks</title>
+    <meta
+        name="description"
+        content="TürkBlocks Yardım Merkezi"
+    >
 
-    <link rel="stylesheet" href="../style.css">
+    <meta
+        name="theme-color"
+        content="#000000"
+    >
+
+    <title>Yardım — TürkBlocks</title>
 
     <style>
-        /* ==============================
-           Help Sayfası
-           ============================== */
 
-        .help-page {
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
             min-height: 100vh;
-            padding-top: 72px;
+
+            background: #000000;
+
+            color: #ffffff;
+
+            font-family:
+                Inter,
+                "Segoe UI",
+                system-ui,
+                sans-serif;
+
+            line-height: 1.6;
         }
 
-        .help-hero {
-            position: relative;
-            padding: 110px 0 80px;
-            overflow: hidden;
+
+        a {
+            color: inherit;
+
+            text-decoration: none;
         }
 
-        .help-glow {
-            position: absolute;
 
-            width: 500px;
-            height: 500px;
+        .container {
+            width: min(
+                calc(100% - 32px),
+                1000px
+            );
 
-            right: -180px;
-            top: 40px;
-
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(80, 0, 0, 0.38),
-                    transparent 70%
-                );
-
-            filter: blur(15px);
-
-            animation:
-                helpGlow 7s ease-in-out infinite alternate;
+            margin: auto;
         }
 
-        @keyframes helpGlow {
-            from {
-                transform: scale(0.9);
-            }
 
-            to {
-                transform: scale(1.12);
-            }
+        /* HEADER */
+
+        header {
+            border-bottom: 1px solid #222222;
+
+            padding: 20px 0;
         }
 
-        .help-hero-content {
-            position: relative;
-            z-index: 2;
 
-            max-width: 800px;
+        .header-inner {
+            display: flex;
 
-            animation:
-                helpEnter 0.8s ease both;
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
         }
 
-        @keyframes helpEnter {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+        .logo {
+            display: flex;
 
-        .help-label {
-            display: block;
+            align-items: center;
 
-            margin-bottom: 18px;
+            gap: 10px;
 
-            color: #b65e5e;
-
-            font-size: 11px;
-            font-weight: 800;
-
-            letter-spacing: 4px;
-        }
-
-        .help-hero h1 {
-            font-size:
-                clamp(48px, 8vw, 82px);
-
-            line-height: 1;
-
-            letter-spacing: -3px;
-        }
-
-        .help-hero h1 span {
-            color: var(--red-bright);
-        }
-
-        .help-description {
-            max-width: 650px;
-
-            margin-top: 25px;
-
-            color: var(--text-soft);
+            font-weight: 900;
 
             font-size: 18px;
         }
 
-        /* Form bölümü */
 
-        .help-form-section {
-            padding: 80px 0 120px;
+        .logo-box {
+            width: 38px;
+            height: 38px;
 
-            background: var(--background-light);
+            display: grid;
 
-            border-top:
-                1px solid rgba(255, 255, 255, 0.04);
-        }
+            place-items: center;
 
-        .form-heading {
-            margin-bottom: 35px;
-        }
-
-        .form-heading span {
-            display: block;
-
-            margin-bottom: 9px;
-
-            color: #b65e5e;
+            background: #500000;
 
             font-size: 11px;
-            font-weight: 800;
 
-            letter-spacing: 3px;
+            font-weight: 900;
         }
 
-        .form-heading h2 {
-            font-size:
-                clamp(30px, 5vw, 46px);
 
-            line-height: 1.1;
+        .home-link {
+            color: #aaaaaa;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            transition: color 200ms ease;
         }
 
-        .form-heading p {
-            max-width: 650px;
 
-            margin-top: 12px;
-
-            color: var(--text-soft);
+        .home-link:hover {
+            color: #ffffff;
         }
 
-        /* Google Forms kutusu */
 
-        .form-wrapper {
-            width: 100%;
+        /* HERO */
 
-            min-height: 700px;
-
-            padding: 8px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #171717,
-                    #0d0d0d
-                );
-
-            border:
-                1px solid var(--border);
-
-            border-radius: 16px;
-
-            box-shadow:
-                0 25px 70px
-                rgba(0, 0, 0, 0.35);
-
-            overflow: hidden;
-
-            animation:
-                formEnter 0.9s ease both;
+        .hero {
+            padding: 110px 0 70px;
         }
 
-        @keyframes formEnter {
-            from {
-                opacity: 0;
-                transform: translateY(25px);
-            }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .form-wrapper iframe {
+        .label {
             display: block;
 
+            margin-bottom: 18px;
+
+            color: #500000;
+
+            font-size: 12px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+        }
+
+
+        h1 {
+            max-width: 800px;
+
+            font-size:
+                clamp(52px, 9vw, 100px);
+
+            line-height: .95;
+
+            letter-spacing: -5px;
+
+            font-weight: 900;
+        }
+
+
+        h1 span {
+            color: #500000;
+        }
+
+
+        .description {
+            max-width: 650px;
+
+            margin-top: 30px;
+
+            color: #999999;
+
+            font-size: 17px;
+
+            line-height: 1.8;
+        }
+
+
+        /* FORM */
+
+        .form-section {
+            padding: 30px 0 100px;
+        }
+
+
+        .form-box {
+            padding: 12px;
+
+            background: #050505;
+
+            border: 1px solid #222222;
+        }
+
+
+        .form-box iframe {
             width: 100%;
 
-            min-height: 680px;
+            min-height: 750px;
+
+            display: block;
 
             border: 0;
-
-            border-radius: 10px;
 
             background: #ffffff;
         }
 
-        /* Mobil */
 
-        @media (max-width: 700px) {
+        /* FOOTER */
 
-            .help-page {
-                padding-top: 64px;
+        footer {
+            border-top: 1px solid #222222;
+
+            padding: 45px 0;
+        }
+
+
+        .footer-content {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 30px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .mail {
+            color: #aaaaaa;
+
+            font-size: 14px;
+        }
+
+
+        .mail a {
+            color: #ffffff;
+
+            font-weight: 700;
+        }
+
+
+        .mail a:hover {
+            color: #500000;
+        }
+
+
+        .back {
+            display: inline-flex;
+
+            padding: 12px 20px;
+
+            background: #500000;
+
+            border: 1px solid #500000;
+
+            color: #ffffff;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            transition:
+                background-color 200ms ease,
+                transform 200ms ease;
+        }
+
+
+        .back:hover {
+            background: #3a0000;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* MOBİL */
+
+        @media (max-width: 600px) {
+
+            .hero {
+                padding:
+                    80px
+                    0
+                    50px;
             }
 
-            .help-hero {
-                padding: 80px 0 60px;
-            }
 
-            .help-hero h1 {
+            h1 {
                 font-size:
-                    clamp(44px, 13vw, 65px);
+                    clamp(48px, 16vw, 75px);
 
-                letter-spacing: -2px;
+                letter-spacing: -4px;
             }
 
-            .help-description {
-                font-size: 16px;
+
+            .description {
+                font-size: 15px;
             }
 
-            .help-form-section {
-                padding: 65px 0 80px;
+
+            .form-section {
+                padding-bottom: 70px;
             }
 
-            .form-wrapper {
-                min-height: 650px;
 
-                padding: 4px;
-
-                border-radius: 12px;
+            .form-box {
+                padding: 5px;
             }
 
-            .form-wrapper iframe {
-                min-height: 630px;
+
+            .form-box iframe {
+                min-height: 700px;
+            }
+
+
+            .footer-content {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .back {
+                width: 100%;
+
+                justify-content: center;
             }
 
         }
+
+
+        /* SİSTEM AÇIK TEMA */
+
+        @media (prefers-color-scheme: light) {
+
+            body {
+                background: #ffffff;
+
+                color: #000000;
+            }
+
+
+            header,
+            footer {
+                border-color: #dddddd;
+            }
+
+
+            .home-link,
+            .description,
+            .mail {
+                color: #666666;
+            }
+
+
+            .form-box {
+                background: #f5f5f5;
+
+                border-color: #dddddd;
+            }
+
+
+            .home-link:hover,
+            .mail a {
+                color: #000000;
+            }
+
+        }
+
     </style>
 </head>
 
+
 <body>
 
-    <!-- Navigasyon -->
 
-    <header class="navbar">
+    <!-- HEADER -->
 
-        <div class="nav-container">
+    <header>
 
-            <a href="../index.html" class="logo">
-                TürkBlocks
+        <div class="container header-inner">
+
+            <a
+                href="../index.html"
+                class="logo"
+            >
+
+                <span class="logo-box">
+                    TB
+                </span>
+
+                <span>
+                    TürkBlocks
+                </span>
+
             </a>
 
-            <nav class="nav-menu" id="navMenu">
 
-                <a href="../">
-                    Ana Sayfa
-                </a>
-
-                <a href="../games/">
-                    Oyunlar
-                </a>
-
-                <a href="../blog/">
-                    Makaleler
-                </a>
-
-                <a href="../channels/">
-                    Kanallar
-                </a>
-
-                <a href="index.html" class="active">
-                    Destek
-                </a>
-
-            </nav>
-
-            <button
-                class="menu-toggle"
-                id="menuToggle"
-                aria-label="Menüyü aç"
-                aria-expanded="false"
-                type="button">
-
-                <span></span>
-                <span></span>
-                <span></span>
-
-            </button>
+            <a
+                href="../index.html"
+                class="home-link"
+            >
+                Ana Site →
+            </a>
 
         </div>
 
     </header>
 
 
-    <main class="help-page">
+    <!-- HERO -->
 
-        <!-- Başlık -->
+    <main>
 
-        <section class="help-hero">
-
-            <div class="help-glow"></div>
+        <section class="hero">
 
             <div class="container">
 
-                <div class="help-hero-content">
+                <span class="label">
+                    YARDIM MERKEZİ
+                </span>
 
-                    <span class="help-label">
-                        TÜRBLOCKS DESTEK
-                    </span>
 
-                    <h1>
-                        Nasıl
-                        <span>yardımcı olabiliriz?</span>
-                    </h1>
+                <h1>
+                    Nasıl
+                    <span>yardımcı</span>
+                    olabiliriz?
+                </h1>
 
-                    <p class="help-description">
-                        TürkBlocks hakkında bir sorunun,
-                        önerinin veya bildirimin varsa
-                        aşağıdaki formu kullanarak bize iletebilirsin.
-                    </p>
 
-                </div>
+                <p class="description">
+                    TürkBlocks hakkında bir sorun,
+                    öneri veya geri bildirimin varsa
+                    aşağıdaki formu kullanarak
+                    bize iletebilirsin.
+                </p>
 
             </div>
 
         </section>
 
 
-        <!-- Form -->
+        <!-- GOOGLE FORM -->
 
-        <section class="help-form-section">
+        <section class="form-section">
 
             <div class="container">
 
-                <div class="form-heading">
-
-                    <span>
-                        DESTEK FORMU
-                    </span>
-
-                    <h2>
-                        Bize ulaş
-                    </h2>
-
-                    <p>
-                        Formu doldurarak mesajını TürkBlocks
-                        ekibine gönderebilirsin.
-                    </p>
-
-                </div>
-
-
-                <div class="form-wrapper">
-
-                    <!--
-                        BURAYA GOOGLE FORMS EMBED KODUNU KOY.
-
-                        Örnek:
-
-                        <iframe
-                            src="GOOGLE_FORMS_LINKİN"
-                            loading="lazy">
-                        </iframe>
-                    -->
+                <div class="form-box">
 
                     <iframe
-    src="https://docs.google.com/forms/d/e/1FAIpQLSftughd-LQZxzZlYPS_dWfk_9BSezt_VOcvi16Sct2zDE1ajQ/viewform?embedded=true"
-    loading="lazy"
-    title="TürkBlocks Destek Formu">
-    Yükleniyor…
-</iframe>
+                        src="FORM_URL_BURAYA"
+                        title="TürkBlocks Yardım Formu"
+                        loading="lazy"
+                    >
+                    </iframe>
 
                 </div>
 
@@ -401,56 +476,34 @@
     </main>
 
 
-    <!-- Footer -->
+    <!-- FOOTER -->
 
-    <footer class="footer">
+    <footer>
 
-        <div class="container footer-container">
+        <div class="container footer-content">
 
-            <div>
+            <div class="mail">
 
-                <strong>
-                    TürkBlocks
-                </strong>
+                Yardım için:
 
-                <p>
-                    Oyunlar ve projeler.
-                </p>
-
-            </div>
-
-
-            <div class="footer-links">
-
-                <a href="../index.html">
-                    Ana Sayfa
-                </a>
-
-                <a href="../games/">
-                    Oyunlar
-                </a>
-
-                <a href="../blog/">
-                    Makaleler
-                </a>
-
-                <a href="index.html">
-                    Destek
+                <a href="mailto:mail@turkblocks.com">
+                    mail@turkblocks.com
                 </a>
 
             </div>
 
-        </div>
 
+            <a
+                href="../index.html"
+                class="back"
+            >
+                TürkBlocks Ana Sitesi
+            </a>
 
-        <div class="footer-bottom">
-            © 2026 TürkBlocks. Tüm hakları saklıdır.
         </div>
 
     </footer>
 
-
-    <script src="../script.js"></script>
 
 </body>
 </html>
