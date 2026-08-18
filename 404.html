@@ -2,21 +2,33 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="robots" content="noindex">
-    <meta name="theme-color" content="#500000">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>404 | TürkBlocks</title>
+    <meta
+        name="theme-color"
+        content="#000000"
+    >
+
+    <meta
+        name="robots"
+        content="noindex, nofollow"
+    >
+
+    <title>404 — TürkBlocks</title>
 
     <style>
+
         :root {
-            --background: #070707;
+            --black: #000000;
             --red: #500000;
-            --red-light: #720000;
-            --red-bright: #a00000;
-            --text: #ffffff;
-            --text-soft: #b7b7b7;
+            --red-dark: #380000;
+            --white: #ffffff;
+            --text: #eeeeee;
+            --muted: #999999;
             --border: #242424;
         }
 
@@ -27,351 +39,261 @@
         }
 
         html {
-            scroll-behavior: smooth;
+            min-height: 100%;
         }
 
         body {
             min-height: 100vh;
-            overflow: hidden;
 
-            background: var(--background);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px;
+
+            background: var(--black);
             color: var(--text);
 
             font-family:
                 Inter,
-                Arial,
-                Helvetica,
+                "Segoe UI",
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
                 sans-serif;
+
+            overflow-x: hidden;
         }
 
-        /* Arka plan */
+        .page {
+            width: min(100%, 1100px);
 
-        .background {
-            position: fixed;
-            inset: 0;
+            position: relative;
 
-            overflow: hidden;
-
-            pointer-events: none;
+            padding: 70px 0;
         }
 
-        .glow {
-            position: absolute;
+        .top-line {
+            width: 70px;
+            height: 5px;
 
-            width: 650px;
-            height: 650px;
+            margin-bottom: 35px;
 
-            top: 50%;
-            left: 50%;
-
-            transform: translate(-50%, -50%);
-
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(80, 0, 0, 0.42) 0%,
-                    rgba(80, 0, 0, 0.16) 35%,
-                    transparent 70%
-                );
-
-            filter: blur(15px);
-
-            animation:
-                glowMove 7s ease-in-out infinite alternate;
+            background: var(--red);
         }
 
-        @keyframes glowMove {
-            from {
-                transform:
-                    translate(-50%, -50%)
-                    scale(0.9);
-            }
+        .brand {
+            display: inline-flex;
+            align-items: center;
 
-            to {
-                transform:
-                    translate(-50%, -50%)
-                    scale(1.12);
-            }
-        }
+            gap: 10px;
 
-        /* Üst logo */
+            margin-bottom: 65px;
 
-        .logo {
-            position: fixed;
+            color: var(--white);
 
-            top: 28px;
-            left: 35px;
-
-            z-index: 5;
-
-            color: #ffffff;
-
-            font-size: 23px;
+            font-size: 18px;
             font-weight: 800;
-
-            letter-spacing: -0.8px;
 
             text-decoration: none;
         }
 
-        .logo::after {
-            content: "";
+        .brand-box {
+            width: 36px;
+            height: 36px;
 
-            position: absolute;
+            display: grid;
+            place-items: center;
 
-            left: 0;
-            bottom: -6px;
+            background: var(--red);
 
-            width: 0;
-            height: 2px;
+            color: var(--white);
 
-            background: var(--red-light);
-
-            transition: width 0.25s ease;
+            font-size: 11px;
+            font-weight: 900;
         }
 
-        .logo:hover::after {
-            width: 100%;
-        }
+        .code {
+            color: var(--red);
 
-        /* Ana alan */
-
-        .error-container {
-            position: relative;
-
-            z-index: 2;
-
-            min-height: 100vh;
-
-            width: min(
-                calc(100% - 40px),
-                750px
+            font-size: clamp(
+                110px,
+                22vw,
+                260px
             );
 
-            margin: auto;
-
-            display: flex;
-            flex-direction: column;
-
-            align-items: center;
-            justify-content: center;
-
-            text-align: center;
-
-            animation:
-                enter 0.8s ease both;
-        }
-
-        @keyframes enter {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* 404 */
-
-        .error-code {
-            font-size:
-                clamp(110px, 24vw, 220px);
+            font-weight: 950;
 
             line-height: 0.8;
 
-            font-weight: 900;
-
             letter-spacing: -12px;
 
-            color: var(--red);
-
-            text-shadow:
-                0 0 70px
-                rgba(100, 0, 0, 0.35);
-
-            animation:
-                errorPulse 4s ease-in-out infinite;
-        }
-
-        @keyframes errorPulse {
-            0%,
-            100% {
-                text-shadow:
-                    0 0 50px
-                    rgba(100, 0, 0, 0.25);
-            }
-
-            50% {
-                text-shadow:
-                    0 0 90px
-                    rgba(150, 0, 0, 0.45);
-            }
-        }
-
-        .line {
-            width: 70px;
-            height: 3px;
-
-            margin: 38px 0 25px;
-
-            border-radius: 10px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    var(--red),
-                    var(--red-bright)
-                );
+            user-select: none;
         }
 
         h1 {
-            font-size:
-                clamp(30px, 6vw, 48px);
+            margin-top: 45px;
 
-            line-height: 1.1;
+            color: var(--white);
 
-            letter-spacing: -1.5px;
+            font-size: clamp(
+                32px,
+                5vw,
+                58px
+            );
+
+            font-weight: 850;
+
+            line-height: 1;
+
+            letter-spacing: -2px;
         }
 
-        .description {
-            max-width: 560px;
+        p {
+            max-width: 600px;
 
-            margin-top: 18px;
+            margin-top: 20px;
 
-            color: var(--text-soft);
+            color: var(--muted);
 
-            font-size: 16px;
+            font-size: 17px;
 
-            line-height: 1.7;
+            line-height: 1.8;
         }
 
-        /* Butonlar */
-
-        .buttons {
+        .actions {
             display: flex;
-
-            justify-content: center;
-
             flex-wrap: wrap;
 
-            gap: 13px;
+            gap: 12px;
 
-            margin-top: 34px;
+            margin-top: 35px;
         }
 
         .button {
-            min-width: 175px;
-            min-height: 50px;
-
-            padding: 0 24px;
+            min-height: 48px;
 
             display: inline-flex;
-
             align-items: center;
             justify-content: center;
 
-            border-radius: 9px;
+            padding: 12px 22px;
+
+            border-radius: 3px;
 
             font-size: 14px;
             font-weight: 700;
 
-            cursor: pointer;
+            text-decoration: none;
 
             transition:
-                transform 0.25s ease,
-                background 0.25s ease,
-                border-color 0.25s ease,
-                box-shadow 0.25s ease;
+                background-color 220ms ease,
+                border-color 220ms ease,
+                color 220ms ease;
         }
 
-        .primary {
+        .button-primary {
             background: var(--red);
 
             border: 1px solid var(--red);
 
-            color: #ffffff;
+            color: var(--white);
         }
 
-        .primary:hover {
-            background: var(--red-light);
+        .button-primary:hover {
+            background: var(--red-dark);
 
-            transform: translateY(-3px);
-
-            box-shadow:
-                0 15px 40px
-                rgba(80, 0, 0, 0.4);
+            border-color: var(--red-dark);
         }
 
-        .secondary {
-            background: rgba(255, 255, 255, 0.02);
+        .button-secondary {
+            background: transparent;
 
             border: 1px solid var(--border);
 
-            color: #ffffff;
+            color: var(--white);
         }
 
-        .secondary:hover {
-            background:
-                rgba(255, 255, 255, 0.06);
+        .button-secondary:hover {
+            background: #080808;
 
             border-color: #444444;
-
-            transform: translateY(-3px);
         }
 
-        /* Alt yazı */
-
         .footer {
-            position: fixed;
+            margin-top: 80px;
 
-            left: 0;
-            right: 0;
-            bottom: 25px;
+            padding-top: 20px;
 
-            z-index: 3;
+            border-top: 1px solid var(--border);
 
-            text-align: center;
-
-            color: #555555;
+            color: #666666;
 
             font-size: 12px;
         }
 
-        /* Mobil */
+
+        /* =============================================
+           AUTOMATIC LIGHT THEME
+           ============================================= */
+
+        @media (prefers-color-scheme: light) {
+
+            :root {
+                --black: #ffffff;
+                --white: #000000;
+                --text: #111111;
+                --muted: #666666;
+                --border: #d5d5d5;
+            }
+
+            .button-secondary:hover {
+                background: #f3f3f3;
+
+                border-color: #aaaaaa;
+            }
+
+        }
+
+
+        /* =============================================
+           MOBILE
+           ============================================= */
 
         @media (max-width: 600px) {
 
             body {
-                overflow: hidden;
+                padding: 20px;
             }
 
-            .logo {
-                top: 22px;
-                left: 20px;
-
-                font-size: 20px;
+            .page {
+                padding: 45px 0;
             }
 
-            .error-container {
-                width:
-                    calc(100% - 28px);
+            .brand {
+                margin-bottom: 50px;
             }
 
-            .error-code {
+            .code {
+                font-size: 110px;
+
                 letter-spacing: -7px;
             }
 
-            .description {
+            h1 {
+                margin-top: 35px;
+
+                font-size: 36px;
+            }
+
+            p {
                 font-size: 15px;
             }
 
-            .buttons {
-                width: 100%;
-
+            .actions {
                 flex-direction: column;
+
+                align-items: stretch;
             }
 
             .button {
@@ -379,91 +301,88 @@
             }
 
             .footer {
-                bottom: 18px;
+                margin-top: 60px;
             }
+
         }
 
-        /* Hareket azaltma */
+
+        /* =============================================
+           REDUCED MOTION
+           ============================================= */
 
         @media (prefers-reduced-motion: reduce) {
 
             *,
-            *::before,
-            *::after {
-                animation: none !important;
+            *::before {
                 transition: none !important;
             }
+
         }
+
     </style>
 </head>
 
 <body>
 
-    <div class="background">
-        <div class="glow"></div>
-    </div>
+    <main class="page">
+
+        <div class="top-line"></div>
+
+        <a
+            href="index.html"
+            class="brand"
+        >
+            <span class="brand-box">TB</span>
+            TürkBlocks
+        </a>
 
 
-    <a href="/" class="logo">
-        TürkBlocks
-    </a>
-
-
-    <main class="error-container">
-
-        <div class="error-code">
+        <div
+            class="code"
+            aria-label="404"
+        >
             404
         </div>
 
-        <div class="line"></div>
 
         <h1>
-            Sayfa bulunamadı
+            Aradığın sayfa bulunamadı.
         </h1>
 
-        <p class="description">
-            Aradığın sayfa mevcut değil, taşınmış veya kaldırılmış olabilir.
+
+        <p>
+            Bu sayfa taşınmış, silinmiş veya hiç
+            oluşturulmamış olabilir. Adresi kontrol
+            edebilir ya da TürkBlocks ana sayfasına
+            geri dönebilirsin.
         </p>
 
-        <div class="buttons">
 
-            <a href="/" class="button primary">
+        <div class="actions">
+
+            <a
+                href=""
+                class="button button-primary"
+            >
                 Ana Sayfaya Dön
             </a>
 
-            <button
-                class="button secondary"
-                id="backButton"
-                type="button">
-                Geri Dön
-            </button>
+            <a
+                href="mailto:salih-turkblocks@outlook.com.tr"
+                class="button button-secondary"
+            >
+                Böyle Bir Sayfa Var Mı? BİLDİR
+            </a>
 
         </div>
 
+
+        <footer class="footer">
+            © 2026 TürkBlocks
+        </footer>
+
     </main>
-
-
-    <footer class="footer">
-        TürkBlocks
-    </footer>
-
-
-    <script>
-        // Geri dön butonu
-
-        const backButton =
-            document.getElementById("backButton");
-
-        backButton.addEventListener("click", () => {
-
-            if (window.history.length > 1) {
-                window.history.back();
-            } else {
-                window.location.href = "/";
-            }
-
-        });
-    </script>
 
 </body>
 </html>
