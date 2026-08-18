@@ -18,14 +18,19 @@
         content="#000000"
     >
 
-    <title>Yardım — TürkBlocks</title>
+    <title>Yardım Merkezi — TürkBlocks</title>
+
 
     <style>
 
+        /* ==================================================
+           RESET
+           ================================================== */
+
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
 
 
@@ -45,9 +50,13 @@
                 Inter,
                 "Segoe UI",
                 system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
                 sans-serif;
 
             line-height: 1.6;
+
+            overflow-x: hidden;
         }
 
 
@@ -58,26 +67,43 @@
         }
 
 
+        /* ==================================================
+           CONTAINER
+           ================================================== */
+
         .container {
             width: min(
-                calc(100% - 32px),
-                1000px
+                calc(100% - 40px),
+                1100px
             );
 
-            margin: auto;
+            margin: 0 auto;
         }
 
 
-        /* HEADER */
+        /* ==================================================
+           HEADER
+           ================================================== */
 
-        header {
+        .header {
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            background:
+                rgba(0, 0, 0, 0.94);
+
             border-bottom: 1px solid #222222;
 
-            padding: 20px 0;
+            backdrop-filter: blur(14px);
         }
 
 
         .header-inner {
+            min-height: 74px;
+
             display: flex;
 
             align-items: center;
@@ -93,11 +119,9 @@
 
             align-items: center;
 
-            gap: 10px;
+            gap: 11px;
 
             font-weight: 900;
-
-            font-size: 18px;
         }
 
 
@@ -111,9 +135,20 @@
 
             background: #500000;
 
+            color: #ffffff;
+
             font-size: 11px;
 
-            font-weight: 900;
+            font-weight: 950;
+        }
+
+
+        .logo-text {
+            color: #ffffff;
+
+            font-size: 17px;
+
+            font-weight: 850;
         }
 
 
@@ -122,9 +157,10 @@
 
             font-size: 13px;
 
-            font-weight: 700;
+            font-weight: 750;
 
-            transition: color 200ms ease;
+            transition:
+                color 250ms ease;
         }
 
 
@@ -133,17 +169,32 @@
         }
 
 
-        /* HERO */
+        /* ==================================================
+           HERO
+           ================================================== */
 
         .hero {
-            padding: 110px 0 70px;
+            padding:
+                120px
+                0
+                80px;
+
+            background:
+                radial-gradient(
+                    circle at 75% 30%,
+                    rgba(80, 0, 0, 0.18),
+                    transparent 35%
+                ),
+                #000000;
+
+            border-bottom: 1px solid #222222;
         }
 
 
         .label {
             display: block;
 
-            margin-bottom: 18px;
+            margin-bottom: 22px;
 
             color: #500000;
 
@@ -156,16 +207,18 @@
 
 
         h1 {
-            max-width: 800px;
+            max-width: 900px;
+
+            color: #ffffff;
 
             font-size:
-                clamp(52px, 9vw, 100px);
+                clamp(55px, 9vw, 105px);
 
-            line-height: .95;
+            line-height: .92;
 
             letter-spacing: -5px;
 
-            font-weight: 900;
+            font-weight: 950;
         }
 
 
@@ -175,27 +228,62 @@
 
 
         .description {
-            max-width: 650px;
+            max-width: 680px;
 
-            margin-top: 30px;
+            margin-top: 32px;
 
             color: #999999;
 
-            font-size: 17px;
+            font-size: 18px;
 
             line-height: 1.8;
         }
 
 
-        /* FORM */
+        /* ==================================================
+           FORM
+           ================================================== */
 
         .form-section {
-            padding: 30px 0 100px;
+            padding:
+                80px
+                0
+                110px;
+        }
+
+
+        .form-header {
+            margin-bottom: 30px;
+        }
+
+
+        .form-header h2 {
+            color: #ffffff;
+
+            font-size:
+                clamp(32px, 5vw, 52px);
+
+            line-height: 1;
+
+            letter-spacing: -2px;
+
+            font-weight: 850;
+        }
+
+
+        .form-header p {
+            max-width: 650px;
+
+            margin-top: 14px;
+
+            color: #888888;
+
+            font-size: 15px;
         }
 
 
         .form-box {
-            padding: 12px;
+            padding: 10px;
 
             background: #050505;
 
@@ -206,7 +294,7 @@
         .form-box iframe {
             width: 100%;
 
-            min-height: 750px;
+            min-height: 760px;
 
             display: block;
 
@@ -216,55 +304,66 @@
         }
 
 
-        /* FOOTER */
+        /* ==================================================
+           CONTACT
+           ================================================== */
 
-        footer {
-            border-top: 1px solid #222222;
-
-            padding: 45px 0;
-        }
-
-
-        .footer-content {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 30px;
-
-            flex-wrap: wrap;
-        }
-
-
-        .mail {
-            color: #aaaaaa;
-
-            font-size: 14px;
-        }
-
-
-        .mail a {
-            color: #ffffff;
-
-            font-weight: 700;
-        }
-
-
-        .mail a:hover {
-            color: #500000;
-        }
-
-
-        .back {
-            display: inline-flex;
-
-            padding: 12px 20px;
+        .contact {
+            padding:
+                90px
+                0;
 
             background: #500000;
 
-            border: 1px solid #500000;
+            border-top: 1px solid #500000;
+        }
+
+
+        .contact h2 {
+            max-width: 750px;
+
+            color: #ffffff;
+
+            font-size:
+                clamp(40px, 7vw, 75px);
+
+            line-height: .95;
+
+            letter-spacing: -3px;
+
+            font-weight: 900;
+        }
+
+
+        .contact p {
+            max-width: 600px;
+
+            margin-top: 22px;
+
+            color: #dddddd;
+
+            font-size: 16px;
+        }
+
+
+        .mail-button {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-height: 50px;
+
+            margin-top: 30px;
+
+            padding:
+                12px
+                22px;
+
+            background: #000000;
+
+            border: 1px solid #000000;
 
             color: #ffffff;
 
@@ -273,75 +372,73 @@
             font-weight: 800;
 
             transition:
-                background-color 200ms ease,
-                transform 200ms ease;
+                transform 250ms ease,
+                background-color 250ms ease;
         }
 
 
-        .back:hover {
-            background: #3a0000;
+        .mail-button:hover {
+            background: #111111;
 
             transform: translateY(-2px);
         }
 
 
-        /* MOBİL */
+        /* ==================================================
+           FOOTER
+           ================================================== */
 
-        @media (max-width: 600px) {
+        footer {
+            padding:
+                35px
+                0;
 
-            .hero {
-                padding:
-                    80px
-                    0
-                    50px;
-            }
+            background: #000000;
 
-
-            h1 {
-                font-size:
-                    clamp(48px, 16vw, 75px);
-
-                letter-spacing: -4px;
-            }
-
-
-            .description {
-                font-size: 15px;
-            }
-
-
-            .form-section {
-                padding-bottom: 70px;
-            }
-
-
-            .form-box {
-                padding: 5px;
-            }
-
-
-            .form-box iframe {
-                min-height: 700px;
-            }
-
-
-            .footer-content {
-                align-items: flex-start;
-
-                flex-direction: column;
-            }
-
-
-            .back {
-                width: 100%;
-
-                justify-content: center;
-            }
-
+            border-top: 1px solid #222222;
         }
 
 
-        /* SİSTEM AÇIK TEMA */
+        .footer-inner {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .footer-text {
+            color: #666666;
+
+            font-size: 12px;
+        }
+
+
+        .footer-link {
+            color: #aaaaaa;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            transition:
+                color 250ms ease;
+        }
+
+
+        .footer-link:hover {
+            color: #ffffff;
+        }
+
+
+        /* ==================================================
+           LIGHT THEME
+           ================================================== */
 
         @media (prefers-color-scheme: light) {
 
@@ -352,15 +449,44 @@
             }
 
 
-            header,
-            footer {
+            .header {
+                background:
+                    rgba(255, 255, 255, 0.94);
+
                 border-color: #dddddd;
             }
 
 
-            .home-link,
+            .logo-text {
+                color: #000000;
+            }
+
+
+            .home-link {
+                color: #666666;
+            }
+
+
+            .home-link:hover {
+                color: #000000;
+            }
+
+
+            .hero {
+                background: #ffffff;
+
+                border-color: #dddddd;
+            }
+
+
+            h1,
+            .form-header h2 {
+                color: #000000;
+            }
+
+
             .description,
-            .mail {
+            .form-header p {
                 color: #666666;
             }
 
@@ -372,9 +498,166 @@
             }
 
 
-            .home-link:hover,
-            .mail a {
+            footer {
+                background: #ffffff;
+
+                border-color: #dddddd;
+            }
+
+
+            .footer-link {
+                color: #666666;
+            }
+
+
+            .footer-link:hover {
                 color: #000000;
+            }
+
+        }
+
+
+        /* ==================================================
+           TABLET
+           ================================================== */
+
+        @media (max-width: 700px) {
+
+            .container {
+                width:
+                    calc(100% - 30px);
+            }
+
+
+            .hero {
+                padding:
+                    90px
+                    0
+                    60px;
+            }
+
+
+            h1 {
+                font-size:
+                    clamp(48px, 15vw, 78px);
+
+                letter-spacing: -4px;
+            }
+
+
+            .description {
+                font-size: 15px;
+            }
+
+
+            .form-section {
+                padding:
+                    60px
+                    0
+                    80px;
+            }
+
+
+            .form-box {
+                padding: 5px;
+            }
+
+
+            .form-box iframe {
+                min-height: 720px;
+            }
+
+
+            .contact {
+                padding:
+                    75px
+                    0;
+            }
+
+
+            .contact h2 {
+                font-size:
+                    clamp(42px, 13vw, 65px);
+            }
+
+
+            .footer-inner {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+        }
+
+
+        /* ==================================================
+           SMALL MOBILE
+           ================================================== */
+
+        @media (max-width: 420px) {
+
+            .header-inner {
+                min-height: 65px;
+            }
+
+
+            .logo-text {
+                font-size: 15px;
+            }
+
+
+            .logo-box {
+                width: 34px;
+                height: 34px;
+            }
+
+
+            .hero {
+                padding:
+                    75px
+                    0
+                    50px;
+            }
+
+
+            h1 {
+                font-size: 48px;
+
+                letter-spacing: -3px;
+            }
+
+
+            .description {
+                font-size: 14px;
+            }
+
+
+            .form-box iframe {
+                min-height: 650px;
+            }
+
+
+            .mail-button {
+                width: 100%;
+            }
+
+        }
+
+
+        /* ==================================================
+           REDUCED MOTION
+           ================================================== */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+
+                transition: none !important;
+
+                animation: none !important;
             }
 
         }
@@ -386,9 +669,11 @@
 <body>
 
 
-    <!-- HEADER -->
+    <!-- ==================================================
+         HEADER
+         ================================================== -->
 
-    <header>
+    <header class="header">
 
         <div class="container header-inner">
 
@@ -401,7 +686,7 @@
                     TB
                 </span>
 
-                <span>
+                <span class="logo-text">
                     TürkBlocks
                 </span>
 
@@ -420,9 +705,14 @@
     </header>
 
 
-    <!-- HERO -->
+    <!-- ==================================================
+         MAIN
+         ================================================== -->
 
     <main>
+
+
+        <!-- HERO -->
 
         <section class="hero">
 
@@ -443,8 +733,8 @@
                 <p class="description">
                     TürkBlocks hakkında bir sorun,
                     öneri veya geri bildirimin varsa
-                    aşağıdaki formu kullanarak
-                    bize iletebilirsin.
+                    aşağıdaki yardım formunu
+                    kullanarak bize ulaşabilirsin.
                 </p>
 
             </div>
@@ -458,16 +748,61 @@
 
             <div class="container">
 
+                <div class="form-header">
+
+                    <h2>
+                        Destek formu
+                    </h2>
+
+
+                    <p>
+                        Mesajını aşağıdaki form
+                        üzerinden gönderebilirsin.
+                    </p>
+
+                </div>
+
+
                 <div class="form-box">
 
                     <iframe
                         src="FORM_URL_BURAYA"
-                        title="TürkBlocks Yardım Formu"
+                        title="TürkBlocks Destek Formu"
                         loading="lazy"
-                    >
-                    </iframe>
+                    ></iframe>
 
                 </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MAIL -->
+
+        <section class="contact">
+
+            <div class="container">
+
+                <h2>
+                    Form kullanmak
+                    istemiyor musun?
+                </h2>
+
+
+                <p>
+                    Doğrudan e-posta üzerinden de
+                    TürkBlocks ile iletişime
+                    geçebilirsin.
+                </p>
+
+
+                <a
+                    href="mailto:mail@turkblocks.com"
+                    class="mail-button"
+                >
+                    mail@turkblocks.com
+                </a>
 
             </div>
 
@@ -476,28 +811,24 @@
     </main>
 
 
-    <!-- FOOTER -->
+    <!-- ==================================================
+         FOOTER
+         ================================================== -->
 
     <footer>
 
-        <div class="container footer-content">
+        <div class="container footer-inner">
 
-            <div class="mail">
-
-                Yardım için:
-
-                <a href="mailto:mail@turkblocks.com">
-                    mail@turkblocks.com
-                </a>
-
-            </div>
+            <span class="footer-text">
+                © 2026 TürkBlocks
+            </span>
 
 
             <a
                 href="../index.html"
-                class="back"
+                class="footer-link"
             >
-                TürkBlocks Ana Sitesi
+                TürkBlocks Ana Sitesi →
             </a>
 
         </div>
