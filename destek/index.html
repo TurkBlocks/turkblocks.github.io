@@ -23,6 +23,17 @@
     <title>Yardım Merkezi — TürkBlocks</title>
 
 
+    <!-- ==================================================
+         GOOGLE reCAPTCHA v2
+         ================================================== -->
+
+    <script
+        src="https://www.google.com/recaptcha/api.js"
+        async
+        defer>
+    </script>
+
+
     <style>
 
         /* ==================================================
@@ -62,6 +73,11 @@
         }
 
 
+        body.captcha-locked {
+            overflow: hidden;
+        }
+
+
         a {
             color: inherit;
 
@@ -86,6 +102,148 @@
             );
 
             margin: 0 auto;
+        }
+
+
+        /* ==================================================
+           CAPTCHA OVERLAY
+           ================================================== */
+
+        .captcha-overlay {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 9999;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(0, 0, 0, 0.78);
+
+            backdrop-filter:
+                blur(16px);
+
+            -webkit-backdrop-filter:
+                blur(16px);
+
+            opacity: 1;
+
+            visibility: visible;
+
+            transition:
+                opacity 350ms ease,
+                visibility 350ms ease;
+        }
+
+
+        .captcha-overlay.hidden {
+            opacity: 0;
+
+            visibility: hidden;
+
+            pointer-events: none;
+        }
+
+
+        .captcha-box {
+            width: min(
+                100%,
+                500px
+            );
+
+            padding: 35px;
+
+            background: #080808;
+
+            border:
+                1px solid #333333;
+
+            box-shadow:
+                0 30px 100px
+                rgba(0, 0, 0, 0.75);
+
+            animation:
+                captchaIn 400ms ease;
+        }
+
+
+        @keyframes captchaIn {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(15px)
+                    scale(.98);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+            }
+
+        }
+
+
+        .captcha-label {
+            display: block;
+
+            margin-bottom: 15px;
+
+            color: #500000;
+
+            font-size: 11px;
+
+            font-weight: 950;
+
+            letter-spacing: 2px;
+        }
+
+
+        .captcha-box h2 {
+            color: #ffffff;
+
+            font-size:
+                clamp(30px, 6vw, 42px);
+
+            line-height: 1;
+
+            letter-spacing: -2px;
+        }
+
+
+        .captcha-box p {
+            max-width: 420px;
+
+            margin:
+                15px
+                0
+                28px;
+
+            color: #888888;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        .captcha-area {
+            min-height: 78px;
+
+            display: flex;
+
+            align-items: center;
         }
 
 
@@ -127,8 +285,6 @@
         }
 
 
-        /* LOGO */
-
         .logo {
             display: flex;
 
@@ -160,8 +316,6 @@
         }
 
 
-        /* HEADER RIGHT */
-
         .header-actions {
             display: flex;
 
@@ -177,10 +331,20 @@
             font-size: 13px;
 
             font-weight: 700;
+
+            transition:
+                color 200ms ease;
         }
 
 
-        /* SEARCH BUTTON */
+        .home-link:hover {
+            color: #ffffff;
+        }
+
+
+        /* ==================================================
+           SEARCH BUTTON
+           ================================================== */
 
         .search-button {
             width: 42px;
@@ -233,12 +397,14 @@
             width: 7px;
             height: 2px;
 
-            background: currentColor;
-
             right: -5px;
             bottom: -3px;
 
-            transform: rotate(45deg);
+            background:
+                currentColor;
+
+            transform:
+                rotate(45deg);
 
             border-radius: 2px;
         }
@@ -516,7 +682,7 @@
 
 
         /* ==================================================
-           CARDS
+           TOPICS
            ================================================== */
 
         .topics {
@@ -721,10 +887,6 @@
                 background: #ffffff;
 
                 border-color: #dddddd;
-
-                box-shadow:
-                    0 30px 100px
-                    rgba(0, 0, 0, 0.18);
             }
 
 
@@ -740,13 +902,6 @@
 
             .search-result {
                 border-color: #eeeeee;
-            }
-
-
-            .search-result:hover {
-                background: #500000;
-
-                color: #ffffff;
             }
 
 
@@ -778,6 +933,29 @@
 
             .topic-card p,
             .section-heading p {
+                color: #666666;
+            }
+
+
+            .captcha-overlay {
+                background:
+                    rgba(255, 255, 255, 0.78);
+            }
+
+
+            .captcha-box {
+                background: #ffffff;
+
+                border-color: #dddddd;
+            }
+
+
+            .captcha-box h2 {
+                color: #000000;
+            }
+
+
+            .captcha-box p {
                 color: #666666;
             }
 
@@ -885,6 +1063,20 @@
             }
 
 
+            .captcha-box {
+                padding: 25px;
+
+                width: 100%;
+            }
+
+
+            .captcha-area {
+                overflow-x: auto;
+
+                padding-bottom: 4px;
+            }
+
+
             .footer-inner {
                 align-items: flex-start;
 
@@ -917,7 +1109,50 @@
 </head>
 
 
-<body>
+<body class="captcha-locked">
+
+
+<!-- ==================================================
+     CAPTCHA
+     ================================================== -->
+
+<div
+    class="captcha-overlay"
+    id="captchaOverlay"
+>
+
+    <div class="captcha-box">
+
+        <span class="captcha-label">
+            TÜRKBLOCKS YARDIM MERKEZİ
+        </span>
+
+
+        <h2>
+            Devam etmek için doğrula.
+        </h2>
+
+
+        <p>
+            Yardım merkezine erişebilmek için
+            aşağıdaki güvenlik doğrulamasını
+            tamamla.
+        </p>
+
+
+        <div class="captcha-area">
+
+            <div
+                class="g-recaptcha"
+                data-sitekey="6LeEyostAAAAAHPlSuTgdVXmsKZDDOQxG-Z4j97J"
+                data-callback="captchaVerified"
+            ></div>
+
+        </div>
+
+    </div>
+
+</div>
 
 
 <!-- ==================================================
@@ -1078,12 +1313,10 @@
             <div class="topic-grid">
 
 
-                <!-- 01 -->
-
                 <a
                     href="./aciklama.html"
                     class="topic-card"
-                    data-title="TürkBlocks hakkında"
+                    data-title="TürkBlocks Hakkında"
                     data-description="TürkBlocks platformu hakkında genel bilgiler."
                 >
 
@@ -1112,13 +1345,11 @@
                 </a>
 
 
-                <!-- 02 -->
-
                 <a
                     href="./aciklama.html"
                     class="topic-card"
-                    data-title="Hesap ve güvenlik"
-                    data-description="Hesap güvenliği ve hesapla ilgili bilgiler."
+                    data-title="Hesap ve Güvenlik"
+                    data-description="Hesap güvenliği hakkında bilgiler."
                 >
 
                     <div>
@@ -1146,13 +1377,11 @@
                 </a>
 
 
-                <!-- 03 -->
-
                 <a
                     href="./aciklama.html"
                     class="topic-card"
                     data-title="Gizlilik"
-                    data-description="TürkBlocks gizlilik ve veri kullanımı."
+                    data-description="TürkBlocks gizlilik bilgileri."
                 >
 
                     <div>
@@ -1180,12 +1409,10 @@
                 </a>
 
 
-                <!-- 04 -->
-
                 <a
                     href="./aciklama.html"
                     class="topic-card"
-                    data-title="Site kullanımı"
+                    data-title="Site Kullanımı"
                     data-description="TürkBlocks web sitesinin kullanımı."
                 >
 
@@ -1213,12 +1440,10 @@
                 </a>
 
 
-                <!-- 05 -->
-
                 <a
                     href="./aciklama.html"
                     class="topic-card"
-                    data-title="Sorun giderme"
+                    data-title="Sorun Giderme"
                     data-description="Karşılaşılan sorunlar ve çözümleri."
                 >
 
@@ -1233,8 +1458,8 @@
                         </h3>
 
                         <p>
-                            Karşılaştığın yaygın
-                            sorunlar için çözümler.
+                            Karşılaşabileceğin yaygın
+                            sorunlar için bilgiler.
                         </p>
 
                     </div>
@@ -1246,12 +1471,10 @@
                 </a>
 
 
-                <!-- 06 -->
-
                 <a
                     href="./aciklama.html"
                     class="topic-card"
-                    data-title="Sık sorulan sorular"
+                    data-title="Sık Sorulan Sorular"
                     data-description="TürkBlocks hakkında sık sorulan sorular."
                 >
 
@@ -1279,13 +1502,11 @@
                 </a>
 
 
-                <!-- 07 -->
-
                 <a
                     href="./aciklama.html"
                     class="topic-card"
-                    data-title="Geri bildirim"
-                    data-description="Öneri ve geri bildirim gönderme."
+                    data-title="Geri Bildirim"
+                    data-description="TürkBlocks'a öneri gönder."
                 >
 
                     <div>
@@ -1312,13 +1533,11 @@
                 </a>
 
 
-                <!-- 08 -->
-
                 <a
                     href="./aciklama.html"
                     class="topic-card"
                     data-title="İletişim"
-                    data-description="TürkBlocks ile iletişim kurma."
+                    data-description="TürkBlocks ile iletişim kur."
                 >
 
                     <div>
@@ -1385,25 +1604,57 @@
 
 <script>
 
+    /* ==================================================
+       CAPTCHA
+       ================================================== */
+
+    function captchaVerified() {
+
+        const overlay =
+            document.getElementById(
+                "captchaOverlay"
+            );
+
+
+        overlay.classList.add(
+            "hidden"
+        );
+
+
+        document.body.classList.remove(
+            "captcha-locked"
+        );
+
+    }
+
+
+    /* ==================================================
+       SEARCH
+       ================================================== */
+
     const searchButton =
         document.getElementById(
             "searchButton"
         );
+
 
     const searchPanel =
         document.getElementById(
             "searchPanel"
         );
 
+
     const closeSearch =
         document.getElementById(
             "closeSearch"
         );
 
+
     const searchInput =
         document.getElementById(
             "searchInput"
         );
+
 
     const searchResults =
         document.getElementById(
@@ -1418,32 +1669,75 @@
     ];
 
 
-    /* SEARCH OPEN */
+    function addResult(card) {
 
-    searchButton.addEventListener(
-        "click",
-        function () {
-
-            searchPanel.classList.add(
-                "active"
-            );
-
-            setTimeout(
-                function () {
-
-                    searchInput.focus();
-
-                },
-                200
-            );
-
-            showAllResults();
-
-        }
-    );
+        const result =
+            document.createElement("a");
 
 
-    /* SEARCH CLOSE */
+        result.href =
+            card.href;
+
+
+        result.className =
+            "search-result";
+
+
+        result.innerHTML = `
+            <strong>
+                ${card.dataset.title}
+            </strong>
+
+            <span>
+                ${card.dataset.description}
+            </span>
+        `;
+
+
+        searchResults.appendChild(
+            result
+        );
+
+    }
+
+
+    function showAllResults() {
+
+        searchResults.innerHTML = "";
+
+
+        cards.forEach(
+            function(card) {
+
+                addResult(card);
+
+            }
+        );
+
+    }
+
+
+    function openSearch() {
+
+        searchPanel.classList.add(
+            "active"
+        );
+
+
+        showAllResults();
+
+
+        setTimeout(
+            function() {
+
+                searchInput.focus();
+
+            },
+            200
+        );
+
+    }
+
 
     function closeSearchPanel() {
 
@@ -1451,9 +1745,16 @@
             "active"
         );
 
+
         searchInput.value = "";
 
     }
+
+
+    searchButton.addEventListener(
+        "click",
+        openSearch
+    );
 
 
     closeSearch.addEventListener(
@@ -1462,11 +1763,9 @@
     );
 
 
-    /* CLICK OUTSIDE */
-
     searchPanel.addEventListener(
         "click",
-        function (event) {
+        function(event) {
 
             if (
                 event.target ===
@@ -1481,11 +1780,9 @@
     );
 
 
-    /* ESC */
-
     document.addEventListener(
         "keydown",
-        function (event) {
+        function(event) {
 
             if (
                 event.key === "Escape"
@@ -1499,58 +1796,9 @@
     );
 
 
-    /* ALL RESULTS */
-
-    function showAllResults() {
-
-        searchResults.innerHTML = "";
-
-        cards.forEach(
-            function (card) {
-
-                addResult(card);
-
-            }
-        );
-
-    }
-
-
-    /* RESULT */
-
-    function addResult(card) {
-
-        const result =
-            document.createElement("a");
-
-        result.href =
-            card.href;
-
-        result.className =
-            "search-result";
-
-        result.innerHTML = `
-            <strong>
-                ${card.dataset.title}
-            </strong>
-
-            <span>
-                ${card.dataset.description}
-            </span>
-        `;
-
-        searchResults.appendChild(
-            result
-        );
-
-    }
-
-
-    /* SEARCH */
-
     searchInput.addEventListener(
         "input",
-        function () {
+        function() {
 
             const query =
                 searchInput.value
@@ -1559,27 +1807,6 @@
 
 
             searchResults.innerHTML = "";
-
-
-            const matches =
-                cards.filter(
-                    function (card) {
-
-                        const title =
-                            card.dataset.title
-                                .toLowerCase();
-
-                        const description =
-                            card.dataset.description
-                                .toLowerCase();
-
-                        return (
-                            title.includes(query) ||
-                            description.includes(query)
-                        );
-
-                    }
-                );
 
 
             if (
@@ -1591,6 +1818,29 @@
                 return;
 
             }
+
+
+            const matches =
+                cards.filter(
+                    function(card) {
+
+                        const title =
+                            card.dataset.title
+                                .toLowerCase();
+
+
+                        const description =
+                            card.dataset.description
+                                .toLowerCase();
+
+
+                        return (
+                            title.includes(query) ||
+                            description.includes(query)
+                        );
+
+                    }
+                );
 
 
             if (
@@ -1609,7 +1859,7 @@
 
 
             matches.forEach(
-                function (card) {
+                function(card) {
 
                     addResult(card);
 
