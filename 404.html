@@ -22,15 +22,26 @@
 
     <style>
 
+        /* ==================================================
+           VARIABLES
+           ================================================== */
+
         :root {
             --black: #000000;
             --red: #500000;
             --red-dark: #380000;
+
             --white: #ffffff;
             --text: #eeeeee;
             --muted: #999999;
+
             --border: #242424;
         }
+
+
+        /* ==================================================
+           RESET
+           ================================================== */
 
         * {
             margin: 0;
@@ -38,9 +49,11 @@
             box-sizing: border-box;
         }
 
+
         html {
             min-height: 100%;
         }
+
 
         body {
             min-height: 100vh;
@@ -65,13 +78,23 @@
             overflow-x: hidden;
         }
 
+
+        /* ==================================================
+           MAIN
+           ================================================== */
+
         .page {
             width: min(100%, 1100px);
 
-            position: relative;
-
             padding: 70px 0;
+
+            position: relative;
         }
+
+
+        /* ==================================================
+           TOP LINE
+           ================================================== */
 
         .top-line {
             width: 70px;
@@ -81,6 +104,11 @@
 
             background: var(--red);
         }
+
+
+        /* ==================================================
+           BRAND
+           ================================================== */
 
         .brand {
             display: inline-flex;
@@ -98,6 +126,7 @@
             text-decoration: none;
         }
 
+
         .brand-box {
             width: 36px;
             height: 36px;
@@ -113,7 +142,14 @@
             font-weight: 900;
         }
 
+
+        /* ==================================================
+           404
+           ================================================== */
+
         .code {
+            display: block;
+
             color: var(--red);
 
             font-size: clamp(
@@ -128,8 +164,23 @@
 
             letter-spacing: -12px;
 
+            text-decoration: none;
+
             user-select: none;
+
+            transition:
+                color 240ms ease;
         }
+
+
+        .code:hover {
+            color: var(--red-dark);
+        }
+
+
+        /* ==================================================
+           TEXT
+           ================================================== */
 
         h1 {
             margin-top: 45px;
@@ -149,6 +200,7 @@
             letter-spacing: -2px;
         }
 
+
         p {
             max-width: 600px;
 
@@ -161,6 +213,11 @@
             line-height: 1.8;
         }
 
+
+        /* ==================================================
+           BUTTONS
+           ================================================== */
+
         .actions {
             display: flex;
             flex-wrap: wrap;
@@ -169,6 +226,7 @@
 
             margin-top: 35px;
         }
+
 
         .button {
             min-height: 48px;
@@ -192,6 +250,9 @@
                 color 220ms ease;
         }
 
+
+        /* PRIMARY */
+
         .button-primary {
             background: var(--red);
 
@@ -200,11 +261,15 @@
             color: var(--white);
         }
 
+
         .button-primary:hover {
             background: var(--red-dark);
 
             border-color: var(--red-dark);
         }
+
+
+        /* SECONDARY */
 
         .button-secondary {
             background: transparent;
@@ -214,11 +279,17 @@
             color: var(--white);
         }
 
+
         .button-secondary:hover {
             background: #080808;
 
             border-color: #444444;
         }
+
+
+        /* ==================================================
+           FOOTER
+           ================================================== */
 
         .footer {
             margin-top: 80px;
@@ -233,19 +304,24 @@
         }
 
 
-        /* =============================================
+        /* ==================================================
            AUTOMATIC LIGHT THEME
-           ============================================= */
+           ================================================== */
 
         @media (prefers-color-scheme: light) {
 
             :root {
                 --black: #ffffff;
+
                 --white: #000000;
+
                 --text: #111111;
+
                 --muted: #666666;
+
                 --border: #d5d5d5;
             }
+
 
             .button-secondary:hover {
                 background: #f3f3f3;
@@ -256,9 +332,9 @@
         }
 
 
-        /* =============================================
+        /* ==================================================
            MOBILE
-           ============================================= */
+           ================================================== */
 
         @media (max-width: 600px) {
 
@@ -266,13 +342,16 @@
                 padding: 20px;
             }
 
+
             .page {
                 padding: 45px 0;
             }
 
+
             .brand {
                 margin-bottom: 50px;
             }
+
 
             .code {
                 font-size: 110px;
@@ -280,15 +359,18 @@
                 letter-spacing: -7px;
             }
 
+
             h1 {
                 margin-top: 35px;
 
                 font-size: 36px;
             }
 
+
             p {
                 font-size: 15px;
             }
+
 
             .actions {
                 flex-direction: column;
@@ -296,9 +378,11 @@
                 align-items: stretch;
             }
 
+
             .button {
                 width: 100%;
             }
+
 
             .footer {
                 margin-top: 60px;
@@ -307,9 +391,27 @@
         }
 
 
-        /* =============================================
+        /* ==================================================
+           SMALL PHONES
+           ================================================== */
+
+        @media (max-width: 380px) {
+
+            .code {
+                font-size: 95px;
+            }
+
+
+            h1 {
+                font-size: 32px;
+            }
+
+        }
+
+
+        /* ==================================================
            REDUCED MOTION
-           ============================================= */
+           ================================================== */
 
         @media (prefers-reduced-motion: reduce) {
 
@@ -323,28 +425,46 @@
     </style>
 </head>
 
+
 <body>
 
     <main class="page">
 
+
+        <!-- TOP LINE -->
+
         <div class="top-line"></div>
 
+
+        <!-- BRAND -->
+
         <a
-            href="index.html"
+            href="./index.html"
             class="brand"
+            aria-label="TürkBlocks ana sayfa"
         >
-            <span class="brand-box">TB</span>
+
+            <span class="brand-box">
+                TB
+            </span>
+
             TürkBlocks
+
         </a>
 
 
-        <div
+        <!-- 404 -->
+
+        <a
+            href="./index.html"
             class="code"
-            aria-label="404"
+            aria-label="Ana sayfaya dön"
         >
             404
-        </div>
+        </a>
 
+
+        <!-- MESSAGE -->
 
         <h1>
             Aradığın sayfa bulunamadı.
@@ -359,28 +479,34 @@
         </p>
 
 
+        <!-- LINK BUTTONS -->
+
         <div class="actions">
 
             <a
-    href="/"
-    class="button button-primary"
->
-    Ana Sayfaya Dön
-</a>
+                href="./"
+                class="button button-primary"
+            >
+                Ana Sayfaya Dön
+            </a>
+
 
             <a
                 href="mailto:salih-turkblocks@outlook.com.tr"
                 class="button button-secondary"
             >
-                Böyle Bir Sayfa Var Mı? BİLDİR
+                Böyle Bir Sayfamı Var? Bildirin
             </a>
 
         </div>
 
 
+        <!-- FOOTER -->
+
         <footer class="footer">
             © 2026 TürkBlocks
         </footer>
+
 
     </main>
 
