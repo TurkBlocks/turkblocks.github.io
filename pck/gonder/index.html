@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TürkBlocks — Oyun Gönder</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 15px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 650px;
+      animation: show .7s ease;
+    }
+
+    @keyframes show {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card {
+      background: #090909;
+      border: 1px solid #242424;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: #500000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .description {
+      color: #aaa;
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 11px;
+      border: 1px solid #303030;
+      background: #111;
+      color: white;
+      outline: none;
+      font-size: 15px;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #700000;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .file-box {
+      border: 2px dashed #333;
+      border-radius: 14px;
+      padding: 25px;
+      text-align: center;
+      transition: .2s;
+    }
+
+    .file-box:hover {
+      border-color: #700000;
+    }
+
+    input[type="file"] {
+      border: 0;
+      padding: 0;
+      background: transparent;
+    }
+
+    .file-info {
+      margin-top: 10px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .message {
+      display: none;
+      padding: 13px;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .message.error {
+      display: block;
+      background: #2a0909;
+      border: 1px solid #650000;
+      color: #ffb0b0;
+    }
+
+    .message.success {
+      display: block;
+      background: #092a13;
+      border: 1px solid #176b32;
+      color: #a9ffbe;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: 0;
+      border-radius: 12px;
+      background: #500000;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    button:hover {
+      background: #700000;
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .limit {
+      color: #777;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 22px;
+        border-radius: 16px;
+      }
+
+      h1 {
+        font-size: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="card">
+
+    <div class="logo">TB</div>
+
+    <h1>Oyun Gönder</h1>
+
+    <p class="description">
+      Oyununuzu TürkBlocks'a göndermek için aşağıdaki formu doldurun.
+      Yalnızca Godot PCK dosyaları kabul edilir.
+    </p>
+
+    <div id="message" class="message"></div>
+
+    <form id="uploadForm">
+
+      <div class="field">
+        <label for="gameName">Oyun adı</label>
+        <input
+          type="text"
+          id="gameName"
+          maxlength="100"
+          placeholder="Oyununuzun adı"
+          required
+        >
+      </div>
+
+      <div class="field">
+        <label for="description">Açıklama</label>
+        <textarea
+          id="description"
+          maxlength="1000"
+          placeholder="Oyununuzu kısaca açıklayın..."
+          required
+        ></textarea>
+      </div>
+
+      <div class="field">
+        <label for="version">Sürüm</label>
+        <input
+          type="text"
+          id="version"
+          maxlength="30"
+          placeholder="1.0.0"
+          required
+        >
+      </div>
+
+      <div class="field">
+        <label for="pck">PCK dosyası</label>
+
+        <div class="file-box">
+          <input
+            type="file"
+            id="pck"
+            accept=".pck"
+            required
+          >
+
+          <div id="fileInfo" class="file-info">
+            Henüz dosya seçilmedi.
+          </div>
+
+          <div class="limit">
+            Maksimum dosya boyutu: 500 MB
+          </div>
+        </div>
+      </div>
+
+      <button id="submitButton" type="submit">
+        🚀 Oyunu Gönder
+      </button>
+
+    </form>
+
+  </div>
+</div>
+
+<script>
+
+  // BURAYA APPS SCRIPT WEB APP URL'ni KOY
+  const API_URL = "BURAYA_APPS_SCRIPT_URL";
+
+  const MAX_SIZE = 500 * 1024 * 1024;
+
+  const form = document.getElementById("uploadForm");
+  const pckInput = document.getElementById("pck");
+  const fileInfo = document.getElementById("fileInfo");
+  const message = document.getElementById("message");
+  const submitButton = document.getElementById("submitButton");
+
+
+  function showMessage(text, type) {
+    message.textContent = text;
+    message.className = "message " + type;
+  }
+
+
+  function formatSize(bytes) {
+
+    if (bytes < 1024 * 1024) {
+      return (bytes / 1024).toFixed(1) + " KB";
+    }
+
+    return (bytes / 1024 / 1024).toFixed(2) + " MB";
+  }
+
+
+  pckInput.addEventListener("change", function () {
+
+    const file = this.files[0];
+
+    if (!file) {
+      fileInfo.textContent = "Henüz dosya seçilmedi.";
+      return;
+    }
+
+    if (!file.name.toLowerCase().endsWith(".pck")) {
+      this.value = "";
+      fileInfo.textContent = "";
+      showMessage("❌ Lütfen .pck uzantılı bir dosya seçin.", "error");
+      return;
+    }
+
+    if (file.size > MAX_SIZE) {
+      this.value = "";
+      fileInfo.textContent = "";
+      showMessage(
+        "❌ Dosya çok büyük. Maksimum 500 MB olabilir.",
+        "error"
+      );
+      return;
+    }
+
+    fileInfo.textContent =
+      "📦 " + file.name + " — " + formatSize(file.size);
+
+    message.className = "message";
+  });
+
+
+  function fileToBase64(file) {
+
+    return new Promise((resolve, reject) => {
+
+      const reader = new FileReader();
+
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(reader.error);
+
+      reader.readAsDataURL(file);
+    });
+  }
+
+
+  form.addEventListener("submit", async function (event) {
+
+    event.preventDefault();
+
+    const file = pckInput.files[0];
+
+    if (!file) {
+      showMessage("❌ Lütfen bir PCK dosyası seçin.", "error");
+      return;
+    }
+
+    if (!file.name.toLowerCase().endsWith(".pck")) {
+      showMessage("❌ Sadece .pck dosyaları kabul edilir.", "error");
+      return;
+    }
+
+    if (file.size > MAX_SIZE) {
+      showMessage("❌ Dosya 500 MB sınırını aşıyor.", "error");
+      return;
+    }
+
+    if (API_URL === "BURAYA_APPS_SCRIPT_URL") {
+      showMessage(
+        "⚠️ Önce Apps Script Web App URL'sini kodda belirtmelisin.",
+        "error"
+      );
+      return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.textContent = "⏳ Gönderiliyor...";
+
+    try {
+
+      const base64 = await fileToBase64(file);
+
+      const data = {
+        filename: file.name,
+        file: base64,
+
+        gameName:
+          document.getElementById("gameName").value.trim(),
+
+        description:
+          document.getElementById("description").value.trim(),
+
+        version:
+          document.getElementById("version").value.trim()
+      };
+
+      const response = await fetch(API_URL, {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(data)
+
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+
+        showMessage(
+          "✅ Oyununuz başarıyla gönderildi!",
+          "success"
+        );
+
+        form.reset();
+        fileInfo.textContent = "Henüz dosya seçilmedi.";
+
+      } else {
+
+        showMessage(
+          "❌ " + (result.message || "Yükleme başarısız."),
+          "error"
+        );
+      }
+
+    } catch (error) {
+
+      console.error(error);
+
+      showMessage(
+        "❌ Sunucuya bağlanırken bir hata oluştu.",
+        "error"
+      );
+
+    } finally {
+
+      submitButton.disabled = false;
+      submitButton.textContent = "Oyunu Gönder";
+    }
+
+  });
+
+</script>
+
+</body>
+</html>
