@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Şartlar | TürkBlocks</title>
+
+    <meta
+        name="description"
+        content="TürkBlocks kullanım şartları ve ilgili belgeler."
+    >
+
+    <style>
+        :root {
+            --black: #000000;
+            --surface: #0a0a0a;
+            --surface-hover: #111111;
+            --border: #202020;
+            --primary: #500000;
+            --primary-light: #730000;
+            --text: #ffffff;
+            --muted: #a5a5a5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--black);
+            color: var(--text);
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           ANIMATIONS
+        ========================= */
+
+        @keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(45px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .animate {
+            opacity: 0;
+            animation:
+                rise 0.8s cubic-bezier(.2,.8,.2,1)
+                forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+
+        .delay-4 {
+            animation-delay: 0.4s;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        header {
+            position: relative;
+
+            min-height: 330px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            padding: 65px 20px;
+
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(80, 0, 0, 0.20),
+                    transparent 55%
+                ),
+                #000000;
+        }
+
+        header::before {
+            content: "";
+
+            position: absolute;
+
+            width: 500px;
+            height: 500px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(80, 0, 0, 0.08);
+
+            filter: blur(100px);
+
+            animation:
+                fade 1.5s ease forwards;
+        }
+
+        .hero {
+            position: relative;
+            z-index: 2;
+        }
+
+        .brand {
+            display: inline-block;
+
+            color: #ffffff;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            letter-spacing: 4px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 18px;
+
+            opacity: 0;
+
+            animation:
+                rise 0.8s cubic-bezier(.2,.8,.2,1)
+                0.1s forwards;
+        }
+
+        h1 {
+            font-size: clamp(42px, 7vw, 72px);
+
+            line-height: 1;
+
+            letter-spacing: -2px;
+
+            margin-bottom: 20px;
+
+            font-weight: 800;
+
+            opacity: 0;
+
+            animation:
+                rise 0.8s cubic-bezier(.2,.8,.2,1)
+                0.25s forwards;
+        }
+
+        h1 span {
+            color: var(--primary-light);
+        }
+
+        .hero-description {
+            max-width: 620px;
+
+            margin: auto;
+
+            color: var(--muted);
+
+            font-size: 16px;
+
+            opacity: 0;
+
+            animation:
+                rise 0.8s cubic-bezier(.2,.8,.2,1)
+                0.4s forwards;
+        }
+
+        /* =========================
+           CONTENT
+        ========================= */
+
+        main {
+            width: min(950px, calc(100% - 32px));
+
+            margin: 50px auto 80px;
+        }
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 18px;
+        }
+
+        /* =========================
+           LINK CARDS
+        ========================= */
+
+        .card {
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+            min-height: 155px;
+
+            padding: 28px;
+
+            background: var(--surface);
+
+            border: 1px solid var(--border);
+
+            border-radius: 18px;
+
+            text-decoration: none;
+
+            color: white;
+
+            overflow: hidden;
+
+            opacity: 0;
+
+            animation:
+                rise 0.8s cubic-bezier(.2,.8,.2,1)
+                forwards;
+
+            transition:
+                transform 0.3s ease,
+                background 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .card:nth-child(1) {
+            animation-delay: 0.5s;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.6s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.7s;
+        }
+
+        .card:nth-child(4) {
+            animation-delay: 0.8s;
+        }
+
+        .card::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 0;
+
+            width: 3px;
+            height: 100%;
+
+            background: var(--primary);
+
+            transform:
+                scaleY(0);
+
+            transform-origin: bottom;
+
+            transition:
+                transform 0.35s ease;
+        }
+
+        .card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 150px;
+            height: 150px;
+
+            right: -70px;
+            bottom: -80px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(80, 0, 0, 0.12);
+
+            filter: blur(25px);
+
+            opacity: 0;
+
+            transition:
+                opacity 0.35s ease;
+        }
+
+        .card:hover {
+            transform:
+                translateY(-6px);
+
+            background:
+                var(--surface-hover);
+
+            border-color:
+                #3a0000;
+
+            box-shadow:
+                0 15px 40px
+                rgba(0, 0, 0, 0.45);
+        }
+
+        .card:hover::before {
+            transform:
+                scaleY(1);
+        }
+
+        .card:hover::after {
+            opacity: 1;
+        }
+
+        .card-content {
+            position: relative;
+
+            z-index: 2;
+
+            width: 100%;
+        }
+
+        .card-label {
+            display: block;
+
+            color: #777777;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 8px;
+        }
+
+        .card h2 {
+            font-size: 21px;
+
+            margin-bottom: 7px;
+
+            font-weight: 700;
+        }
+
+        .card p {
+            color: #999999;
+
+            font-size: 14px;
+
+            margin: 0;
+
+            max-width: 440px;
+        }
+
+        .arrow {
+            position: absolute;
+
+            right: 25px;
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            color: #555555;
+
+            font-size: 25px;
+
+            transition:
+                transform 0.3s ease,
+                color 0.3s ease;
+        }
+
+        .card:hover .arrow {
+            color: #ffffff;
+
+            transform:
+                translate(5px, -50%);
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+
+            border-top: 1px solid #111111;
+
+            padding: 35px 20px 50px;
+
+            color: #666666;
+
+            opacity: 0;
+
+            animation:
+                fade 1s ease
+                1s forwards;
+        }
+
+        footer p {
+            color: #666666;
+
+            font-size: 13px;
+
+            margin-bottom: 8px;
+        }
+
+        footer a {
+            color: #888888;
+
+            text-decoration: none;
+
+            transition:
+                color 0.25s ease;
+        }
+
+        footer a:hover {
+            color: #ffffff;
+        }
+
+        /* =========================
+           SELECTION
+        ========================= */
+
+        ::selection {
+            background: var(--primary);
+
+            color: #ffffff;
+        }
+
+        /* =========================
+           SCROLLBAR
+        ========================= */
+
+        ::-webkit-scrollbar {
+            width: 9px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #250000;
+
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            header {
+                min-height: 290px;
+
+                padding: 55px 20px;
+            }
+
+            .brand {
+                font-size: 11px;
+
+                letter-spacing: 3px;
+            }
+
+            h1 {
+                font-size: 43px;
+
+                letter-spacing: -1.5px;
+            }
+
+            .hero-description {
+                font-size: 14px;
+
+                line-height: 1.7;
+            }
+
+            main {
+                width: calc(100% - 20px);
+
+                margin-top: 30px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+
+                gap: 14px;
+            }
+
+            .card {
+                min-height: 140px;
+
+                padding: 24px;
+
+                border-radius: 15px;
+            }
+
+            .card:hover {
+                transform:
+                    translateY(-3px);
+            }
+
+            .card h2 {
+                font-size: 19px;
+            }
+
+            .card p {
+                font-size: 13px;
+
+                padding-right: 25px;
+            }
+
+            .arrow {
+                right: 18px;
+
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 400px) {
+
+            header {
+                min-height: 270px;
+
+                padding: 45px 15px;
+            }
+
+            h1 {
+                font-size: 37px;
+            }
+
+            main {
+                width: calc(100% - 14px);
+            }
+
+            .card {
+                padding: 21px;
+            }
+        }
+
+        /* =========================
+           REDUCED MOTION
+        ========================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="hero">
+
+        <div class="brand">
+            TürkBlocks
+        </div>
+
+        <h1>
+            <span>Şartlar</span>
+        </h1>
+
+        <p class="hero-description">
+            TürkBlocks hizmetlerini kullanırken geçerli olan şartlar,
+            politikalar ve ilgili belgeler.
+        </p>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <div class="cards">
+
+        <!-- 1 -->
+
+        <a
+            class="card"
+            href="/sartlar/kullanim/"
+        >
+
+            <div class="card-content">
+
+                <span class="card-label">
+                    Belge
+                </span>
+
+                <h2>
+                    Kullanım Şartları
+                </h2>
+
+                <p>
+                    TürkBlocks hizmetlerinin kullanımına ilişkin
+                    temel şartları ve kuralları inceleyin.
+                </p>
+
+            </div>
+
+            <span class="arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <!-- 2 -->
+
+        <a
+            class="card"
+            href="/gizlilik/"
+        >
+
+            <div class="card-content">
+
+                <span class="card-label">
+                    Belge
+                </span>
+
+                <h2>
+                    Gizlilik Politikası
+                </h2>
+
+                <p>
+                    Kişisel bilgilerin ve kullanıcı verilerinin
+                    nasıl ele alındığını öğrenin.
+                </p>
+
+            </div>
+
+            <span class="arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <!-- 3 -->
+
+        <a
+            class="card"
+            href="/sartlar/cerezler/"
+        >
+
+            <div class="card-content">
+
+                <span class="card-label">
+                    Belge
+                </span>
+
+                <h2>
+                    Çerez Politikası
+                </h2>
+
+                <p>
+                    Web sitemizde kullanılan çerezler ve
+                    benzer teknolojiler hakkında bilgi alın.
+                </p>
+
+            </div>
+
+            <span class="arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <!-- 4 -->
+
+        <a
+            class="card"
+            href="/sartlar/uygun-kullanim/"
+        >
+
+            <div class="card-content">
+
+                <span class="card-label">
+                    Belge
+                </span>
+
+                <h2>
+                    Uygun Kullanım Politikası
+                </h2>
+
+                <p>
+                    TürkBlocks hizmetlerinin güvenli ve uygun
+                    şekilde kullanılmasına ilişkin kurallar.
+                </p>
+
+            </div>
+
+            <span class="arrow">
+                →
+            </span>
+
+        </a>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <p>
+        © 2026 TürkBlocks. Tüm hakları saklıdır.
+    </p>
+
+    <p>
+        <a href="/">
+            Ana Sayfa
+        </a>
+    </p>
+
+</footer>
+
+</body>
+</html>
