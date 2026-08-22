@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>TürkBlocks — Oyun Gönder</title>
 
   <style>
@@ -17,15 +18,18 @@
       font-family: Arial, sans-serif;
       background: #000;
       color: #fff;
+
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+
       padding: 30px 15px;
     }
 
     .container {
       width: 100%;
       max-width: 650px;
+
       animation: show .7s ease;
     }
 
@@ -43,21 +47,26 @@
 
     .card {
       background: #090909;
+
       border: 1px solid #242424;
       border-radius: 20px;
+
       padding: 30px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
     }
 
     .logo {
       width: 64px;
       height: 64px;
+
       border-radius: 16px;
+
       background: #500000;
 
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
 
       font-size: 25px;
       font-weight: bold;
@@ -72,25 +81,21 @@
 
     .description {
       color: #aaa;
+
       line-height: 1.6;
+
       margin-bottom: 28px;
-    }
-
-    .field {
-      margin-bottom: 20px;
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 8px;
     }
 
     .file-box {
       border: 2px dashed #333;
+
       border-radius: 14px;
+
       padding: 25px;
+
       text-align: center;
+
       transition: .2s;
     }
 
@@ -100,500 +105,511 @@
 
     input[type="file"] {
       width: 100%;
+
       border: 0;
-      padding: 0;
+
       background: transparent;
+
       color: white;
     }
 
     .file-info {
       margin-top: 10px;
+
       color: #aaa;
+
       font-size: 14px;
+
       word-break: break-word;
     }
 
     .limit {
       color: #777;
+
       font-size: 13px;
+
       margin-top: 8px;
     }
 
     .message {
       display: none;
+
       padding: 13px;
+
       border-radius: 10px;
+
       margin-bottom: 18px;
+
       line-height: 1.5;
     }
 
     .message.error {
       display: block;
+
       background: #2a0909;
+
       border: 1px solid #650000;
+
       color: #ffb0b0;
     }
 
     .message.success {
       display: block;
+
       background: #092a13;
+
       border: 1px solid #176b32;
+
       color: #a9ffbe;
     }
 
     .message.info {
       display: block;
+
       background: #111;
+
       border: 1px solid #333;
+
       color: #ddd;
     }
 
     button {
       width: 100%;
+
       padding: 15px;
+
+      margin-top: 20px;
+
       border: 0;
+
       border-radius: 12px;
+
       background: #500000;
+
       color: white;
 
       font-size: 16px;
+
       font-weight: bold;
 
       cursor: pointer;
+
       transition: .2s;
     }
 
     button:hover {
       background: #700000;
+
       transform: translateY(-1px);
     }
 
     button:disabled {
       opacity: .5;
+
       cursor: not-allowed;
+
       transform: none;
     }
 
     @media (max-width: 600px) {
+
       .card {
         padding: 22px;
+
         border-radius: 16px;
       }
 
       h1 {
         font-size: 25px;
       }
+
     }
   </style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <div class="card">
+  <div class="card">
 
-      <div class="logo">
-        TB
-      </div>
+    <div class="logo">
+      TB
+    </div>
 
-      <h1>
-        Oyun Gönder
-      </h1>
+    <h1>
+      Oyun Gönder
+    </h1>
 
-      <p class="description">
-        Oyununuzu TürkBlocks'a göndermek için
-        aşağıdan PCK dosyanızı seçin.
-      </p>
+    <p class="description">
+      TürkBlocks'a göndermek istediğiniz
+      PCK dosyasını seçin.
+    </p>
 
-      <div id="message" class="message"></div>
+    <div id="message" class="message"></div>
 
-      <form id="uploadForm">
+    <form id="uploadForm">
 
-        <div class="field">
+      <div class="file-box">
 
-          <label for="pck">
-            PCK dosyası
-          </label>
+        <input
+          type="file"
+          id="pck"
+          accept=".pck"
+          required
+        >
 
-          <div class="file-box">
-
-            <input
-              type="file"
-              id="pck"
-              accept=".pck"
-              required
-            >
-
-            <div id="fileInfo" class="file-info">
-              Henüz dosya seçilmedi.
-            </div>
-
-            <div class="limit">
-              Maksimum dosya boyutu: 500 MB
-            </div>
-
-          </div>
-
+        <div id="fileInfo" class="file-info">
+          Henüz dosya seçilmedi.
         </div>
 
-        <button
-          id="submitButton"
-          type="submit"
-        >
-          Oyunu Gönder
-        </button>
+        <div class="limit">
+          Maksimum dosya boyutu: 500 MB
+        </div>
 
-      </form>
+      </div>
 
-    </div>
+      <button
+        id="submitButton"
+        type="submit"
+      >
+        Oyunu Gönder
+      </button>
+
+    </form>
 
   </div>
 
+</div>
 
-  <script>
+<script>
 
-    /*
-     * Apps Script Web App URL
-     */
-    const API_URL =
-      "https://script.google.com/macros/s/AKfycbwyXWwuE2dBBVXk3DMQP_91xKo5SWXgKahQhIQPZb9-xGwYwkRuZBidCnqYbwxvtB4M/exec";
+const API_URL =
+"https://script.google.com/macros/s/AKfycbwyXWwuE2dBBVXk3DMQP_91xKo5SWXgKahQhIQPZb9-xGwYwkRuZBidCnqYbwxvtB4M/exec";
 
 
-    /*
-     * Maksimum dosya boyutu
-     */
-    const MAX_SIZE =
-      500 * 1024 * 1024;
+const MAX_SIZE =
+500 * 1024 * 1024;
 
 
-    const form =
-      document.getElementById("uploadForm");
+const form =
+document.getElementById("uploadForm");
 
-    const pckInput =
-      document.getElementById("pck");
+const pckInput =
+document.getElementById("pck");
 
-    const fileInfo =
-      document.getElementById("fileInfo");
+const fileInfo =
+document.getElementById("fileInfo");
 
-    const message =
-      document.getElementById("message");
+const message =
+document.getElementById("message");
 
-    const submitButton =
-      document.getElementById("submitButton");
-
-
-    /*
-     * Mesaj göster
-     */
-    function showMessage(text, type) {
-
-      message.textContent = text;
-
-      message.className =
-        "message " + type;
-    }
+const submitButton =
+document.getElementById("submitButton");
 
 
-    /*
-     * Dosya boyutu
-     */
-    function formatSize(bytes) {
+function showMessage(text, type) {
 
-      if (bytes < 1024 * 1024) {
+  message.textContent = text;
 
-        return (
-          (bytes / 1024).toFixed(1)
-          + " KB"
-        );
+  message.className =
+    "message " + type;
 
-      }
-
-      return (
-        (bytes / 1024 / 1024).toFixed(2)
-        + " MB"
-      );
-    }
+}
 
 
-    /*
-     * PCK seçildiğinde kontrol
-     */
-    pckInput.addEventListener(
-      "change",
-      function () {
+function formatSize(bytes) {
 
-        const file =
-          this.files[0];
+  if (bytes < 1024 * 1024) {
 
-        if (!file) {
-
-          fileInfo.textContent =
-            "Henüz dosya seçilmedi.";
-
-          return;
-        }
-
-
-        /*
-         * PCK kontrolü
-         */
-        if (
-          !file.name
-            .toLowerCase()
-            .endsWith(".pck")
-        ) {
-
-          this.value = "";
-
-          fileInfo.textContent = "";
-
-          showMessage(
-            "❌ Sadece .pck dosyaları kabul edilir.",
-            "error"
-          );
-
-          return;
-        }
-
-
-        /*
-         * Boyut kontrolü
-         */
-        if (file.size > MAX_SIZE) {
-
-          this.value = "";
-
-          fileInfo.textContent = "";
-
-          showMessage(
-            "❌ Dosya çok büyük. Maksimum 500 MB olabilir.",
-            "error"
-          );
-
-          return;
-        }
-
-
-        fileInfo.textContent =
-          "📦 " +
-          file.name +
-          " — " +
-          formatSize(file.size);
-
-        message.className =
-          "message";
-
-      }
+    return (
+      (bytes / 1024).toFixed(1)
+      + " KB"
     );
 
+  }
+
+  return (
+    (bytes / 1024 / 1024).toFixed(2)
+    + " MB"
+  );
+
+}
+
+
+pckInput.addEventListener(
+"change",
+function() {
+
+  const file =
+    this.files[0];
+
+  if (!file) {
+
+    fileInfo.textContent =
+      "Henüz dosya seçilmedi.";
+
+    return;
+
+  }
+
+
+  if (
+    !file.name
+      .toLowerCase()
+      .endsWith(".pck")
+  ) {
+
+    this.value = "";
+
+    fileInfo.textContent = "";
+
+    showMessage(
+      "❌ Sadece .pck dosyaları kabul edilir.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if (file.size > MAX_SIZE) {
+
+    this.value = "";
+
+    fileInfo.textContent = "";
+
+    showMessage(
+      "❌ Dosya 500 MB sınırını aşıyor.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  fileInfo.textContent =
+    "📦 " +
+    file.name +
+    " — " +
+    formatSize(file.size);
+
+  message.className =
+    "message";
+
+});
+
+
+function fileToBase64(file) {
+
+  return new Promise(
+    function(resolve, reject) {
+
+      const reader =
+        new FileReader();
+
+      reader.onload =
+        function() {
+
+          resolve(reader.result);
+
+        };
+
+      reader.onerror =
+        function() {
+
+          reject(reader.error);
+
+        };
+
+      reader.readAsDataURL(file);
+
+    }
+  );
+
+}
+
+
+form.addEventListener(
+"submit",
+async function(event) {
+
+  event.preventDefault();
+
+
+  const file =
+    pckInput.files[0];
+
+
+  if (!file) {
+
+    showMessage(
+      "❌ Lütfen bir PCK dosyası seçin.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if (
+    !file.name
+      .toLowerCase()
+      .endsWith(".pck")
+  ) {
+
+    showMessage(
+      "❌ Sadece .pck dosyaları kabul edilir.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  if (file.size > MAX_SIZE) {
+
+    showMessage(
+      "❌ Dosya 500 MB sınırını aşıyor.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  submitButton.disabled =
+    true;
+
+  submitButton.textContent =
+    "⏳ Hazırlanıyor...";
+
+
+  showMessage(
+    "PCK hazırlanıyor...",
+    "info"
+  );
+
+
+  try {
+
+    const base64 =
+      await fileToBase64(file);
+
+
+    const data = {
+
+      filename:
+        file.name,
+
+      file:
+        base64
+
+    };
+
+
+    submitButton.textContent =
+      "⏳ Gönderiliyor...";
+
 
     /*
-     * Dosyayı Base64'e çevir
+     * Apps Script'e JSON gönderiyoruz.
+     *
+     * Apps Script tarafında doPost(e)
+     * JSON.parse(e.postData.contents)
+     * kullanacak.
      */
-    function fileToBase64(file) {
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: "POST",
 
-      return new Promise(
-        (resolve, reject) => {
+          headers: {
+            "Content-Type":
+              "text/plain;charset=utf-8"
+          },
 
-          const reader =
-            new FileReader();
-
-          reader.onload =
-            () => resolve(reader.result);
-
-          reader.onerror =
-            () => reject(reader.error);
-
-          reader.readAsDataURL(file);
-
+          body:
+            JSON.stringify(data)
         }
       );
+
+
+    if (!response.ok) {
+
+      throw new Error(
+        "HTTP " +
+        response.status
+      );
+
     }
 
 
-    /*
-     * Form gönderme
-     */
-    form.addEventListener(
-      "submit",
-      async function (event) {
-
-        event.preventDefault();
+    const result =
+      await response.json();
 
 
-        const file =
-          pckInput.files[0];
+    if (result.success) {
+
+      showMessage(
+        "✅ PCK başarıyla gönderildi!",
+        "success"
+      );
+
+      form.reset();
+
+      fileInfo.textContent =
+        "Henüz dosya seçilmedi.";
+
+    }
+
+    else {
+
+      showMessage(
+        "❌ " +
+        (
+          result.message ||
+          "Yükleme başarısız."
+        ),
+        "error"
+      );
+
+    }
 
 
-        if (!file) {
+  }
 
-          showMessage(
-            "❌ Lütfen bir PCK dosyası seçin.",
-            "error"
-          );
+  catch(error) {
 
-          return;
-        }
+    console.error(error);
 
-
-        if (
-          !file.name
-            .toLowerCase()
-            .endsWith(".pck")
-        ) {
-
-          showMessage(
-            "❌ Sadece .pck dosyaları kabul edilir.",
-            "error"
-          );
-
-          return;
-        }
-
-
-        if (file.size > MAX_SIZE) {
-
-          showMessage(
-            "❌ Dosya 500 MB sınırını aşıyor.",
-            "error"
-          );
-
-          return;
-        }
-
-
-        submitButton.disabled =
-          true;
-
-        submitButton.textContent =
-          "⏳ Dosya hazırlanıyor...";
-
-
-        showMessage(
-          "Dosya hazırlanıyor...",
-          "info"
-        );
-
-
-        try {
-
-          /*
-           * PCK → Base64
-           */
-          const base64 =
-            await fileToBase64(file);
-
-
-          /*
-           * Apps Script'e gönderilecek veri
-           */
-          const data = {
-
-            filename:
-              file.name,
-
-            file:
-              base64
-
-          };
-
-
-          submitButton.textContent =
-            "⏳ TürkBlocks'a gönderiliyor...";
-
-
-          /*
-           * Apps Script
-           */
-          const response =
-            await fetch(API_URL, {
-
-              method: "POST",
-
-              headers: {
-
-                "Content-Type":
-                  "text/plain;charset=utf-8"
-
-              },
-
-              body:
-                JSON.stringify(data)
-
-            });
-
-
-          if (!response.ok) {
-
-            throw new Error(
-              "HTTP " +
-              response.status
-            );
-          }
-
-
-          const result =
-            await response.json();
-
-
-          if (result.success) {
-
-            showMessage(
-              "✅ PCK başarıyla gönderildi!",
-              "success"
-            );
-
-
-            form.reset();
-
-            fileInfo.textContent =
-              "Henüz dosya seçilmedi.";
-
-          }
-
-          else {
-
-            showMessage(
-              "❌ " +
-              (
-                result.message ||
-                "Yükleme başarısız."
-              ),
-              "error"
-            );
-
-          }
-
-
-        } catch (error) {
-
-          console.error(
-            "TürkBlocks Upload Error:",
-            error
-          );
-
-          showMessage(
-            "❌ Sunucuya bağlanırken bir hata oluştu.",
-            "error"
-          );
-
-        }
-
-        finally {
-
-          submitButton.disabled =
-            false;
-
-          submitButton.textContent =
-            "Oyunu Gönder";
-
-        }
-
-      }
+    showMessage(
+      "❌ Sunucuya bağlanırken bir hata oluştu.",
+      "error"
     );
 
-  </script>
+  }
+
+
+  finally {
+
+    submitButton.disabled =
+      false;
+
+    submitButton.textContent =
+      "Oyunu Gönder";
+
+  }
+
+});
+
+</script>
 
 </body>
 </html>
