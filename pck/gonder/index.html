@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>TürkBlocks — Oyun Gönder</title>
 
   <style>
@@ -18,18 +17,15 @@
       font-family: Arial, sans-serif;
       background: #000;
       color: #fff;
-
       display: flex;
       justify-content: center;
       align-items: center;
-
       padding: 30px 15px;
     }
 
     .container {
       width: 100%;
       max-width: 650px;
-
       animation: show .7s ease;
     }
 
@@ -49,24 +45,19 @@
       background: #090909;
       border: 1px solid #242424;
       border-radius: 20px;
-
       padding: 30px;
-
-      box-shadow:
-        0 20px 60px rgba(0, 0, 0, .5);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
     }
 
     .logo {
       width: 64px;
       height: 64px;
-
       border-radius: 16px;
-
       background: #500000;
 
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
 
       font-size: 25px;
       font-weight: bold;
@@ -82,7 +73,6 @@
     .description {
       color: #aaa;
       line-height: 1.6;
-
       margin-bottom: 28px;
     }
 
@@ -92,47 +82,15 @@
 
     label {
       display: block;
-
       font-weight: bold;
-
       margin-bottom: 8px;
-    }
-
-    input,
-    textarea {
-      width: 100%;
-
-      padding: 13px 14px;
-
-      border-radius: 11px;
-      border: 1px solid #303030;
-
-      background: #111;
-      color: white;
-
-      outline: none;
-
-      font-size: 15px;
-    }
-
-    input:focus,
-    textarea:focus {
-      border-color: #700000;
-    }
-
-    textarea {
-      min-height: 110px;
-      resize: vertical;
     }
 
     .file-box {
       border: 2px dashed #333;
       border-radius: 14px;
-
       padding: 25px;
-
       text-align: center;
-
       transition: .2s;
     }
 
@@ -141,110 +99,84 @@
     }
 
     input[type="file"] {
+      width: 100%;
       border: 0;
       padding: 0;
-
       background: transparent;
+      color: white;
     }
 
     .file-info {
       margin-top: 10px;
-
       color: #aaa;
-
       font-size: 14px;
       word-break: break-word;
     }
 
     .limit {
       color: #777;
-
       font-size: 13px;
-
       margin-top: 8px;
     }
 
     .message {
       display: none;
-
       padding: 13px;
-
       border-radius: 10px;
-
       margin-bottom: 18px;
-
       line-height: 1.5;
     }
 
     .message.error {
       display: block;
-
       background: #2a0909;
-
       border: 1px solid #650000;
-
       color: #ffb0b0;
     }
 
     .message.success {
       display: block;
-
       background: #092a13;
-
       border: 1px solid #176b32;
-
       color: #a9ffbe;
     }
 
     .message.info {
       display: block;
-
       background: #111;
-
       border: 1px solid #333;
-
       color: #ddd;
     }
 
     button {
       width: 100%;
-
       padding: 15px;
-
       border: 0;
       border-radius: 12px;
-
       background: #500000;
-
       color: white;
 
       font-size: 16px;
       font-weight: bold;
 
       cursor: pointer;
-
       transition: .2s;
     }
 
     button:hover {
       background: #700000;
-
       transform: translateY(-1px);
     }
 
     button:disabled {
       opacity: .5;
-
       cursor: not-allowed;
-
       transform: none;
     }
 
     @media (max-width: 600px) {
-
       .card {
         padding: 22px;
-
         border-radius: 16px;
       }
 
@@ -271,68 +203,13 @@
 
       <p class="description">
         Oyununuzu TürkBlocks'a göndermek için
-        aşağıdaki formu doldurun.
-        Yalnızca Godot PCK dosyaları kabul edilir.
+        aşağıdan PCK dosyanızı seçin.
       </p>
 
       <div id="message" class="message"></div>
 
       <form id="uploadForm">
 
-        <!-- Oyun adı -->
-        <div class="field">
-
-          <label for="gameName">
-            Oyun adı
-          </label>
-
-          <input
-            type="text"
-            id="gameName"
-            maxlength="100"
-            placeholder="Oyununuzun adı"
-            required
-          >
-
-        </div>
-
-
-        <!-- Açıklama -->
-        <div class="field">
-
-          <label for="gameDescription">
-            Açıklama
-          </label>
-
-          <textarea
-            id="gameDescription"
-            maxlength="1000"
-            placeholder="Oyununuzu kısaca açıklayın..."
-            required
-          ></textarea>
-
-        </div>
-
-
-        <!-- Sürüm -->
-        <div class="field">
-
-          <label for="version">
-            Sürüm
-          </label>
-
-          <input
-            type="text"
-            id="version"
-            maxlength="30"
-            placeholder="1.0.0"
-            required
-          >
-
-        </div>
-
-
-        <!-- PCK -->
         <div class="field">
 
           <label for="pck">
@@ -360,7 +237,6 @@
 
         </div>
 
-
         <button
           id="submitButton"
           type="submit"
@@ -378,14 +254,14 @@
   <script>
 
     /*
-     * TÜRKBlocks Apps Script Web App
+     * Apps Script Web App URL
      */
     const API_URL =
       "https://script.google.com/macros/s/AKfycbwyXWwuE2dBBVXk3DMQP_91xKo5SWXgKahQhIQPZb9-xGwYwkRuZBidCnqYbwxvtB4M/exec";
 
 
     /*
-     * Maksimum PCK boyutu
+     * Maksimum dosya boyutu
      */
     const MAX_SIZE =
       500 * 1024 * 1024;
@@ -420,7 +296,7 @@
 
 
     /*
-     * Dosya boyutunu okunabilir hale getir
+     * Dosya boyutu
      */
     function formatSize(bytes) {
 
@@ -441,7 +317,7 @@
 
 
     /*
-     * PCK seçildiğinde kontrol et
+     * PCK seçildiğinde kontrol
      */
     pckInput.addEventListener(
       "change",
@@ -460,7 +336,7 @@
 
 
         /*
-         * Uzantı kontrolü
+         * PCK kontrolü
          */
         if (
           !file.name
@@ -499,9 +375,6 @@
         }
 
 
-        /*
-         * Dosya bilgisi
-         */
         fileInfo.textContent =
           "📦 " +
           file.name +
@@ -540,7 +413,7 @@
 
 
     /*
-     * FORM GÖNDER
+     * Form gönderme
      */
     form.addEventListener(
       "submit",
@@ -553,9 +426,6 @@
           pckInput.files[0];
 
 
-        /*
-         * Dosya seçilmiş mi?
-         */
         if (!file) {
 
           showMessage(
@@ -567,9 +437,6 @@
         }
 
 
-        /*
-         * PCK kontrolü
-         */
         if (
           !file.name
             .toLowerCase()
@@ -585,9 +452,6 @@
         }
 
 
-        /*
-         * Boyut kontrolü
-         */
         if (file.size > MAX_SIZE) {
 
           showMessage(
@@ -599,10 +463,8 @@
         }
 
 
-        /*
-         * Gönderme başladı
-         */
-        submitButton.disabled = true;
+        submitButton.disabled =
+          true;
 
         submitButton.textContent =
           "⏳ Dosya hazırlanıyor...";
@@ -632,25 +494,7 @@
               file.name,
 
             file:
-              base64,
-
-            gameName:
-              document
-                .getElementById("gameName")
-                .value
-                .trim(),
-
-            description:
-              document
-                .getElementById("gameDescription")
-                .value
-                .trim(),
-
-            version:
-              document
-                .getElementById("version")
-                .value
-                .trim()
+              base64
 
           };
 
@@ -661,12 +505,6 @@
 
           /*
            * Apps Script
-           *
-           * application/json yerine
-           * text/plain kullanıyoruz.
-           *
-           * Böylece CORS preflight
-           * ihtimalini azaltıyoruz.
            */
           const response =
             await fetch(API_URL, {
@@ -674,8 +512,10 @@
               method: "POST",
 
               headers: {
+
                 "Content-Type":
                   "text/plain;charset=utf-8"
+
               },
 
               body:
@@ -684,48 +524,34 @@
             });
 
 
-          /*
-           * HTTP başarılı mı?
-           */
           if (!response.ok) {
 
             throw new Error(
               "HTTP " +
               response.status
             );
-
           }
 
 
-          /*
-           * Apps Script cevabı
-           */
           const result =
             await response.json();
 
 
-          /*
-           * Başarılı
-           */
           if (result.success) {
 
             showMessage(
-              "✅ Oyununuz başarıyla gönderildi!",
+              "✅ PCK başarıyla gönderildi!",
               "success"
             );
 
 
             form.reset();
 
-
             fileInfo.textContent =
               "Henüz dosya seçilmedi.";
 
           }
 
-          /*
-           * Apps Script hata döndürdü
-           */
           else {
 
             showMessage(
@@ -747,17 +573,14 @@
             error
           );
 
-
-          /*
-           * Kullanıcıya göster
-           */
           showMessage(
             "❌ Sunucuya bağlanırken bir hata oluştu.",
             "error"
           );
 
+        }
 
-        } finally {
+        finally {
 
           submitButton.disabled =
             false;
