@@ -2,189 +2,162 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>404 - TÜRKBLOCKS</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta
+        name="theme-color"
+        content="#500000"
+    >
+
+    <title>404 — TürkBlocks</title>
+
+    <!-- Google Sans -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap"
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap"
         rel="stylesheet"
     >
 
     <style>
-        :root {
-            color-scheme: light dark;
 
-            --bg: #000000;
-            --surface: #111111;
-            --text: #ffffff;
-            --muted: #a5a5a5;
-            --border: #292929;
+        :root {
             --accent: #500000;
             --accent-hover: #680000;
+
+            --background: #f5f5f5;
+            --surface: #ffffff;
+
+            --text: #111111;
+            --muted: #6b6b6b;
+
+            --border: #e5e5e5;
+
+            --shadow:
+                0 15px 45px rgba(0, 0, 0, 0.07);
         }
 
-        @media (prefers-color-scheme: light) {
+
+        /* Koyu tema */
+
+        @media (prefers-color-scheme: dark) {
+
             :root {
-                --bg: #f7f7f7;
-                --surface: #ffffff;
-                --text: #111111;
-                --muted: #666666;
-                --border: #dddddd;
-                --accent: #500000;
-                --accent-hover: #680000;
+                --background: #0d0d0d;
+                --surface: #151515;
+
+                --text: #f3f3f3;
+                --muted: #a1a1a1;
+
+                --border: #292929;
+
+                --shadow:
+                    0 15px 45px rgba(0, 0, 0, 0.35);
             }
+
         }
+
 
         * {
             box-sizing: border-box;
         }
 
+
         html,
         body {
             width: 100%;
-            min-height: 100%;
+            height: 100%;
         }
+
 
         body {
             margin: 0;
 
-            min-height: 100vh;
-
-            display: flex;
-            flex-direction: column;
-
-            background: var(--bg);
+            background: var(--background);
             color: var(--text);
 
             font-family:
                 "Google Sans",
+                "Segoe UI",
                 Arial,
                 sans-serif;
+
+            display: flex;
+            flex-direction: column;
+
+            transition:
+                background 0.25s ease,
+                color 0.25s ease;
         }
 
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
 
-        /* =====================================================
-           HEADER
-        ===================================================== */
+        /* Üst bar */
 
         header {
             width: 100%;
 
-            display: flex;
-            align-items: center;
+            border-bottom:
+                1px solid var(--border);
 
-            padding: 18px 28px;
-
-            border-bottom: 1px solid var(--border);
-
-            background: color-mix(
-                in srgb,
-                var(--bg) 88%,
-                transparent
-            );
-
-            backdrop-filter: blur(18px);
+            background:
+                var(--surface);
         }
 
+
+        .navbar {
+            width: min(1180px, 100%);
+
+            min-height: 72px;
+
+            margin: auto;
+            padding: 0 24px;
+
+            display: flex;
+            align-items: center;
+        }
+
+
         .brand {
-            display: inline-flex;
+            display: flex;
             align-items: center;
 
             gap: 11px;
 
-            font-size: 21px;
-            font-weight: 700;
-
-            letter-spacing: 1px;
-        }
-
-        .brand img {
-            width: 35px;
-            height: 35px;
-
-            object-fit: contain;
-        }
-
-        /*
-         * TÜRKBLOCKS RGB efekti
-         * Soldan sağa akar.
-         */
-
-        .brand-text {
-            position: relative;
-
             color: var(--text);
 
-            transition: color .25s ease;
+            text-decoration: none;
+
+            font-size: 18px;
+            font-weight: 700;
+
+            letter-spacing: 0.4px;
         }
 
-        .brand-text::after {
-            content: "TÜRKBLOCKS";
 
-            position: absolute;
-            inset: 0;
+        .brand img {
+            width: 39px;
+            height: 39px;
 
-            color: transparent;
+            object-fit: contain;
 
-            background:
-                linear-gradient(
-                    90deg,
-                    #ff0000,
-                    #ff7a00,
-                    #ffff00,
-                    #00ff55,
-                    #00c8ff,
-                    #3d5cff,
-                    #b400ff,
-                    #ff008c,
-                    #ff0000
-                );
-
-            background-size: 300% 100%;
-
-            background-clip: text;
-            -webkit-background-clip: text;
-
-            opacity: 0;
-
-            pointer-events: none;
+            border-radius: 10px;
         }
 
-        .brand:hover .brand-text {
-            color: transparent;
-        }
 
-        .brand:hover .brand-text::after {
-            opacity: 1;
-
-            animation:
-                rgbLeftToRight
-                2.5s
-                linear
-                infinite;
-        }
-
-        @keyframes rgbLeftToRight {
-            from {
-                background-position: 0% 50%;
-            }
-
-            to {
-                background-position: 300% 50%;
-            }
-        }
-
-        /* =====================================================
-           404 ALANI
-        ===================================================== */
+        /* Ana içerik */
 
         main {
             flex: 1;
@@ -193,228 +166,211 @@
             align-items: center;
             justify-content: center;
 
-            padding: 60px 20px;
+            padding: 50px 20px;
         }
 
-        .error {
+
+        .error-card {
             width: min(650px, 100%);
 
+            padding: 55px 40px;
+
             text-align: center;
+
+            background: var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 22px;
+
+            box-shadow: var(--shadow);
         }
 
+
         .error-code {
-            margin: 0;
+            margin: 0 0 8px;
 
-            font-size: clamp(
-                110px,
-                22vw,
-                210px
-            );
+            color: var(--accent);
 
-            line-height: .85;
+            font-size:
+                clamp(70px, 14vw, 130px);
+
+            line-height: 0.9;
 
             font-weight: 700;
 
-            letter-spacing: -10px;
-
-            color: var(--text);
-
-            text-shadow:
-                0 0 0 transparent;
-
-            animation:
-                errorGlow 4s ease-in-out infinite;
+            letter-spacing: -6px;
         }
 
-        @keyframes errorGlow {
-            0%,
-            100% {
-                text-shadow:
-                    0 0 0 transparent;
-            }
 
-            50% {
-                text-shadow:
-                    0 0 35px
-                    rgba(80, 0, 0, .55);
-            }
+        h1 {
+            margin: 25px 0 12px;
+
+            font-size: 28px;
+
+            letter-spacing: -0.7px;
         }
 
-        .error h1 {
-            margin: 35px 0 12px;
 
-            font-size: clamp(
-                25px,
-                5vw,
-                38px
-            );
+        .description {
+            max-width: 470px;
 
-            letter-spacing: -1px;
-        }
-
-        .error p {
-            margin: 0 auto;
-
-            max-width: 500px;
+            margin: 0 auto 28px;
 
             color: var(--muted);
 
-            font-size: 16px;
+            font-size: 15px;
 
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
-        /* =====================================================
-           BUTON
-        ===================================================== */
+
+        /* Ana sayfa butonu */
 
         .home-button {
-            display: inline-block;
+            display: inline-flex;
 
-            margin-top: 30px;
+            align-items: center;
+            justify-content: center;
 
-            padding: 12px 22px;
+            padding: 11px 18px;
 
-            border: 1px solid var(--accent);
-
-            border-radius: 12px;
+            border-radius: 10px;
 
             background: var(--accent);
 
             color: #ffffff;
 
-            font-size: 15px;
-            font-weight: 500;
+            font-size: 14px;
+            font-weight: 600;
+
+            text-decoration: none;
 
             transition:
-                background .2s ease,
-                transform .2s ease,
-                border-color .2s ease;
+                background 0.2s ease,
+                transform 0.2s ease;
         }
+
 
         .home-button:hover {
             background: var(--accent-hover);
 
-            border-color:
-                var(--accent-hover);
-
             transform: translateY(-2px);
         }
 
-        .home-button:active {
-            transform: scale(.97);
-        }
 
-        /* =====================================================
-           FOOTER
-        ===================================================== */
+        /* Footer */
 
         footer {
-            padding: 22px;
-
-            border-top: 1px solid var(--border);
-
-            color: var(--muted);
+            padding: 24px;
 
             text-align: center;
 
-            font-size: 13px;
+            color: var(--muted);
+
+            font-size: 12px;
+
+            border-top:
+                1px solid var(--border);
         }
 
-        /* =====================================================
-           MOBİL
-        ===================================================== */
+
+        /* Mobil */
 
         @media (max-width: 600px) {
 
-            header {
-                padding: 14px 17px;
+            .navbar {
+                padding: 0 18px;
             }
 
-            .brand {
-                font-size: 18px;
+
+            .error-card {
+                padding:
+                    45px 24px;
+
+                border-radius: 18px;
             }
 
-            .brand img {
-                width: 31px;
-                height: 31px;
-            }
 
             .error-code {
-                letter-spacing: -5px;
+                font-size: 90px;
             }
+
+
+            h1 {
+                font-size: 24px;
+            }
+
         }
 
-        /* =====================================================
-           HAREKET AZALTMA
-        ===================================================== */
 
-        @media (prefers-reduced-motion: reduce) {
-
-            *,
-            *::before,
-            *::after {
-                animation-duration: .01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: .01ms !important;
-            }
+        ::selection {
+            background: var(--accent);
+            color: #ffffff;
         }
+
     </style>
 </head>
 
+
 <body>
 
-    <!-- HEADER -->
+
+    <!-- ÜST BAR -->
 
     <header>
 
-        <a
-            class="brand"
-            href="/"
-            aria-label="TürkBlocks ana sayfa"
-        >
+        <nav class="navbar">
 
-            <img
-                src="https://turkblocks.gamer.gd/logo/6642781985798787256865186887954381688697668781534687987679868154396796545368967453.png"
-                alt="TürkBlocks"
+            <a
+                href="/"
+                class="brand"
             >
 
-            <span class="brand-text">
-                TÜRKBLOCKS
-            </span>
+                <img
+                    src="https://turkblocks.github.io/turkblockslogo6.png"
+                    alt="TürkBlocks"
+                >
 
-        </a>
+                <span>
+                    TÜRKBLOCKS
+                </span>
+
+            </a>
+
+        </nav>
 
     </header>
 
 
-    <!-- 404 -->
+    <!-- HATA SAYFASI -->
 
     <main>
 
-        <section
-            class="error"
-            aria-labelledby="error-title"
-        >
+        <section class="error-card">
 
-            <div class="error-code">
+            <p class="error-code">
                 404
-            </div>
+            </p>
 
-            <h1 id="error-title">
+
+            <h1>
                 Sayfa bulunamadı
             </h1>
 
-            <p>
-                Aradığın sayfa mevcut değil,
-                taşınmış veya kaldırılmış olabilir.
+
+            <p class="description">
+                Aradığın sayfa taşınmış, silinmiş
+                veya hiç oluşturulmamış olabilir.
             </p>
 
+
             <a
-                class="home-button"
                 href="/"
+                class="home-button"
             >
-                Ana Sayfaya Dön
+                Ana Sayfaya Git
             </a>
 
         </section>
@@ -425,8 +381,10 @@
     <!-- FOOTER -->
 
     <footer>
-        © TürkBlocks
+
+        © 2026 TürkBlocks
     </footer>
+
 
 </body>
 </html>
