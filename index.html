@@ -5,44 +5,69 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta name="theme-color" content="#500000">
+
     <meta
         name="description"
         content="TürkBlocks — Oyun platformu."
     >
 
-    <meta name="theme-color" content="#500000">
-
     <title>TürkBlocks — Oyunlar</title>
+
+    <!-- Google Sans -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap"
+        rel="stylesheet"
+    >
 
     <style>
         :root {
             --accent: #500000;
             --accent-hover: #680000;
 
-            --bg: #f5f5f5;
+            --background: #f5f5f5;
             --surface: #ffffff;
             --surface-hover: #fafafa;
 
             --text: #111111;
             --muted: #6b6b6b;
-            --border: #e3e3e3;
+
+            --border: #e4e4e4;
 
             --shadow:
-                0 8px 28px rgba(0, 0, 0, 0.06);
+                0 8px 30px rgba(0, 0, 0, 0.06);
+
+            --shadow-hover:
+                0 14px 38px rgba(0, 0, 0, 0.10);
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg: #0d0d0d;
+                --background: #0d0d0d;
                 --surface: #151515;
                 --surface-hover: #1c1c1c;
 
-                --text: #f2f2f2;
-                --muted: #a0a0a0;
+                --text: #f3f3f3;
+                --muted: #a1a1a1;
+
                 --border: #292929;
 
                 --shadow:
-                    0 8px 28px rgba(0, 0, 0, 0.3);
+                    0 8px 30px rgba(0, 0, 0, 0.28);
+
+                --shadow-hover:
+                    0 14px 38px rgba(0, 0, 0, 0.40);
             }
         }
 
@@ -57,17 +82,18 @@
         body {
             margin: 0;
 
-            background: var(--bg);
+            background: var(--background);
             color: var(--text);
 
             font-family:
+                "Google Sans",
                 "Segoe UI",
                 Arial,
                 sans-serif;
 
             transition:
-                background .25s ease,
-                color .25s ease;
+                background 0.25s ease,
+                color 0.25s ease;
         }
 
         a {
@@ -75,14 +101,15 @@
             text-decoration: none;
         }
 
-        /* =========================
+
+        /* ==============================
            ÜST MENÜ
-           ========================= */
+           ============================== */
 
         header {
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 100;
 
             border-bottom:
                 1px solid var(--border);
@@ -113,9 +140,10 @@
             gap: 20px;
         }
 
-        /* =========================
+
+        /* ==============================
            LOGO
-           ========================= */
+           ============================== */
 
         .brand {
             display: flex;
@@ -126,21 +154,24 @@
             font-size: 18px;
             font-weight: 700;
 
-            letter-spacing: .4px;
+            letter-spacing: 0.4px;
+
+            white-space: nowrap;
         }
 
         .brand img {
-            width: 38px;
-            height: 38px;
+            width: 39px;
+            height: 39px;
 
             object-fit: contain;
 
             border-radius: 10px;
         }
 
-        /* =========================
+
+        /* ==============================
            MENÜ
-           ========================= */
+           ============================== */
 
         .nav-links {
             display: flex;
@@ -160,30 +191,33 @@
             font-weight: 500;
 
             transition:
-                background .2s ease,
-                color .2s ease,
-                transform .2s ease;
+                background 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease;
         }
 
         .nav-links a:hover {
             background: var(--surface-hover);
+
             color: var(--text);
 
             transform: translateY(-1px);
         }
 
-        .panel-link {
-            background: var(--accent) !important;
-            color: #fff !important;
+        .nav-links .panel {
+            background: var(--accent);
+            color: #ffffff;
         }
 
-        .panel-link:hover {
-            background: var(--accent-hover) !important;
+        .nav-links .panel:hover {
+            background: var(--accent-hover);
+            color: #ffffff;
         }
 
-        /* =========================
+
+        /* ==============================
            ANA ALAN
-           ========================= */
+           ============================== */
 
         main {
             width: min(1180px, 100%);
@@ -194,17 +228,17 @@
                 70px 24px 90px;
         }
 
+
+        /* ==============================
+           HERO
+           ============================== */
+
         .hero {
             padding:
-                30px 0 55px;
+                35px 0 60px;
         }
 
-        .hero-content {
-            max-width: 760px;
-        }
-
-        .hero-label,
-        .section-label {
+        .hero-label {
             margin: 0 0 10px;
 
             color: var(--accent);
@@ -216,30 +250,34 @@
         }
 
         .hero h1 {
-            margin: 0 0 18px;
+            margin: 0 0 17px;
+
+            max-width: 750px;
 
             font-size:
                 clamp(40px, 6vw, 64px);
 
-            line-height: 1.03;
+            line-height: 1.04;
 
             letter-spacing: -2.5px;
         }
 
         .hero-description {
-            max-width: 620px;
+            max-width: 650px;
 
             margin: 0;
 
             color: var(--muted);
 
             font-size: 17px;
+
             line-height: 1.7;
         }
 
-        /* =========================
-           OYUNLAR
-           ========================= */
+
+        /* ==============================
+           OYUNLAR BAŞLIK
+           ============================== */
 
         .section-header {
             display: flex;
@@ -252,12 +290,23 @@
             margin-bottom: 20px;
         }
 
+        .section-label {
+            margin: 0 0 7px;
+
+            color: var(--accent);
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 1.7px;
+        }
+
         .section-header h2 {
             margin: 0;
 
             font-size: 26px;
 
-            letter-spacing: -.7px;
+            letter-spacing: -0.7px;
         }
 
         .game-count {
@@ -265,6 +314,11 @@
 
             font-size: 13px;
         }
+
+
+        /* ==============================
+           OYUN LİSTESİ
+           ============================== */
 
         .game-list {
             display: grid;
@@ -278,9 +332,10 @@
             gap: 16px;
         }
 
-        /* =========================
+
+        /* ==============================
            OYUN KARTI
-           ========================= */
+           ============================== */
 
         .game-card {
             min-height: 145px;
@@ -304,39 +359,42 @@
             box-shadow: var(--shadow);
 
             transition:
-                transform .22s ease,
-                box-shadow .22s ease,
-                border-color .22s ease;
+                transform 0.22s ease,
+                box-shadow 0.22s ease,
+                border-color 0.22s ease;
         }
 
         .game-card:hover {
             transform: translateY(-4px);
 
-            box-shadow:
-                0 16px 40px rgba(0, 0, 0, .10);
+            box-shadow: var(--shadow-hover);
 
-            border-color:
-                color-mix(
-                    in srgb,
-                    var(--accent) 35%,
-                    var(--border)
-                );
+            border-color: var(--accent);
         }
 
-        .game-info h3 {
-            margin: 0 0 7px;
+        .game-name {
+            margin: 0;
 
             font-size: 18px;
-            font-weight: 650;
+            font-weight: 600;
+
+            letter-spacing: -0.2px;
         }
 
-        .game-info p {
-            margin: 0;
+        .game-file {
+            margin: 7px 0 0;
 
             color: var(--muted);
 
             font-size: 12px;
+
+            word-break: break-word;
         }
+
+
+        /* ==============================
+           GÖRÜNTÜLE
+           ============================== */
 
         .game-button {
             width: fit-content;
@@ -347,14 +405,14 @@
 
             background: var(--accent);
 
-            color: #fff;
+            color: #ffffff;
 
             font-size: 13px;
             font-weight: 600;
 
             transition:
-                background .2s ease,
-                transform .2s ease;
+                background 0.2s ease,
+                transform 0.2s ease;
         }
 
         .game-button:hover {
@@ -363,12 +421,12 @@
             transform: translateY(-1px);
         }
 
-        /* =========================
-           YÜKLENİYOR / HATA
-           ========================= */
 
-        .loading,
-        .empty-message {
+        /* ==============================
+           YÜKLENİYOR / HATA
+           ============================== */
+
+        .message {
             grid-column: 1 / -1;
 
             padding: 45px 20px;
@@ -385,9 +443,50 @@
             border-radius: 16px;
         }
 
-        /* =========================
+
+        /* ==============================
+           HAKKINDA
+           ============================== */
+
+        .about {
+            margin-top: 80px;
+        }
+
+        .about-card {
+            max-width: 760px;
+
+            padding: 30px;
+
+            background: var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 18px;
+
+            box-shadow: var(--shadow);
+        }
+
+        .about-card h2 {
+            margin: 0 0 12px;
+
+            font-size: 24px;
+
+            letter-spacing: -0.5px;
+        }
+
+        .about-card p:last-child {
+            margin: 0;
+
+            color: var(--muted);
+
+            line-height: 1.7;
+        }
+
+
+        /* ==============================
            FOOTER
-           ========================= */
+           ============================== */
 
         footer {
             border-top:
@@ -396,30 +495,34 @@
             background: var(--surface);
         }
 
-        .footer-content {
+        .footer-inner {
             width: min(1180px, 100%);
 
             margin: auto;
 
-            padding: 35px 24px;
+            padding:
+                32px 24px;
 
             display: flex;
-            align-items: start;
+
+            align-items: center;
             justify-content: space-between;
 
-            gap: 30px;
+            gap: 25px;
         }
 
-        .footer-content strong {
-            font-size: 15px;
+        .footer-brand {
+            font-weight: 700;
+
+            font-size: 14px;
         }
 
-        .footer-content p {
-            margin: 7px 0 0;
+        .footer-copy {
+            margin: 5px 0 0;
 
             color: var(--muted);
 
-            font-size: 13px;
+            font-size: 12px;
         }
 
         .footer-links {
@@ -436,31 +539,16 @@
             color: var(--text);
         }
 
-        .copyright {
-            width: min(1180px, 100%);
 
-            margin: auto;
-
-            padding:
-                0 24px 30px;
-
-            color: var(--muted);
-
-            font-size: 12px;
-        }
-
-        /* =========================
+        /* ==============================
            MOBİL
-           ========================= */
+           ============================== */
 
         @media (max-width: 700px) {
 
             .navbar {
-                min-height: auto;
-
-                padding: 15px 18px;
-
-                align-items: flex-start;
+                padding:
+                    14px 18px;
             }
 
             .nav-links {
@@ -498,37 +586,48 @@
                 grid-template-columns: 1fr;
             }
 
-            .footer-content {
+            .footer-inner {
+                align-items: flex-start;
+
                 flex-direction: column;
 
                 padding:
-                    30px 18px;
+                    28px 18px;
             }
 
-            .copyright {
-                padding:
-                    0 18px 25px;
+            .footer-links {
+                flex-wrap: wrap;
             }
         }
 
+
+        /* ==============================
+           SEÇİM
+           ============================== */
+
         ::selection {
             background: var(--accent);
-            color: white;
+
+            color: #ffffff;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- =========================
+    <!-- ==============================
          ÜST MENÜ
-         ========================= -->
+         ============================== -->
 
     <header>
 
         <nav class="navbar">
 
-            <a href="/" class="brand">
+            <a
+                href="/"
+                class="brand"
+                aria-label="TürkBlocks ana sayfa"
+            >
 
                 <img
                     src="https://turkblocks.github.io/turkblockslogo6.png"
@@ -539,11 +638,8 @@
 
             </a>
 
-            <div class="nav-links">
 
-                <a href="/">
-                    Ana Sayfa
-                </a>
+            <div class="nav-links">
 
                 <a href="#games">
                     Oyunlar
@@ -555,7 +651,7 @@
 
                 <a
                     href="/tpanel/"
-                    class="panel-link"
+                    class="panel"
                 >
                     tPanel
                 </a>
@@ -567,30 +663,26 @@
     </header>
 
 
-    <!-- =========================
+    <!-- ==============================
          ANA İÇERİK
-         ========================= -->
+         ============================== -->
 
     <main>
 
         <section class="hero">
 
-            <div class="hero-content">
+            <p class="hero-label">
+                TÜRKBLOCKS
+            </p>
 
-                <p class="hero-label">
-                    TÜRK BLOCKS
-                </p>
+            <h1>
+                Oyunlarını keşfet.
+            </h1>
 
-                <h1>
-                    Oyunlarını keşfet.
-                </h1>
-
-                <p class="hero-description">
-                    TürkBlocks üzerindeki oyunları
-                    keşfet, indir ve oyna.
-                </p>
-
-            </div>
+            <p class="hero-description">
+                TürkBlocks oyunlarını keşfet,
+                indir ve oyna.
+            </p>
 
         </section>
 
@@ -628,7 +720,7 @@
                 class="game-list"
             >
 
-                <div class="loading">
+                <div class="message">
                     Oyunlar yükleniyor...
                 </div>
 
@@ -641,35 +733,20 @@
 
         <section
             id="about"
-            style="margin-top: 80px;"
+            class="about"
         >
 
-            <div
-                style="
-                    max-width:760px;
-                    padding:30px;
-                    background:var(--surface);
-                    border:1px solid var(--border);
-                    border-radius:18px;
-                    box-shadow:var(--shadow);
-                "
-            >
+            <div class="about-card">
 
                 <p class="section-label">
                     TÜRKBLOCKS
                 </p>
 
-                <h2 style="margin:0 0 12px;">
+                <h2>
                     TürkBlocks hakkında
                 </h2>
 
-                <p
-                    style="
-                        margin:0;
-                        color:var(--muted);
-                        line-height:1.7;
-                    "
-                >
+                <p>
                     TürkBlocks, oyunları keşfetmek,
                     indirmek ve oynamak için
                     geliştirilen bir oyun platformudur.
@@ -682,23 +759,26 @@
     </main>
 
 
-    <!-- =========================
+    <!-- ==============================
          FOOTER
-         ========================= -->
+         ============================== -->
 
     <footer>
 
-        <div class="footer-content">
+        <div class="footer-inner">
 
             <div>
 
-                <strong>TÜRKBLOCKS</strong>
+                <div class="footer-brand">
+                    TÜRKBLOCKS
+                </div>
 
-                <p>
-                    Oyun platformu.
+                <p class="footer-copy">
+                    © 2026 TürkBlocks
                 </p>
 
             </div>
+
 
             <div class="footer-links">
 
@@ -718,24 +798,32 @@
 
         </div>
 
-        <div class="copyright">
-            © 2026 TürkBlocks
-        </div>
-
     </footer>
 
 
-    <!-- =========================
-         GITHUB API
-         ========================= -->
+    <!-- ==============================
+         JAVASCRIPT
+         ============================== -->
 
     <script>
+
+        "use strict";
+
+
+        /* ==========================================
+           GITHUB AYARLARI
+           ========================================== */
 
         const GITHUB_API =
             "https://api.github.com/repos/TurkBlocks/TurkBlocksGamesDepo/contents/";
 
         const DOWNLOAD_PAGE =
             "https://turkblocks.github.io/indir/";
+
+
+        /* ==========================================
+           HTML ELEMANLARI
+           ========================================== */
 
         const gameList =
             document.getElementById("game-list");
@@ -744,24 +832,33 @@
             document.getElementById("game-count");
 
 
+        /* ==========================================
+           OYUNLARI YÜKLE
+           ========================================== */
+
         async function loadGames() {
 
             try {
 
                 const response =
-                    await fetch(GITHUB_API, {
-                        headers: {
-                            "Accept":
-                                "application/vnd.github+json"
+                    await fetch(
+                        GITHUB_API,
+                        {
+                            headers: {
+                                "Accept":
+                                    "application/vnd.github+json"
+                            }
                         }
-                    });
+                    );
 
 
                 if (!response.ok) {
+
                     throw new Error(
                         "GitHub API HTTP " +
                         response.status
                     );
+
                 }
 
 
@@ -769,24 +866,35 @@
                     await response.json();
 
 
+                /*
+                 * Sadece PCK dosyalarını al.
+                 */
+
                 const games =
-                    files.filter(file =>
-                        file.type === "file" &&
-                        file.name
-                            .toLowerCase()
-                            .endsWith(".pck")
+                    files.filter(
+                        file =>
+                            file.type === "file" &&
+                            file.name
+                                .toLowerCase()
+                                .endsWith(".pck")
                     );
 
 
                 gameCount.textContent =
                     games.length +
-                    " oyun";
+                    (games.length === 1
+                        ? " oyun"
+                        : " oyun");
 
+
+                /*
+                 * Oyun yoksa
+                 */
 
                 if (games.length === 0) {
 
                     gameList.innerHTML = `
-                        <div class="empty-message">
+                        <div class="message">
                             Henüz oyun bulunmuyor.
                         </div>
                     `;
@@ -795,8 +903,16 @@
                 }
 
 
+                /*
+                 * Listeyi temizle.
+                 */
+
                 gameList.innerHTML = "";
 
+
+                /*
+                 * Her PCK için kart oluştur.
+                 */
 
                 games.forEach(game => {
 
@@ -816,46 +932,87 @@
                         "game-card";
 
 
-                    card.innerHTML = `
+                    const info =
+                        document.createElement(
+                            "div"
+                        );
 
-                        <div class="game-info">
 
-                            <h3>
-                                ${escapeHTML(gameName)}
-                            </h3>
+                    const title =
+                        document.createElement(
+                            "h3"
+                        );
 
-                            <p>
-                                ${escapeHTML(game.name)}
-                            </p>
+                    title.className =
+                        "game-name";
 
-                        </div>
+                    title.textContent =
+                        gameName;
 
-                        <a
-                            class="game-button"
-                            href="${DOWNLOAD_PAGE}"
-                        >
-                            Görüntüle
-                        </a>
 
-                    `;
+                    const file =
+                        document.createElement(
+                            "p"
+                        );
 
+                    file.className =
+                        "game-file";
+
+                    file.textContent =
+                        game.name;
+
+
+                    info.appendChild(title);
+
+                    info.appendChild(file);
+
+
+                    /*
+                     * Görüntüle
+                     *
+                     * Her oyun için aynı indirme
+                     * sayfasına gidiyoruz.
+                     */
+
+                    const button =
+                        document.createElement(
+                            "a"
+                        );
+
+                    button.className =
+                        "game-button";
+
+                    button.href =
+                        DOWNLOAD_PAGE;
+
+
+                    button.textContent =
+                        "Görüntüle";
+
+
+                    card.appendChild(info);
+
+                    card.appendChild(button);
 
                     gameList.appendChild(card);
 
                 });
 
+
             } catch (error) {
 
                 console.error(
-                    "TürkBlocks:",
+                    "TürkBlocks GitHub API hatası:",
                     error
                 );
+
 
                 gameCount.textContent =
                     "Yüklenemedi";
 
+
                 gameList.innerHTML = `
-                    <div class="empty-message">
+                    <div class="message">
                         Oyunlar yüklenirken bir hata oluştu.
                     </div>
                 `;
@@ -863,21 +1020,9 @@
         }
 
 
-        /*
-         * GitHub'dan gelen dosya adlarını
-         * güvenli şekilde HTML'e ekler.
-         */
-
-        function escapeHTML(text) {
-
-            const element =
-                document.createElement("div");
-
-            element.textContent = text;
-
-            return element.innerHTML;
-        }
-
+        /* ==========================================
+           BAŞLAT
+           ========================================== */
 
         loadGames();
 
