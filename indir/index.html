@@ -1,1 +1,754 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
 
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#500000"
+    >
+
+    <meta
+        name="description"
+        content="TürkBlocks indirme sayfası."
+    >
+
+    <title>TürkBlocks — İndir</title>
+
+    <!-- Google Sans -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        :root {
+            --accent: #500000;
+            --accent-hover: #680000;
+
+            --background: #f5f5f5;
+            --surface: #ffffff;
+            --surface-hover: #fafafa;
+
+            --text: #111111;
+            --muted: #6b6b6b;
+
+            --border: #e4e4e4;
+
+            --shadow:
+                0 10px 35px rgba(0, 0, 0, 0.06);
+
+            --shadow-hover:
+                0 16px 42px rgba(0, 0, 0, 0.11);
+        }
+
+
+        /* =========================
+           KOYU TEMA
+           ========================= */
+
+        @media (prefers-color-scheme: dark) {
+
+            :root {
+                --background: #0d0d0d;
+                --surface: #151515;
+                --surface-hover: #1c1c1c;
+
+                --text: #f3f3f3;
+                --muted: #a1a1a1;
+
+                --border: #292929;
+
+                --shadow:
+                    0 10px 35px rgba(0, 0, 0, 0.30);
+
+                --shadow-hover:
+                    0 16px 42px rgba(0, 0, 0, 0.42);
+            }
+
+        }
+
+
+        /* =========================
+           GENEL
+           ========================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            margin: 0;
+
+            background: var(--background);
+            color: var(--text);
+
+            font-family:
+                "Google Sans",
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            transition:
+                background 0.25s ease,
+                color 0.25s ease;
+        }
+
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+
+        /* =========================
+           ÜST MENÜ
+           ========================= */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            border-bottom:
+                1px solid var(--border);
+
+            background:
+                color-mix(
+                    in srgb,
+                    var(--surface) 90%,
+                    transparent
+                );
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+
+        .navbar {
+            width: min(1180px, 100%);
+
+            min-height: 72px;
+
+            margin: auto;
+            padding: 0 24px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+
+        /* =========================
+           MARKA
+           ========================= */
+
+        .brand {
+            display: flex;
+            align-items: center;
+
+            gap: 11px;
+
+            font-size: 18px;
+            font-weight: 700;
+
+            letter-spacing: 0.4px;
+        }
+
+
+        .brand img {
+            width: 39px;
+            height: 39px;
+
+            object-fit: contain;
+
+            border-radius: 10px;
+        }
+
+
+        /* =========================
+           MENÜ
+           ========================= */
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+
+            gap: 5px;
+        }
+
+
+        .nav-links a {
+            padding: 9px 13px;
+
+            border-radius: 9px;
+
+            color: var(--muted);
+
+            font-size: 14px;
+            font-weight: 500;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        .nav-links a:hover {
+            background: var(--surface-hover);
+
+            color: var(--text);
+
+            transform: translateY(-1px);
+        }
+
+
+        .nav-links .active {
+            background: var(--accent);
+
+            color: #ffffff;
+        }
+
+
+        .nav-links .active:hover {
+            background: var(--accent-hover);
+
+            color: #ffffff;
+        }
+
+
+        /* =========================
+           ANA ALAN
+           ========================= */
+
+        main {
+            width: min(1100px, 100%);
+
+            margin: auto;
+
+            padding:
+                70px 24px 90px;
+        }
+
+
+        /* =========================
+           BAŞLIK
+           ========================= */
+
+        .hero {
+            margin-bottom: 45px;
+        }
+
+
+        .hero-label {
+            margin: 0 0 9px;
+
+            color: var(--accent);
+
+            font-size: 12px;
+            font-weight: 700;
+
+            letter-spacing: 1.8px;
+        }
+
+
+        .hero h1 {
+            margin: 0 0 14px;
+
+            font-size:
+                clamp(38px, 6vw, 58px);
+
+            line-height: 1.04;
+
+            letter-spacing: -2px;
+        }
+
+
+        .hero p:last-child {
+            max-width: 650px;
+
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 16px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================
+           KARTLAR
+           ========================= */
+
+        .download-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(0, 1fr)
+                );
+
+            gap: 18px;
+        }
+
+
+        .download-card {
+            padding: 28px;
+
+            background: var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 18px;
+
+            box-shadow: var(--shadow);
+
+            transition:
+                transform 0.22s ease,
+                box-shadow 0.22s ease,
+                border-color 0.22s ease;
+        }
+
+
+        .download-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow: var(--shadow-hover);
+
+            border-color: var(--accent);
+        }
+
+
+        /* =========================
+           PLATFORM LOGOS
+           ========================= */
+
+        .platform-logo {
+            width: 54px;
+            height: 54px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 24px;
+
+            border-radius: 14px;
+
+            background: var(--background);
+
+            border:
+                1px solid var(--border);
+
+            color: var(--accent);
+
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+
+        .download-card h2 {
+            margin: 0 0 9px;
+
+            font-size: 24px;
+
+            letter-spacing: -0.5px;
+        }
+
+
+        .download-card p {
+            margin: 0 0 22px;
+
+            color: var(--muted);
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           İNDİR BUTONU
+           ========================= */
+
+        .download-button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 10px 17px;
+
+            border-radius: 10px;
+
+            background: var(--accent);
+
+            color: #ffffff;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        .download-button:hover {
+            background: var(--accent-hover);
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================
+           FOOTER
+           ========================= */
+
+        footer {
+            border-top:
+                1px solid var(--border);
+
+            background: var(--surface);
+        }
+
+
+        .footer-inner {
+            width: min(1100px, 100%);
+
+            margin: auto;
+
+            padding:
+                30px 24px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+
+        .footer-brand {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+
+        .footer-copy {
+            margin: 5px 0 0;
+
+            color: var(--muted);
+
+            font-size: 12px;
+        }
+
+
+        .footer-links {
+            display: flex;
+
+            gap: 18px;
+
+            color: var(--muted);
+
+            font-size: 13px;
+        }
+
+
+        .footer-links a:hover {
+            color: var(--text);
+        }
+
+
+        /* =========================
+           MOBİL
+           ========================= */
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding:
+                    14px 18px;
+            }
+
+
+            .nav-links {
+                display: none;
+            }
+
+
+            main {
+                padding:
+                    45px 18px 70px;
+            }
+
+
+            .hero h1 {
+                font-size: 42px;
+
+                letter-spacing: -1.6px;
+            }
+
+
+            .download-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .footer-inner {
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                padding:
+                    28px 18px;
+            }
+
+
+            .footer-links {
+                flex-wrap: wrap;
+            }
+
+        }
+
+
+        ::selection {
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         ÜST MENÜ
+         ========================= -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <a
+                href="/"
+                class="brand"
+            >
+
+                <img
+                    src="https://turkblocks.github.io/turkblockslogo6.png"
+                    alt="TürkBlocks"
+                >
+
+                <span>
+                    TÜRKBLOCKS
+                </span>
+
+            </a>
+
+
+            <div class="nav-links">
+
+                <a href="/">
+                    Ana Sayfa
+                </a>
+
+                <a
+                    href="/#games"
+                >
+                    Oyunlar
+                </a>
+
+                <a
+                    href="/tpanel/"
+                >
+                    tPanel
+                </a>
+
+                <a
+                    href="/indir/"
+                    class="active"
+                >
+                    İndir
+                </a>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================
+         ANA İÇERİK
+         ========================= -->
+
+    <main>
+
+        <section class="hero">
+
+            <p class="hero-label">
+                TÜRKBLOCKS
+            </p>
+
+            <h1>
+                TürkBlocks'i indir.
+            </h1>
+
+            <p>
+                Kullandığın platformu seçerek
+                TürkBlocks'i cihazına indirebilirsin.
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             PLATFORM KARTLARI
+             ========================= -->
+
+        <section class="download-grid">
+
+
+            <!-- WINDOWS -->
+
+            <article class="download-card">
+
+                <div class="platform-logo">
+                    WIN
+                </div>
+
+
+                <h2>
+                    Windows
+                </h2>
+
+
+                <p>
+                    Windows için TürkBlocks
+                    uygulamasını indir.
+                </p>
+
+
+                <a
+                    class="download-button"
+                    href="https://turkblocks.github.io/indir/turkblocks.exe"
+                    download
+                >
+                    Windows için indir
+                </a>
+
+            </article>
+
+
+            <!-- LINUX -->
+
+            <article class="download-card">
+
+                <div class="platform-logo">
+                    TUX
+                </div>
+
+
+                <h2>
+                    Linux
+                </h2>
+
+
+                <p>
+                    Linux için TürkBlocks
+                    uygulamasını indir.
+                </p>
+
+
+                <a
+                    class="download-button"
+                    href="https://turkblocks.github.io/indir/turkblocks.x86_64"
+                    download
+                >
+                    Linux için indir
+                </a>
+
+            </article>
+
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+         ========================= -->
+
+    <footer>
+
+        <div class="footer-inner">
+
+            <div>
+
+                <div class="footer-brand">
+                    TÜRKBLOCKS
+                </div>
+
+                <p class="footer-copy">
+                    © 2026 TürkBlocks
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <a href="/">
+                    Ana Sayfa
+                </a>
+
+                <a href="/#games">
+                    Oyunlar
+                </a>
+
+                <a href="/tpanel/">
+                    tPanel
+                </a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+</body>
+</html>
