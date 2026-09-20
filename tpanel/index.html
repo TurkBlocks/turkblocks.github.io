@@ -1,1 +1,1896 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
 
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>TürkBlocks tPanel</title>
+
+    <meta
+        name="description"
+        content="TürkBlocks tPanel"
+    >
+
+    <style>
+
+        /* =====================================================
+           TEMEL
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            min-height: 100%;
+        }
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            font-family:
+                "Google Sans",
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                #0a0a0a;
+
+            color:
+                #ffffff;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+        }
+
+
+        /* =====================================================
+           ÜST BAR
+        ===================================================== */
+
+        .topbar {
+
+            width: 100%;
+
+            height: 72px;
+
+            padding:
+                0 28px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            border-bottom:
+                1px solid #242424;
+
+            background:
+                rgba(10, 10, 10, 0.94);
+
+            backdrop-filter:
+                blur(16px);
+
+            position:
+                sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+        }
+
+
+        .brand {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            min-width:
+                0;
+
+        }
+
+
+        .brand img {
+
+            width:
+                40px;
+
+            height:
+                40px;
+
+            object-fit:
+                contain;
+
+            border-radius:
+                10px;
+
+        }
+
+
+        .brand-text {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            min-width:
+                0;
+
+        }
+
+
+        .brand-title {
+
+            font-size:
+                17px;
+
+            font-weight:
+                700;
+
+            white-space:
+                nowrap;
+
+        }
+
+
+        .brand-subtitle {
+
+            margin-top:
+                2px;
+
+            color:
+                #888;
+
+            font-size:
+                12px;
+
+            white-space:
+                nowrap;
+
+        }
+
+
+        /* =====================================================
+           KULLANICI
+        ===================================================== */
+
+        .user-area {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            min-width:
+                0;
+
+        }
+
+
+        .user-info {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            align-items:
+                flex-end;
+
+            min-width:
+                0;
+
+        }
+
+
+        .user-email {
+
+            max-width:
+                280px;
+
+            overflow:
+                hidden;
+
+            text-overflow:
+                ellipsis;
+
+            white-space:
+                nowrap;
+
+            font-size:
+                13px;
+
+            color:
+                #ddd;
+
+        }
+
+
+        .user-status {
+
+            margin-top:
+                2px;
+
+            font-size:
+                11px;
+
+            color:
+                #777;
+
+        }
+
+
+        .profile {
+
+            width:
+                40px;
+
+            height:
+                40px;
+
+            border-radius:
+                50%;
+
+            object-fit:
+                cover;
+
+            border:
+                2px solid #333;
+
+            background:
+                #222;
+
+        }
+
+
+        /* =====================================================
+           ANA ALAN
+        ===================================================== */
+
+        main {
+
+            width:
+                100%;
+
+            max-width:
+                900px;
+
+            margin:
+                0 auto;
+
+            padding:
+                55px 22px 70px;
+
+            flex:
+                1;
+
+        }
+
+
+        .welcome {
+
+            margin-bottom:
+                30px;
+
+        }
+
+
+        .welcome h1 {
+
+            margin:
+                0;
+
+            font-size:
+                clamp(28px, 5vw, 40px);
+
+            letter-spacing:
+                -0.7px;
+
+        }
+
+
+        .welcome p {
+
+            margin:
+                10px 0 0;
+
+            color:
+                #929292;
+
+            font-size:
+                15px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        /* =====================================================
+           PANEL
+        ===================================================== */
+
+        .panel {
+
+            background:
+                #121212;
+
+            border:
+                1px solid #272727;
+
+            border-radius:
+                22px;
+
+            overflow:
+                hidden;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.35);
+
+        }
+
+
+        .panel-header {
+
+            padding:
+                24px 26px;
+
+            border-bottom:
+                1px solid #252525;
+
+        }
+
+
+        .panel-header h2 {
+
+            margin:
+                0;
+
+            font-size:
+                18px;
+
+        }
+
+
+        .panel-header p {
+
+            margin:
+                7px 0 0;
+
+            color:
+                #777;
+
+            font-size:
+                13px;
+
+            line-height:
+                1.5;
+
+        }
+
+
+        /* =====================================================
+           İŞLEMLER
+        ===================================================== */
+
+        .actions {
+
+            padding:
+                26px;
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap:
+                16px;
+
+        }
+
+
+        .action-card {
+
+            padding:
+                24px;
+
+            border:
+                1px solid #292929;
+
+            border-radius:
+                17px;
+
+            background:
+                #181818;
+
+            transition:
+                transform 0.18s ease,
+                border-color 0.18s ease,
+                background 0.18s ease;
+
+        }
+
+
+        .action-card:hover {
+
+            transform:
+                translateY(-2px);
+
+            border-color:
+                #3a3a3a;
+
+            background:
+                #1b1b1b;
+
+        }
+
+
+        .action-card h3 {
+
+            margin:
+                0;
+
+            font-size:
+                17px;
+
+        }
+
+
+        .action-card p {
+
+            margin:
+                9px 0 20px;
+
+            color:
+                #888;
+
+            font-size:
+                13px;
+
+            line-height:
+                1.55;
+
+        }
+
+
+        /* =====================================================
+           BUTON
+        ===================================================== */
+
+        button {
+
+            width:
+                100%;
+
+            border:
+                0;
+
+            border-radius:
+                12px;
+
+            padding:
+                13px 16px;
+
+            background:
+                #500000;
+
+            color:
+                #ffffff;
+
+            font-family:
+                inherit;
+
+            font-size:
+                14px;
+
+            font-weight:
+                600;
+
+            cursor:
+                pointer;
+
+            transition:
+                background 0.18s ease,
+                transform 0.12s ease,
+                opacity 0.18s ease;
+
+        }
+
+
+        button:hover {
+
+            background:
+                #680000;
+
+        }
+
+
+        button:active {
+
+            transform:
+                scale(0.985);
+
+        }
+
+
+        button:disabled {
+
+            opacity:
+                0.5;
+
+            cursor:
+                not-allowed;
+
+        }
+
+
+        .secondary-button {
+
+            background:
+                #242424;
+
+            border:
+                1px solid #333;
+
+        }
+
+
+        .secondary-button:hover {
+
+            background:
+                #2d2d2d;
+
+        }
+
+
+        /* =====================================================
+           DURUM MESAJI
+        ===================================================== */
+
+        .message-area {
+
+            margin:
+                0 26px 26px;
+
+            min-height:
+                48px;
+
+            padding:
+                14px 16px;
+
+            border:
+                1px solid #292929;
+
+            border-radius:
+                12px;
+
+            background:
+                #171717;
+
+            color:
+                #999;
+
+            font-size:
+                13px;
+
+            line-height:
+                1.5;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+        }
+
+
+        .message-area.success {
+
+            color:
+                #d5d5d5;
+
+            border-color:
+                #343434;
+
+        }
+
+
+        .message-area.error {
+
+            color:
+                #ffb4b4;
+
+            border-color:
+                #4a2424;
+
+        }
+
+
+        .message-area.loading {
+
+            color:
+                #c7c7c7;
+
+        }
+
+
+        /* =====================================================
+           ALT BİLGİ
+        ===================================================== */
+
+        .info {
+
+            margin-top:
+                20px;
+
+            padding:
+                18px 20px;
+
+            border:
+                1px solid #222;
+
+            border-radius:
+                14px;
+
+            color:
+                #777;
+
+            font-size:
+                12px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+
+            padding:
+                20px;
+
+            text-align:
+                center;
+
+            color:
+                #555;
+
+            font-size:
+                12px;
+
+            border-top:
+                1px solid #1c1c1c;
+
+        }
+
+
+        /* =====================================================
+           GİZLİ DOSYA INPUT
+        ===================================================== */
+
+        #fileInput {
+
+            display:
+                none;
+
+        }
+
+
+        /* =====================================================
+           MOBİL
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .topbar {
+
+                height:
+                    64px;
+
+                padding:
+                    0 16px;
+
+            }
+
+
+            .brand-subtitle {
+
+                display:
+                    none;
+
+            }
+
+
+            .user-info {
+
+                display:
+                    none;
+
+            }
+
+
+            .profile {
+
+                width:
+                    36px;
+
+                height:
+                    36px;
+
+            }
+
+
+            main {
+
+                padding:
+                    35px 14px 50px;
+
+            }
+
+
+            .actions {
+
+                grid-template-columns:
+                    1fr;
+
+                padding:
+                    18px;
+
+            }
+
+
+            .panel-header {
+
+                padding:
+                    20px;
+
+            }
+
+
+            .message-area {
+
+                margin:
+                    0 18px 18px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     ÜST BAR
+========================================================= -->
+
+<header class="topbar">
+
+    <div class="brand">
+
+        <img
+            src="https://turkblocks.github.io/turkblockslogo6.png"
+            alt="TürkBlocks"
+        >
+
+        <div class="brand-text">
+
+            <div class="brand-title">
+                TürkBlocks tPanel
+            </div>
+
+            <div class="brand-subtitle">
+                Oyun yönetim paneli
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="user-area">
+
+        <div class="user-info">
+
+            <div
+                class="user-email"
+                id="userEmail"
+            >
+                Hesap kontrol ediliyor...
+            </div>
+
+            <div
+                class="user-status"
+                id="userStatus"
+            >
+                Bağlanıyor...
+            </div>
+
+        </div>
+
+
+        <img
+            class="profile"
+            id="profileImage"
+            src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+            alt="Profil"
+        >
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     ANA İÇERİK
+========================================================= -->
+
+<main>
+
+
+    <section class="welcome">
+
+        <h1>
+            Kontrol Paneli
+        </h1>
+
+        <p>
+            TürkBlocks oyununuzu buradan yönetebilirsiniz.
+        </p>
+
+    </section>
+
+
+
+    <section class="panel">
+
+
+        <div class="panel-header">
+
+            <h2>
+                PCK Yönetimi
+            </h2>
+
+            <p>
+                Mevcut PCK dosyanızı silebilir veya yeni
+                bir PCK dosyasıyla güncelleyebilirsiniz.
+            </p>
+
+        </div>
+
+
+
+        <div class="actions">
+
+
+            <!-- =================================================
+                 PCK SİL
+            ================================================== -->
+
+            <div class="action-card">
+
+                <h3>
+                    PCK Sil
+                </h3>
+
+                <p>
+                    Hesabınıza bağlı mevcut PCK dosyasını
+                    GitHub deposundan kaldırır.
+                </p>
+
+                <button
+                    id="deleteButton"
+                    type="button"
+                >
+                    PCK Sil
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PCK GÜNCELLE
+            ================================================== -->
+
+            <div class="action-card">
+
+                <h3>
+                    PCK Güncelle
+                </h3>
+
+                <p>
+                    Yeni bir .pck dosyası seçerek mevcut
+                    oyununuzu güncelleyebilirsiniz.
+                </p>
+
+                <button
+                    id="updateButton"
+                    type="button"
+                >
+                    PCK Seç ve Güncelle
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             DOSYA INPUT
+        ====================================================== -->
+
+        <input
+            type="file"
+            id="fileInput"
+            accept=".pck"
+        >
+
+
+
+        <!-- =====================================================
+             DURUM
+        ====================================================== -->
+
+        <div
+            id="message"
+            class="message-area"
+        >
+            Hazır.
+        </div>
+
+
+    </section>
+
+
+
+    <div class="info">
+
+        <strong>Bilgi:</strong>
+        İşlemler Google Apps Script üzerinden gerçekleştirilir.
+        GitHub erişimi sunucu tarafında yapılır; GitHub erişim
+        anahtarı bu sayfaya gönderilmez.
+
+    </div>
+
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    TürkBlocks tPanel
+
+</footer>
+
+
+
+<!-- =========================================================
+     FIREBASE + UYGULAMA
+========================================================= -->
+
+<script type="module">
+
+
+/* ============================================================
+   FIREBASE
+============================================================ */
+
+import {
+
+    initializeApp
+
+} from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+
+
+import {
+
+    getAuth,
+    onAuthStateChanged,
+    signOut
+
+} from
+"https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+
+
+/* ============================================================
+   FIREBASE AYARLARI
+============================================================ */
+
+const firebaseConfig = {
+
+    apiKey:
+        "AIzaSyDR1Z_oUJ1iA_xn1nOUVt2U56ll94ilxxQ",
+
+    authDomain:
+        "turkblocks-8540.firebaseapp.com",
+
+    projectId:
+        "turkblocks-8540",
+
+    storageBucket:
+        "turkblocks-8540.firebasestorage.app",
+
+    messagingSenderId:
+        "1025065211121",
+
+    appId:
+        "1:1025065211121:web:2c94856d608f2822260550",
+
+    measurementId:
+        "G-N9FV48EQ9V"
+
+};
+
+
+
+/* ============================================================
+   FIREBASE BAŞLAT
+============================================================ */
+
+const app =
+    initializeApp(
+        firebaseConfig
+    );
+
+
+const auth =
+    getAuth(
+        app
+    );
+
+
+
+/* ============================================================
+   APPS SCRIPT URL'LERİ
+============================================================ */
+
+/*
+    PCK Güncelle
+*/
+
+const PCK_UPDATE_URL =
+    "https://script.google.com/macros/s/AKfycby9zCMlaKr2V35mmzuqv6io_jbN-m_aIM9cgBEAH4eL6XyG4DtjACpHm9t9NgJOtnFn/exec";
+
+
+/*
+    PCK Sil
+*/
+
+const PCK_DELETE_URL =
+    "https://script.google.com/macros/s/AKfycbwuhZNgDBq5vp3y1ekRDY4ULGjabxIpOVGq2JCqY5UM5hxTD6cqlALCV44uBi_LosgKIA/exec";
+
+
+
+/* ============================================================
+   HTML ELEMANLARI
+============================================================ */
+
+const userEmail =
+    document.getElementById(
+        "userEmail"
+    );
+
+
+const userStatus =
+    document.getElementById(
+        "userStatus"
+    );
+
+
+const profileImage =
+    document.getElementById(
+        "profileImage"
+    );
+
+
+const message =
+    document.getElementById(
+        "message"
+    );
+
+
+const deleteButton =
+    document.getElementById(
+        "deleteButton"
+    );
+
+
+const updateButton =
+    document.getElementById(
+        "updateButton"
+    );
+
+
+const fileInput =
+    document.getElementById(
+        "fileInput"
+    );
+
+
+
+/* ============================================================
+   DURUM MESAJI
+============================================================ */
+
+function setMessage(
+    text,
+    type = ""
+) {
+
+    message.textContent =
+        text;
+
+    message.className =
+        "message-area";
+
+    if (type) {
+
+        message.classList.add(
+            type
+        );
+
+    }
+
+}
+
+
+
+/* ============================================================
+   BUTONLARI AKTİF/PASİF YAP
+============================================================ */
+
+function setButtonsDisabled(
+    disabled
+) {
+
+    deleteButton.disabled =
+        disabled;
+
+    updateButton.disabled =
+        disabled;
+
+}
+
+
+
+/* ============================================================
+   GİRİŞ DURUMU
+============================================================ */
+
+onAuthStateChanged(
+
+    auth,
+
+    (user) => {
+
+
+        /* ----------------------------------------------------
+           GİRİŞ YAPILMAMIŞ
+        ---------------------------------------------------- */
+
+        if (!user) {
+
+            window.location.replace(
+                "login.html"
+            );
+
+            return;
+
+        }
+
+
+
+        /* ----------------------------------------------------
+           GİRİŞ YAPILMIŞ
+        ---------------------------------------------------- */
+
+        userEmail.textContent =
+            user.email ||
+            "Google hesabı";
+
+
+        userStatus.textContent =
+            "Google ile giriş yapıldı";
+
+
+        if (
+            user.photoURL
+        ) {
+
+            profileImage.src =
+                user.photoURL;
+
+        }
+
+
+        setMessage(
+            "Panel hazır.",
+            "success"
+        );
+
+    }
+
+);
+
+
+
+/* ============================================================
+   PCK SİL
+============================================================ */
+
+deleteButton.addEventListener(
+
+    "click",
+
+    async () => {
+
+
+        const user =
+            auth.currentUser;
+
+
+        /* ----------------------------------------------------
+           KULLANICI KONTROLÜ
+        ---------------------------------------------------- */
+
+        if (!user) {
+
+            window.location.replace(
+                "login.html"
+            );
+
+            return;
+
+        }
+
+
+
+        /* ----------------------------------------------------
+           ONAY
+        ---------------------------------------------------- */
+
+        const confirmed =
+            confirm(
+                "Hesabınıza bağlı PCK dosyası silinecek. Devam etmek istiyor musunuz?"
+            );
+
+
+        if (!confirmed) {
+
+            return;
+
+        }
+
+
+
+        /* ----------------------------------------------------
+           BAŞLANGIÇ
+        ---------------------------------------------------- */
+
+        setButtonsDisabled(
+            true
+        );
+
+
+        setMessage(
+            "PCK siliniyor...",
+            "loading"
+        );
+
+
+        try {
+
+
+            /* ------------------------------------------------
+               APPS SCRIPT'E GÖNDER
+            ------------------------------------------------ */
+
+            const response =
+                await fetch(
+                    PCK_DELETE_URL,
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "text/plain;charset=utf-8"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                email:
+                                    user.email
+
+                            })
+
+                    }
+                );
+
+
+
+            /* ------------------------------------------------
+               HTTP KONTROLÜ
+            ------------------------------------------------ */
+
+            if (
+                !response.ok
+            ) {
+
+                throw new Error(
+                    "Sunucu HTTP " +
+                    response.status +
+                    " döndürdü."
+                );
+
+            }
+
+
+
+            /* ------------------------------------------------
+               JSON
+            ------------------------------------------------ */
+
+            const result =
+                await response.json();
+
+
+
+            /* ------------------------------------------------
+               BAŞARILI
+            ------------------------------------------------ */
+
+            if (
+                result.success
+            ) {
+
+                setMessage(
+                    "PCK silindi.",
+                    "success"
+                );
+
+
+                return;
+
+            }
+
+
+
+            /* ------------------------------------------------
+               APPS SCRIPT HATASI
+            ------------------------------------------------ */
+
+            setMessage(
+
+                result.error ||
+                result.message ||
+                "PCK silinemedi.",
+
+                "error"
+
+            );
+
+
+        } catch (error) {
+
+
+            console.error(
+                "PCK Sil hatası:",
+                error
+            );
+
+
+            setMessage(
+
+                "PCK silinirken bir hata oluştu.",
+
+                "error"
+
+            );
+
+
+        } finally {
+
+
+            setButtonsDisabled(
+                false
+            );
+
+        }
+
+    }
+
+);
+
+
+
+/* ============================================================
+   PCK GÜNCELLE BUTONU
+============================================================ */
+
+updateButton.addEventListener(
+
+    "click",
+
+    () => {
+
+        const user =
+            auth.currentUser;
+
+
+        if (!user) {
+
+            window.location.replace(
+                "login.html"
+            );
+
+            return;
+
+        }
+
+
+        fileInput.click();
+
+    }
+
+);
+
+
+
+/* ============================================================
+   DOSYA SEÇİLDİ
+============================================================ */
+
+fileInput.addEventListener(
+
+    "change",
+
+    async () => {
+
+
+        const file =
+            fileInput.files[0];
+
+
+        if (!file) {
+
+            return;
+
+        }
+
+
+
+        /* ----------------------------------------------------
+           DOSYA UZANTISI
+        ---------------------------------------------------- */
+
+        if (
+
+            !file.name
+                .toLowerCase()
+                .endsWith(".pck")
+
+        ) {
+
+            setMessage(
+
+                "Sadece .pck dosyası seçebilirsiniz.",
+
+                "error"
+
+            );
+
+
+            fileInput.value =
+                "";
+
+            return;
+
+        }
+
+
+
+        /* ----------------------------------------------------
+           KULLANICI
+        ---------------------------------------------------- */
+
+        const user =
+            auth.currentUser;
+
+
+        if (!user) {
+
+            window.location.replace(
+                "login.html"
+            );
+
+            return;
+
+        }
+
+
+
+        /* ----------------------------------------------------
+           DOSYA BOYUTU
+        ---------------------------------------------------- */
+
+        const MAX_FILE_SIZE =
+            35 * 1024 * 1024;
+
+
+        if (
+            file.size >
+            MAX_FILE_SIZE
+        ) {
+
+            setMessage(
+
+                "PCK dosyası 35 MiB sınırını aşamaz.",
+
+                "error"
+
+            );
+
+
+            fileInput.value =
+                "";
+
+            return;
+
+        }
+
+
+
+        /* ----------------------------------------------------
+           BAŞLANGIÇ
+        ---------------------------------------------------- */
+
+        setButtonsDisabled(
+            true
+        );
+
+
+        setMessage(
+
+            "PCK hazırlanıyor...",
+
+            "loading"
+
+        );
+
+
+
+        try {
+
+
+            /* ------------------------------------------------
+               BASE64
+            ------------------------------------------------ */
+
+            const base64Data =
+                await fileToBase64(
+                    file
+                );
+
+
+
+            setMessage(
+
+                "PCK gönderiliyor...",
+
+                "loading"
+
+            );
+
+
+
+            /* ------------------------------------------------
+               APPS SCRIPT
+            ------------------------------------------------ */
+
+            const response =
+                await fetch(
+
+                    PCK_UPDATE_URL,
+
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "text/plain;charset=utf-8"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                email:
+                                    user.email,
+
+                                fileName:
+                                    file.name,
+
+                                base64Data:
+                                    base64Data
+
+                            })
+
+                    }
+
+                );
+
+
+
+            /* ------------------------------------------------
+               HTTP
+            ------------------------------------------------ */
+
+            if (
+                !response.ok
+            ) {
+
+                throw new Error(
+
+                    "Sunucu HTTP " +
+                    response.status +
+                    " döndürdü."
+
+                );
+
+            }
+
+
+
+            /* ------------------------------------------------
+               JSON
+            ------------------------------------------------ */
+
+            const result =
+                await response.json();
+
+
+
+            /* ------------------------------------------------
+               BAŞARILI
+            ------------------------------------------------ */
+
+            if (
+                result.success
+            ) {
+
+                setMessage(
+
+                    "PCK değiştirildi.",
+
+                    "success"
+
+                );
+
+
+                fileInput.value =
+                    "";
+
+                return;
+
+            }
+
+
+
+            /* ------------------------------------------------
+               APPS SCRIPT HATASI
+            ------------------------------------------------ */
+
+            setMessage(
+
+                result.error ||
+                result.message ||
+                "PCK değiştirilemedi.",
+
+                "error"
+
+            );
+
+
+        } catch (error) {
+
+
+            console.error(
+
+                "PCK Güncelle hatası:",
+
+                error
+
+            );
+
+
+            setMessage(
+
+                "PCK güncellenirken bir hata oluştu.",
+
+                "error"
+
+            );
+
+
+        } finally {
+
+
+            setButtonsDisabled(
+                false
+            );
+
+        }
+
+    }
+
+);
+
+
+
+/* ============================================================
+   DOSYAYI BASE64'E ÇEVİR
+============================================================ */
+
+function fileToBase64(
+    file
+) {
+
+    return new Promise(
+
+        (resolve, reject) => {
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                () => {
+
+
+                    const result =
+                        reader.result;
+
+
+                    if (
+                        typeof result !==
+                        "string"
+                    ) {
+
+                        reject(
+
+                            new Error(
+                                "Dosya okunamadı."
+                            )
+
+                        );
+
+                        return;
+
+                    }
+
+
+                    const commaIndex =
+                        result.indexOf(
+                            ","
+                        );
+
+
+                    if (
+                        commaIndex === -1
+                    ) {
+
+                        reject(
+
+                            new Error(
+                                "Dosya Base64 formatına çevrilemedi."
+                            )
+
+                        );
+
+                        return;
+
+                    }
+
+
+                    const base64 =
+                        result.substring(
+                            commaIndex + 1
+                        );
+
+
+                    resolve(
+                        base64
+                    );
+
+                };
+
+
+            reader.onerror =
+                () => {
+
+                    reject(
+                        reader.error ||
+                        new Error(
+                            "Dosya okunurken hata oluştu."
+                        )
+                    );
+
+                };
+
+
+            reader.readAsDataURL(
+                file
+            );
+
+        }
+
+    );
+
+}
+
+
+</script>
+
+</body>
+</html>
