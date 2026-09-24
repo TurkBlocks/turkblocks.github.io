@@ -8,7 +8,7 @@
 
     <meta
         name="description"
-        content="TürkBlocks tPanel"
+        content="TürkBlocks tPanel — TBP yönetimi"
     >
 
     <style>
@@ -223,15 +223,14 @@
                 transform 0.18s ease,
                 border-color 0.18s ease,
                 background 0.18s ease,
-                box-shadow 0.18s ease,
-                opacity 0.18s ease;
+                box-shadow 0.18s ease;
 
             text-align: left;
 
             color: var(--text);
         }
 
-        .action:hover:not(:disabled) {
+        .action:hover {
             transform: translateY(-3px);
 
             border-color:
@@ -243,18 +242,14 @@
                 0 12px 30px rgba(0,0,0,0.25);
         }
 
-        .action:active:not(:disabled) {
+        .action:active {
             transform: translateY(-1px);
         }
 
         .action:disabled {
-            cursor: not-allowed;
             opacity: 0.55;
-        }
-
-        .action:focus-visible {
-            outline: 2px solid rgba(128,20,20,0.8);
-            outline-offset: 3px;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .action-icon {
@@ -309,8 +304,6 @@
 
             font-size: 13px;
             line-height: 1.4;
-
-            overflow-wrap: anywhere;
         }
 
         .status.show {
@@ -392,25 +385,12 @@
                 min-height: 125px;
             }
         }
-
-        @media (prefers-reduced-motion: reduce) {
-
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
     </style>
 </head>
 
 <body>
 
 <div class="panel">
-
-    <!-- HEADER -->
 
     <header class="header">
 
@@ -436,20 +416,18 @@
 
             <img
                 id="userPhoto"
-                src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                src=""
                 alt="Profil"
             >
 
             <span id="userEmail">
-                Oturum kontrol ediliyor...
+                Yükleniyor...
             </span>
 
         </div>
 
     </header>
 
-
-    <!-- MAIN -->
 
     <main class="card">
 
@@ -458,7 +436,7 @@
             <h2>Oyun Yönetimi</h2>
 
             <p>
-                Oyununun PCK dosyasını buradan
+                Oyununun TBP dosyasını buradan
                 güncelleyebilir veya silebilirsin.
             </p>
 
@@ -467,46 +445,50 @@
 
         <div class="actions">
 
-            <!-- PCK SİL -->
+            <!-- TBP SİL -->
 
             <button
                 class="action"
                 id="deleteButton"
                 type="button"
-                disabled
             >
 
-                <div class="action-icon">
+                <div
+                    class="action-icon"
+                    aria-hidden="true"
+                >
                     −
                 </div>
 
-                <h3>PCK Sil</h3>
+                <h3>TBP Sil</h3>
 
                 <p>
-                    Hesabına bağlı mevcut PCK
+                    Hesabına bağlı mevcut TBP
                     dosyasını GitHub'dan kaldır.
                 </p>
 
             </button>
 
 
-            <!-- PCK GÜNCELLE -->
+            <!-- TBP GÜNCELLE -->
 
             <button
                 class="action"
                 id="updateButton"
                 type="button"
-                disabled
             >
 
-                <div class="action-icon">
+                <div
+                    class="action-icon"
+                    aria-hidden="true"
+                >
                     ↻
                 </div>
 
-                <h3>PCK Güncelle</h3>
+                <h3>TBP Güncelle</h3>
 
                 <p>
-                    Yeni bir PCK seçerek mevcut
+                    Yeni bir TBP seçerek mevcut
                     oyunun dosyasını güncelle.
                 </p>
 
@@ -518,7 +500,7 @@
         <input
             type="file"
             id="fileInput"
-            accept=".pck,application/octet-stream"
+            accept=".tbp"
             hidden
         >
 
@@ -594,23 +576,22 @@
     // APPS SCRIPT
     // ==========================================
 
-    const PCK_SIL_URL =
+    const TBP_SIL_URL =
         "https://script.google.com/macros/s/AKfycbwx6w_KU8PMIYRHw41RcJDEh1JEw0p0nYDyd7Omc-5x2Lka5TN0gFmMoL2vq-6ntAqezA/exec";
 
-
-    const PCK_GUNCELLE_URL =
-        "https://script.google.com/macros/s/AKfycbykDkGYd_kJFcfrK8JcmZVxBospFbUBGgJtrK2OLbA00RepsT7L4aF8ElN5SQAzcqRM/exec";
+    const TBP_GUNCELLE_URL =
+        "https://script.google.com/macros/s/AKfycbykDkGYd_kJFcfrK8JCmZVxBospFbUBGgJtrK2OLbA00RepsT7L4aF8ElN5SQAzcqRM/exec";
 
 
     // ==========================================
     // AYARLAR
     // ==========================================
 
-    const MAX_FILE_SIZE =
+    const MAX_TBP_SIZE =
         35 * 1024 * 1024;
 
     const REQUEST_TIMEOUT =
-        120000;
+        30000;
 
 
     // ==========================================
@@ -637,18 +618,19 @@
 
 
     let currentUser = null;
-    let authReady = false;
-    let requestRunning = false;
 
 
     // ==========================================
     // DURUM
     // ==========================================
 
-    function showStatus(message, type = "success") {
+    function showStatus(
+        message,
+        type = "success"
+    ) {
 
         statusBox.textContent =
-            String(message || "Bir hata oluştu.");
+            String(message);
 
         statusBox.className =
             "status show " + type;
@@ -665,15 +647,10 @@
 
 
     // ==========================================
-    // BUTON DURUMU
+    // BUTTON DURUMU
     // ==========================================
 
-    function updateButtonState() {
-
-        const disabled =
-            !authReady ||
-            !currentUser ||
-            requestRunning;
+    function setButtonsDisabled(disabled) {
 
         deleteButton.disabled =
             disabled;
@@ -684,76 +661,92 @@
 
 
     // ==========================================
-    // FETCH TIMEOUT
+    // GÜVENLİ JSON İSTEĞİ
     // ==========================================
 
-    async function fetchWithTimeout(
+    async function requestJSON(
         url,
-        options = {},
-        timeout = REQUEST_TIMEOUT
+        body
     ) {
 
         const controller =
             new AbortController();
 
-        const timer =
+        const timeout =
             setTimeout(
                 () => controller.abort(),
-                timeout
+                REQUEST_TIMEOUT
             );
 
         try {
 
-            return await fetch(
-                url,
-                {
-                    ...options,
-                    signal:
-                        controller.signal
-                }
-            );
+            const response =
+                await fetch(
+                    url,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "text/plain;charset=utf-8"
+                        },
+
+                        body:
+                            JSON.stringify(body),
+
+                        signal:
+                            controller.signal
+                    }
+                );
+
+
+            const text =
+                await response.text();
+
+
+            let result;
+
+            try {
+
+                result =
+                    JSON.parse(text);
+
+            } catch {
+
+                throw new Error(
+                    "Sunucudan geçersiz yanıt alındı."
+                );
+            }
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    result.error ||
+                    "Sunucu isteği reddetti."
+                );
+            }
+
+
+            return result;
+
+        } catch (error) {
+
+            if (
+                error.name ===
+                "AbortError"
+            ) {
+
+                throw new Error(
+                    "İstek zaman aşımına uğradı."
+                );
+            }
+
+            throw error;
 
         } finally {
 
-            clearTimeout(timer);
-        }
-    }
-
-
-    // ==========================================
-    // JSON RESPONSE
-    // ==========================================
-
-    async function readJsonResponse(response) {
-
-        const text =
-            await response.text();
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Sunucu HTTP " +
-                response.status +
-                " hatası döndürdü."
-            );
-        }
-
-        if (!text) {
-
-            throw new Error(
-                "Sunucudan boş yanıt geldi."
-            );
-        }
-
-        try {
-
-            return JSON.parse(text);
-
-        } catch {
-
-            throw new Error(
-                "Sunucudan geçersiz yanıt geldi."
-            );
+            clearTimeout(timeout);
         }
     }
 
@@ -766,15 +759,9 @@
         auth,
         (user) => {
 
-            authReady = true;
-            currentUser = user || null;
-
             if (!user) {
 
-                userEmail.textContent =
-                    "Oturum bulunamadı.";
-
-                updateButtonState();
+                currentUser = null;
 
                 window.location.replace(
                     "login.html"
@@ -782,6 +769,9 @@
 
                 return;
             }
+
+
+            currentUser = user;
 
 
             userEmail.textContent =
@@ -799,41 +789,32 @@
                     "https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg";
             }
 
-
-            userPhoto.onerror = () => {
-
-                userPhoto.onerror = null;
-
-                userPhoto.src =
-                    "https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg";
-            };
-
-
-            updateButtonState();
         }
     );
 
 
     // ==========================================
-    // PCK SİL
+    // TBP SİL
     // ==========================================
 
     deleteButton.addEventListener(
         "click",
         async () => {
 
-            if (
-                !authReady ||
-                !currentUser ||
-                requestRunning
-            ) {
+            if (!currentUser) {
+
+                showStatus(
+                    "Oturum bulunamadı.",
+                    "error"
+                );
+
                 return;
             }
 
 
             const confirmed =
                 window.confirm(
-                    "Hesabına bağlı PCK dosyasını silmek istediğine emin misin?"
+                    "Hesabına bağlı TBP dosyasını silmek istediğine emin misin?"
                 );
 
 
@@ -842,42 +823,24 @@
             }
 
 
-            requestRunning = true;
-
-            updateButtonState();
+            setButtonsDisabled(true);
 
 
             showStatus(
-                "PCK siliniyor...",
+                "TBP siliniyor...",
                 "loading"
             );
 
 
             try {
 
-                const response =
-                    await fetchWithTimeout(
-                        PCK_SIL_URL,
-                        {
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "text/plain;charset=utf-8"
-                            },
-
-                            body:
-                                JSON.stringify({
-                                    email:
-                                        currentUser.email
-                                })
-                        }
-                    );
-
-
                 const result =
-                    await readJsonResponse(
-                        response
+                    await requestJSON(
+                        TBP_SIL_URL,
+                        {
+                            email:
+                                currentUser.email
+                        }
                     );
 
 
@@ -888,13 +851,13 @@
 
                     throw new Error(
                         result?.error ||
-                        "PCK silinemedi."
+                        "TBP silinemedi."
                     );
                 }
 
 
                 showStatus(
-                    "PCK silindi.",
+                    "TBP silindi.",
                     "success"
                 );
 
@@ -902,68 +865,51 @@
             } catch (error) {
 
                 console.error(
-                    "PCK silme hatası:",
+                    "TBP silme hatası:",
                     error
                 );
 
 
-                if (
-                    error.name ===
-                    "AbortError"
-                ) {
-
-                    showStatus(
-                        "İşlem zaman aşımına uğradı. PCK'nin silinip silinmediğini tekrar kontrol et.",
-                        "error"
-                    );
-
-                } else {
-
-                    showStatus(
-                        "PCK silinemedi: " +
-                        getSafeErrorMessage(error),
-                        "error"
-                    );
-                }
+                showStatus(
+                    "TBP silinemedi: " +
+                    error.message,
+                    "error"
+                );
 
             } finally {
 
-                requestRunning = false;
-
-                updateButtonState();
+                setButtonsDisabled(false);
             }
+
         }
     );
 
 
     // ==========================================
-    // PCK GÜNCELLE
+    // TBP GÜNCELLE
     // ==========================================
 
     updateButton.addEventListener(
         "click",
         () => {
 
-            if (
-                !authReady ||
-                !currentUser ||
-                requestRunning
-            ) {
+            if (!currentUser) {
+
+                showStatus(
+                    "Oturum bulunamadı.",
+                    "error"
+                );
+
                 return;
             }
 
-            clearStatus();
 
-            fileInput.value = "";
+            clearStatus();
 
             fileInput.click();
         }
     );
 
-
-    // ==========================================
-    // DOSYA SEÇİLDİ
-    // ==========================================
 
     fileInput.addEventListener(
         "change",
@@ -978,15 +924,22 @@
             }
 
 
+            const fileName =
+                file.name.trim();
+
+
+            // ==================================
+            // DOSYA ADI
+            // ==================================
+
             if (
-                !file.name ||
-                !file.name
+                !fileName
                     .toLowerCase()
-                    .endsWith(".pck")
+                    .endsWith(".tbp")
             ) {
 
                 showStatus(
-                    "Sadece .pck dosyaları kullanılabilir.",
+                    "Sadece .tbp dosyaları kullanılabilir.",
                     "error"
                 );
 
@@ -996,23 +949,17 @@
             }
 
 
-            if (file.size <= 0) {
+            // ==================================
+            // DOSYA BOYUTU
+            // ==================================
+
+            if (
+                file.size >
+                MAX_TBP_SIZE
+            ) {
 
                 showStatus(
-                    "Seçilen PCK dosyası boş.",
-                    "error"
-                );
-
-                fileInput.value = "";
-
-                return;
-            }
-
-
-            if (file.size > MAX_FILE_SIZE) {
-
-                showStatus(
-                    "PCK dosyası 35 MB'dan büyük olamaz.",
+                    "TBP dosyası 35 MB'dan büyük olamaz.",
                     "error"
                 );
 
@@ -1023,10 +970,13 @@
 
 
             if (
-                !authReady ||
-                !currentUser ||
-                requestRunning
+                file.size === 0
             ) {
+
+                showStatus(
+                    "Boş bir TBP dosyası yüklenemez.",
+                    "error"
+                );
 
                 fileInput.value = "";
 
@@ -1034,74 +984,53 @@
             }
 
 
-            requestRunning = true;
+            if (!currentUser) {
 
-            updateButtonState();
+                showStatus(
+                    "Oturum bulunamadı.",
+                    "error"
+                );
+
+                fileInput.value = "";
+
+                return;
+            }
+
+
+            setButtonsDisabled(true);
+
+
+            showStatus(
+                "TBP hazırlanıyor...",
+                "loading"
+            );
 
 
             try {
 
-                showStatus(
-                    "PCK hazırlanıyor...",
-                    "loading"
-                );
-
-
                 const base64Data =
-                    await fileToBase64(
-                        file
-                    );
-
-
-                if (
-                    !base64Data ||
-                    typeof base64Data !==
-                        "string"
-                ) {
-
-                    throw new Error(
-                        "PCK verisi okunamadı."
-                    );
-                }
+                    await fileToBase64(file);
 
 
                 showStatus(
-                    "PCK güncelleniyor...",
+                    "TBP güncelleniyor...",
                     "loading"
                 );
-
-
-                const response =
-                    await fetchWithTimeout(
-                        PCK_GUNCELLE_URL,
-                        {
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "text/plain;charset=utf-8"
-                            },
-
-                            body:
-                                JSON.stringify({
-
-                                    email:
-                                        currentUser.email,
-
-                                    fileName:
-                                        file.name,
-
-                                    base64Data:
-                                        base64Data
-
-                                })
-                        }
-                    );
 
 
                 const result =
-                    await readJsonResponse(
-                        response
+                    await requestJSON(
+                        TBP_GUNCELLE_URL,
+                        {
+                            email:
+                                currentUser.email,
+
+                            fileName:
+                                fileName,
+
+                            base64Data:
+                                base64Data
+                        }
                     );
 
 
@@ -1112,13 +1041,13 @@
 
                     throw new Error(
                         result?.error ||
-                        "PCK güncellenemedi."
+                        "TBP güncellenemedi."
                     );
                 }
 
 
                 showStatus(
-                    "PCK değiştirildi.",
+                    "TBP değiştirildi.",
                     "success"
                 );
 
@@ -1126,44 +1055,30 @@
             } catch (error) {
 
                 console.error(
-                    "PCK güncelleme hatası:",
+                    "TBP güncelleme hatası:",
                     error
                 );
 
 
-                if (
-                    error.name ===
-                    "AbortError"
-                ) {
-
-                    showStatus(
-                        "İşlem zaman aşımına uğradı. PCK'nin güncellenip güncellenmediğini tekrar kontrol et.",
-                        "error"
-                    );
-
-                } else {
-
-                    showStatus(
-                        "PCK güncellenemedi: " +
-                        getSafeErrorMessage(error),
-                        "error"
-                    );
-                }
+                showStatus(
+                    "TBP güncellenemedi: " +
+                    error.message,
+                    "error"
+                );
 
             } finally {
 
-                requestRunning = false;
+                setButtonsDisabled(false);
 
                 fileInput.value = "";
-
-                updateButtonState();
             }
+
         }
     );
 
 
     // ==========================================
-    // DOSYA -> BASE64
+    // DOSYA → BASE64
     // ==========================================
 
     function fileToBase64(file) {
@@ -1188,7 +1103,7 @@
 
                         reject(
                             new Error(
-                                "Dosya okunamadı."
+                                "Dosya verisi okunamadı."
                             )
                         );
 
@@ -1243,26 +1158,6 @@
                 reader.readAsDataURL(file);
             }
         );
-    }
-
-
-    // ==========================================
-    // HATA MESAJI
-    // ==========================================
-
-    function getSafeErrorMessage(error) {
-
-        if (
-            error &&
-            typeof error.message ===
-                "string"
-        ) {
-
-            return error.message
-                .slice(0, 500);
-        }
-
-        return "Bilinmeyen bir hata oluştu.";
     }
 
 </script>
