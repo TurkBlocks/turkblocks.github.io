@@ -62,6 +62,11 @@
             padding: 24px;
         }
 
+        button,
+        input {
+            font: inherit;
+        }
+
         .panel {
             width: 100%;
             max-width: 620px;
@@ -218,14 +223,15 @@
                 transform 0.18s ease,
                 border-color 0.18s ease,
                 background 0.18s ease,
-                box-shadow 0.18s ease;
+                box-shadow 0.18s ease,
+                opacity 0.18s ease;
 
             text-align: left;
 
             color: var(--text);
         }
 
-        .action:hover {
+        .action:hover:not(:disabled) {
             transform: translateY(-3px);
 
             border-color:
@@ -237,8 +243,18 @@
                 0 12px 30px rgba(0,0,0,0.25);
         }
 
-        .action:active {
+        .action:active:not(:disabled) {
             transform: translateY(-1px);
+        }
+
+        .action:disabled {
+            cursor: not-allowed;
+            opacity: 0.55;
+        }
+
+        .action:focus-visible {
+            outline: 2px solid rgba(128,20,20,0.8);
+            outline-offset: 3px;
         }
 
         .action-icon {
@@ -293,6 +309,8 @@
 
             font-size: 13px;
             line-height: 1.4;
+
+            overflow-wrap: anywhere;
         }
 
         .status.show {
@@ -374,6 +392,17 @@
                 min-height: 125px;
             }
         }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 
@@ -381,9 +410,7 @@
 
 <div class="panel">
 
-    <!-- ================================
-         HEADER
-    ================================= -->
+    <!-- HEADER -->
 
     <header class="header">
 
@@ -405,17 +432,16 @@
 
         </div>
 
-
         <div class="user">
 
             <img
                 id="userPhoto"
-                src=""
+                src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
                 alt="Profil"
             >
 
             <span id="userEmail">
-                Yükleniyor...
+                Oturum kontrol ediliyor...
             </span>
 
         </div>
@@ -423,9 +449,7 @@
     </header>
 
 
-    <!-- ================================
-         MAIN
-    ================================= -->
+    <!-- MAIN -->
 
     <main class="card">
 
@@ -449,6 +473,7 @@
                 class="action"
                 id="deleteButton"
                 type="button"
+                disabled
             >
 
                 <div class="action-icon">
@@ -471,6 +496,7 @@
                 class="action"
                 id="updateButton"
                 type="button"
+                disabled
             >
 
                 <div class="action-icon">
@@ -492,7 +518,7 @@
         <input
             type="file"
             id="fileInput"
-            accept=".pck"
+            accept=".pck,application/octet-stream"
             hidden
         >
 
@@ -500,6 +526,8 @@
         <div
             id="status"
             class="status"
+            role="status"
+            aria-live="polite"
         ></div>
 
     </main>
@@ -512,8 +540,6 @@
 </div>
 
 
-<!-- Firebase -->
-
 <script type="module">
 
     import {
@@ -521,11 +547,9 @@
     } from
         "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
 
-
     import {
         getAuth,
-        onAuthStateChanged,
-        signOut
+        onAuthStateChanged
     } from
         "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
@@ -562,7 +586,6 @@
     const app =
         initializeApp(firebaseConfig);
 
-
     const auth =
         getAuth(app);
 
@@ -576,7 +599,18 @@
 
 
     const PCK_GUNCELLE_URL =
-        "https://script.google.com/macros/s/AKfycbykDkGYd_kJFcfrK8jCmZVxBospFbUBGgJtrK2OLbA00RepsT7L4aF8ElN5SQAzcqRM/exec";
+        "https://script.google.com/macros/s/AKfycbykDkGYd_kJFcfrK8JcmZVxBospFbUBGgJtrK2OLbA00RepsT7L4aF8ElN5SQAzcqRM/exec";
+
+
+    // ==========================================
+    // AYARLAR
+    // ==========================================
+
+    const MAX_FILE_SIZE =
+        35 * 1024 * 1024;
+
+    const REQUEST_TIMEOUT =
+        120000;
 
 
     // ==========================================
@@ -603,19 +637,18 @@
 
 
     let currentUser = null;
+    let authReady = false;
+    let requestRunning = false;
 
 
     // ==========================================
-    // DURUM MESAJI
+    // DURUM
     // ==========================================
 
-    function showStatus(
-        message,
-        type = "success"
-    ) {
+    function showStatus(message, type = "success") {
 
         statusBox.textContent =
-            message;
+            String(message || "Bir hata oluştu.");
 
         statusBox.className =
             "status show " + type;
@@ -632,23 +665,123 @@
 
 
     // ==========================================
-    // AUTH KONTROLÜ
+    // BUTON DURUMU
+    // ==========================================
+
+    function updateButtonState() {
+
+        const disabled =
+            !authReady ||
+            !currentUser ||
+            requestRunning;
+
+        deleteButton.disabled =
+            disabled;
+
+        updateButton.disabled =
+            disabled;
+    }
+
+
+    // ==========================================
+    // FETCH TIMEOUT
+    // ==========================================
+
+    async function fetchWithTimeout(
+        url,
+        options = {},
+        timeout = REQUEST_TIMEOUT
+    ) {
+
+        const controller =
+            new AbortController();
+
+        const timer =
+            setTimeout(
+                () => controller.abort(),
+                timeout
+            );
+
+        try {
+
+            return await fetch(
+                url,
+                {
+                    ...options,
+                    signal:
+                        controller.signal
+                }
+            );
+
+        } finally {
+
+            clearTimeout(timer);
+        }
+    }
+
+
+    // ==========================================
+    // JSON RESPONSE
+    // ==========================================
+
+    async function readJsonResponse(response) {
+
+        const text =
+            await response.text();
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Sunucu HTTP " +
+                response.status +
+                " hatası döndürdü."
+            );
+        }
+
+        if (!text) {
+
+            throw new Error(
+                "Sunucudan boş yanıt geldi."
+            );
+        }
+
+        try {
+
+            return JSON.parse(text);
+
+        } catch {
+
+            throw new Error(
+                "Sunucudan geçersiz yanıt geldi."
+            );
+        }
+    }
+
+
+    // ==========================================
+    // AUTH
     // ==========================================
 
     onAuthStateChanged(
         auth,
         (user) => {
 
+            authReady = true;
+            currentUser = user || null;
+
             if (!user) {
 
-                window.location.href =
-                    "login.html";
+                userEmail.textContent =
+                    "Oturum bulunamadı.";
+
+                updateButtonState();
+
+                window.location.replace(
+                    "login.html"
+                );
 
                 return;
             }
-
-
-            currentUser = user;
 
 
             userEmail.textContent =
@@ -666,6 +799,17 @@
                     "https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg";
             }
 
+
+            userPhoto.onerror = () => {
+
+                userPhoto.onerror = null;
+
+                userPhoto.src =
+                    "https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg";
+            };
+
+
+            updateButtonState();
         }
     );
 
@@ -678,13 +822,17 @@
         "click",
         async () => {
 
-            if (!currentUser) {
+            if (
+                !authReady ||
+                !currentUser ||
+                requestRunning
+            ) {
                 return;
             }
 
 
             const confirmed =
-                confirm(
+                window.confirm(
                     "Hesabına bağlı PCK dosyasını silmek istediğine emin misin?"
                 );
 
@@ -694,11 +842,9 @@
             }
 
 
-            deleteButton.disabled =
-                true;
+            requestRunning = true;
 
-            updateButton.disabled =
-                true;
+            updateButtonState();
 
 
             showStatus(
@@ -710,12 +856,10 @@
             try {
 
                 const response =
-                    await fetch(
+                    await fetchWithTimeout(
                         PCK_SIL_URL,
                         {
-
-                            method:
-                                "POST",
+                            method: "POST",
 
                             headers: {
                                 "Content-Type":
@@ -724,23 +868,26 @@
 
                             body:
                                 JSON.stringify({
-
                                     email:
                                         currentUser.email
-
                                 })
                         }
                     );
 
 
                 const result =
-                    await response.json();
+                    await readJsonResponse(
+                        response
+                    );
 
 
-                if (!result.success) {
+                if (
+                    !result ||
+                    result.success !== true
+                ) {
 
                     throw new Error(
-                        result.error ||
+                        result?.error ||
                         "PCK silinemedi."
                     );
                 }
@@ -754,24 +901,37 @@
 
             } catch (error) {
 
-                console.error(error);
-
-
-                showStatus(
-                    "PCK silinemedi: " +
-                    error.message,
-                    "error"
+                console.error(
+                    "PCK silme hatası:",
+                    error
                 );
+
+
+                if (
+                    error.name ===
+                    "AbortError"
+                ) {
+
+                    showStatus(
+                        "İşlem zaman aşımına uğradı. PCK'nin silinip silinmediğini tekrar kontrol et.",
+                        "error"
+                    );
+
+                } else {
+
+                    showStatus(
+                        "PCK silinemedi: " +
+                        getSafeErrorMessage(error),
+                        "error"
+                    );
+                }
 
             } finally {
 
-                deleteButton.disabled =
-                    false;
+                requestRunning = false;
 
-                updateButton.disabled =
-                    false;
+                updateButtonState();
             }
-
         }
     );
 
@@ -784,20 +944,33 @@
         "click",
         () => {
 
+            if (
+                !authReady ||
+                !currentUser ||
+                requestRunning
+            ) {
+                return;
+            }
+
             clearStatus();
 
-            fileInput.click();
+            fileInput.value = "";
 
+            fileInput.click();
         }
     );
 
+
+    // ==========================================
+    // DOSYA SEÇİLDİ
+    // ==========================================
 
     fileInput.addEventListener(
         "change",
         async () => {
 
             const file =
-                fileInput.files[0];
+                fileInput.files?.[0];
 
 
             if (!file) {
@@ -805,26 +978,8 @@
             }
 
 
-            // 35 MB SINIRI
-
-            const MAX_SIZE =
-                35 * 1024 * 1024;
-
-
-            if (file.size > MAX_SIZE) {
-
-                showStatus(
-                    "PCK dosyası 35 MB'dan büyük olamaz.",
-                    "error"
-                );
-
-                fileInput.value = "";
-
-                return;
-            }
-
-
             if (
+                !file.name ||
                 !file.name
                     .toLowerCase()
                     .endsWith(".pck")
@@ -841,28 +996,73 @@
             }
 
 
-            if (!currentUser) {
+            if (file.size <= 0) {
+
+                showStatus(
+                    "Seçilen PCK dosyası boş.",
+                    "error"
+                );
+
+                fileInput.value = "";
+
                 return;
             }
 
 
-            updateButton.disabled =
-                true;
+            if (file.size > MAX_FILE_SIZE) {
 
-            deleteButton.disabled =
-                true;
+                showStatus(
+                    "PCK dosyası 35 MB'dan büyük olamaz.",
+                    "error"
+                );
+
+                fileInput.value = "";
+
+                return;
+            }
 
 
-            showStatus(
-                "PCK hazırlanıyor...",
-                "loading"
-            );
+            if (
+                !authReady ||
+                !currentUser ||
+                requestRunning
+            ) {
+
+                fileInput.value = "";
+
+                return;
+            }
+
+
+            requestRunning = true;
+
+            updateButtonState();
 
 
             try {
 
+                showStatus(
+                    "PCK hazırlanıyor...",
+                    "loading"
+                );
+
+
                 const base64Data =
-                    await fileToBase64(file);
+                    await fileToBase64(
+                        file
+                    );
+
+
+                if (
+                    !base64Data ||
+                    typeof base64Data !==
+                        "string"
+                ) {
+
+                    throw new Error(
+                        "PCK verisi okunamadı."
+                    );
+                }
 
 
                 showStatus(
@@ -872,12 +1072,10 @@
 
 
                 const response =
-                    await fetch(
+                    await fetchWithTimeout(
                         PCK_GUNCELLE_URL,
                         {
-
-                            method:
-                                "POST",
+                            method: "POST",
 
                             headers: {
                                 "Content-Type":
@@ -902,13 +1100,18 @@
 
 
                 const result =
-                    await response.json();
+                    await readJsonResponse(
+                        response
+                    );
 
 
-                if (!result.success) {
+                if (
+                    !result ||
+                    result.success !== true
+                ) {
 
                     throw new Error(
-                        result.error ||
+                        result?.error ||
                         "PCK güncellenemedi."
                     );
                 }
@@ -922,32 +1125,45 @@
 
             } catch (error) {
 
-                console.error(error);
-
-
-                showStatus(
-                    "PCK güncellenemedi: " +
-                    error.message,
-                    "error"
+                console.error(
+                    "PCK güncelleme hatası:",
+                    error
                 );
+
+
+                if (
+                    error.name ===
+                    "AbortError"
+                ) {
+
+                    showStatus(
+                        "İşlem zaman aşımına uğradı. PCK'nin güncellenip güncellenmediğini tekrar kontrol et.",
+                        "error"
+                    );
+
+                } else {
+
+                    showStatus(
+                        "PCK güncellenemedi: " +
+                        getSafeErrorMessage(error),
+                        "error"
+                    );
+                }
 
             } finally {
 
-                updateButton.disabled =
-                    false;
-
-                deleteButton.disabled =
-                    false;
+                requestRunning = false;
 
                 fileInput.value = "";
-            }
 
+                updateButtonState();
+            }
         }
     );
 
 
     // ==========================================
-    // DOSYAYI BASE64'E ÇEVİR
+    // DOSYA -> BASE64
     // ==========================================
 
     function fileToBase64(file) {
@@ -964,15 +1180,11 @@
                     const result =
                         reader.result;
 
-                    const base64 =
-                        result.split(",")[1];
 
-                    resolve(base64);
-                };
-
-
-                reader.onerror =
-                    () => {
+                    if (
+                        typeof result !==
+                        "string"
+                    ) {
 
                         reject(
                             new Error(
@@ -980,12 +1192,77 @@
                             )
                         );
 
-                    };
+                        return;
+                    }
+
+
+                    const comma =
+                        result.indexOf(",");
+
+
+                    if (comma === -1) {
+
+                        reject(
+                            new Error(
+                                "Dosya verisi geçersiz."
+                            )
+                        );
+
+                        return;
+                    }
+
+
+                    resolve(
+                        result.slice(
+                            comma + 1
+                        )
+                    );
+                };
+
+
+                reader.onerror = () => {
+
+                    reject(
+                        new Error(
+                            "Dosya okunamadı."
+                        )
+                    );
+                };
+
+
+                reader.onabort = () => {
+
+                    reject(
+                        new Error(
+                            "Dosya okuma işlemi iptal edildi."
+                        )
+                    );
+                };
 
 
                 reader.readAsDataURL(file);
             }
         );
+    }
+
+
+    // ==========================================
+    // HATA MESAJI
+    // ==========================================
+
+    function getSafeErrorMessage(error) {
+
+        if (
+            error &&
+            typeof error.message ===
+                "string"
+        ) {
+
+            return error.message
+                .slice(0, 500);
+        }
+
+        return "Bilinmeyen bir hata oluştu.";
     }
 
 </script>
