@@ -10,458 +10,786 @@
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     margin: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
     font-family: Arial, Helvetica, sans-serif;
-    background: #d9d9d9;
-    color: #222;
+    background: #111;
+    color: #eee;
 }
 
-/* ÜST MENÜ */
-.topbar {
-    height: 48px;
-    background: linear-gradient(#650000, #450000);
+button,
+input,
+select {
+    font: inherit;
+}
+
+/* =========================================================
+   ANA PENCERE
+   ========================================================= */
+
+#app {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =========================================================
+   ÜST BAŞLIK
+   ========================================================= */
+
+#topbar {
+    height: 46px;
+    min-height: 46px;
+    background: #500000;
     border-bottom: 2px solid #250000;
     display: flex;
     align-items: center;
-    padding: 0 10px;
-    color: white;
-    box-shadow: 0 1px 4px #555;
+    padding: 0 8px;
+    gap: 6px;
 }
 
 .logo {
-    font-size: 19px;
     font-weight: bold;
-    margin-right: 22px;
-    text-shadow: 1px 1px #250000;
+    font-size: 17px;
+    padding: 0 12px;
+    white-space: nowrap;
 }
 
-.menu {
-    display: flex;
-    height: 100%;
-}
-
-.menu button {
-    height: 32px;
-    margin: 8px 3px;
-    padding: 0 13px;
-    border: 1px solid #300000;
-    border-radius: 4px;
-    background: linear-gradient(#790000, #500000);
+.top-button {
+    height: 30px;
+    padding: 0 12px;
+    border: 1px solid #783030;
+    background: #620000;
     color: white;
+    border-radius: 5px;
     cursor: pointer;
-    font-size: 13px;
 }
 
-.menu button:hover {
-    background: linear-gradient(#900000, #600000);
+.top-button:hover {
+    background: #780000;
 }
 
-/* ANA ALAN */
-.main {
+.top-button:active {
+    background: #3d0000;
+}
+
+.spacer {
+    flex: 1;
+}
+
+.status {
+    font-size: 12px;
+    color: #ddd;
+    padding-right: 8px;
+}
+
+/* =========================================================
+   ANA ALAN
+   ========================================================= */
+
+#main {
+    flex: 1;
+    min-height: 0;
     display: flex;
-    height: calc(100vh - 48px);
 }
 
-/* SOL PANEL */
-.left-panel {
+/* =========================================================
+   SOL PANEL
+   ========================================================= */
+
+#left-panel {
     width: 220px;
-    background: #eeeeee;
-    border-right: 1px solid #999;
-    box-shadow: inset -1px 0 #fff;
-    overflow-y: auto;
+    min-width: 220px;
+    background: #1c1c1c;
+    border-right: 1px solid #333;
+    display: flex;
+    flex-direction: column;
 }
 
 .panel-title {
-    background: linear-gradient(#eeeeee, #cccccc);
-    border-bottom: 1px solid #999;
-    padding: 9px 10px;
-    font-size: 13px;
+    height: 32px;
+    background: #292929;
+    border-bottom: 1px solid #3a3a3a;
+    display: flex;
+    align-items: center;
+    padding: 0 9px;
     font-weight: bold;
-    color: #333;
-}
-
-.node-list {
-    padding: 8px;
-}
-
-.node {
-    padding: 8px 9px;
-    margin-bottom: 5px;
-    border: 1px solid #aaa;
-    border-radius: 4px;
-    background: linear-gradient(#fff, #e2e2e2);
-    box-shadow: 0 1px 2px #bbb;
-    cursor: grab;
     font-size: 13px;
-    user-select: none;
 }
 
-.node:hover {
+#node-search {
+    margin: 7px;
+    width: calc(100% - 14px);
+    height: 29px;
+    background: #111;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: white;
+    padding: 0 8px;
+    outline: none;
+}
+
+#node-search:focus {
     border-color: #700000;
-    background: #f8eeee;
 }
 
-.node:active {
+#node-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 5px;
+}
+
+.node-item {
+    height: 31px;
+    margin-bottom: 4px;
+    background: #292929;
+    border: 1px solid #414141;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    cursor: grab;
+    user-select: none;
+    font-size: 13px;
+}
+
+.node-item:hover {
+    background: #363636;
+    border-color: #650000;
+}
+
+.node-item:active {
     cursor: grabbing;
 }
 
-/* ÇALIŞMA ALANI */
-.workspace {
+/* =========================================================
+   SAHNE
+   ========================================================= */
+
+#workspace {
     flex: 1;
-    position: relative;
-    overflow: hidden;
-    background-color: #cfcfcf;
-
-    background-image:
-        linear-gradient(#bdbdbd 1px, transparent 1px),
-        linear-gradient(90deg, #bdbdbd 1px, transparent 1px);
-
-    background-size: 20px 20px;
+    min-width: 0;
+    min-height: 0;
+    background: #101010;
+    display: flex;
+    flex-direction: column;
 }
 
-.workspace-header {
-    position: absolute;
-    left: 10px;
-    top: 10px;
-    z-index: 5;
+#scene-toolbar {
+    height: 36px;
+    min-height: 36px;
+    background: #202020;
+    border-bottom: 1px solid #363636;
+    display: flex;
+    align-items: center;
+    padding: 0 7px;
+    gap: 5px;
+}
 
-    background: #eeeeee;
-    border: 1px solid #999;
+.tool-button {
+    height: 26px;
+    padding: 0 9px;
+    background: #2c2c2c;
+    border: 1px solid #444;
+    color: #eee;
     border-radius: 4px;
-    padding: 6px 9px;
-
+    cursor: pointer;
     font-size: 12px;
-    color: #555;
 }
 
-/* SAHNEDEKİ NESNELER */
+.tool-button:hover {
+    background: #393939;
+}
+
+.tool-button.active {
+    background: #500000;
+    border-color: #7c0000;
+}
+
+#scene-wrapper {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: 30px;
+    background:
+        linear-gradient(#191919 1px, transparent 1px),
+        linear-gradient(90deg, #191919 1px, transparent 1px);
+    background-size: 25px 25px;
+}
+
+#scene {
+    position: relative;
+    width: 900px;
+    height: 550px;
+    background: #151515;
+    border: 2px solid #555;
+    overflow: hidden;
+}
+
+/* =========================================================
+   SAHNE NESNELERİ
+   ========================================================= */
+
 .scene-object {
     position: absolute;
-    min-width: 90px;
+    min-width: 70px;
     min-height: 45px;
-
-    border: 2px solid #500000;
-    border-radius: 4px;
-
-    background: #ffffff;
-    box-shadow: 2px 2px 4px rgba(0,0,0,.3);
-
+    border: 2px solid #aaa;
+    background: #555;
     cursor: move;
     user-select: none;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 11px;
+    color: white;
 }
 
 .scene-object.selected {
-    border: 2px dashed #500000;
-    box-shadow: 0 0 0 2px rgba(80,0,0,.25);
+    border-color: #ff7070;
+    box-shadow: 0 0 0 1px #500000;
 }
 
 .scene-object.character {
-    background: #f3dddd;
+    width: 50px;
+    height: 70px;
+    min-width: 50px;
+    min-height: 70px;
+    background: #500000;
+    border-radius: 5px;
 }
 
 .scene-object.block {
-    background: #dddddd;
+    width: 100px;
+    height: 50px;
+    background: #444;
 }
 
-.scene-object.enemy {
-    background: #ead7d7;
+.scene-object.obstacle {
+    width: 80px;
+    height: 80px;
+    background: #333;
+    border-color: #aaa;
 }
 
-/* SAĞ PANEL */
-.right-panel {
+.scene-object.camera {
+    width: 80px;
+    height: 50px;
+    background: #252525;
+}
+
+.scene-object.label-node {
+    background: #292929;
+}
+
+.scene-object.sprite {
+    background: #303030;
+}
+
+.scene-object.area {
+    background: rgba(80, 0, 0, .45);
+    border-style: dashed;
+}
+
+.scene-object.light {
+    border-radius: 50%;
+    background: #777;
+}
+
+.scene-object.audio {
+    background: #222;
+}
+
+/* =========================================================
+   ALT BİLGİ
+   ========================================================= */
+
+#scene-info {
+    height: 25px;
+    min-height: 25px;
+    background: #202020;
+    border-top: 1px solid #363636;
+    padding: 5px 8px;
+    font-size: 11px;
+    color: #aaa;
+}
+
+/* =========================================================
+   SAĞ PANEL
+   ========================================================= */
+
+#right-panel {
     width: 270px;
-    background: #eeeeee;
-    border-left: 1px solid #999;
+    min-width: 270px;
+    background: #1b1b1b;
+    border-left: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+}
+
+#tree {
+    height: 42%;
+    min-height: 150px;
     overflow-y: auto;
+    border-bottom: 1px solid #333;
 }
 
-.inspector {
-    padding: 10px;
-}
-
-.inspector-section {
-    border: 1px solid #aaa;
-    border-radius: 4px;
-    background: white;
-    margin-bottom: 10px;
-    box-shadow: 0 1px 2px #bbb;
-}
-
-.inspector-title {
-    padding: 7px;
-    background: linear-gradient(#eeeeee, #d0d0d0);
-    border-bottom: 1px solid #aaa;
-    font-weight: bold;
+.tree-row {
+    height: 27px;
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    cursor: pointer;
     font-size: 12px;
+}
+
+.tree-row:hover {
+    background: #292929;
+}
+
+.tree-row.selected {
+    background: #500000;
+}
+
+.tree-indent {
+    width: 14px;
+}
+
+#inspector {
+    flex: 1;
+    overflow-y: auto;
 }
 
 .inspector-content {
     padding: 8px;
 }
 
-.field {
+.property {
     margin-bottom: 8px;
 }
 
-.field label {
+.property label {
     display: block;
     font-size: 11px;
-    color: #555;
+    color: #aaa;
     margin-bottom: 3px;
 }
 
-.field input,
-.field select {
+.property input,
+.property select {
     width: 100%;
-    height: 28px;
-    border: 1px solid #999;
-    border-radius: 3px;
-    padding: 4px 6px;
-    background: #fff;
-}
-
-/* SAHNE AĞACI */
-.tree {
-    padding: 8px;
-}
-
-.tree-item {
-    padding: 6px 8px;
-    border: 1px solid transparent;
-    border-radius: 3px;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-.tree-item:hover {
-    background: #e8d5d5;
-    border-color: #c4a0a0;
-}
-
-.tree-item.active {
-    background: #500000;
+    height: 27px;
+    background: #111;
     color: white;
-}
-
-/* ALT DURUM ÇUBUĞU */
-.statusbar {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 26px;
-
-    background: linear-gradient(#eeeeee, #cccccc);
-    border-top: 1px solid #999;
-
-    display: flex;
-    align-items: center;
-    padding: 0 8px;
-
-    font-size: 11px;
-    color: #444;
-}
-
-.empty {
-    padding: 15px;
-    font-size: 12px;
-    color: #777;
-    text-align: center;
-}
-
-/* DÜĞME */
-.small-button {
-    width: 100%;
-    height: 30px;
-
-    border: 1px solid #777;
+    border: 1px solid #444;
     border-radius: 4px;
+    padding: 0 7px;
+    outline: none;
+}
 
-    background: linear-gradient(#fff, #d7d7d7);
+.property input:focus,
+.property select:focus {
+    border-color: #700000;
+}
 
-    cursor: pointer;
+.info-box {
+    padding: 8px;
+    margin-top: 10px;
+    background: #252525;
+    border: 1px solid #3c3c3c;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #bbb;
+    line-height: 1.5;
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+#modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.65);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+#modal {
+    width: 420px;
+    background: #222;
+    border: 1px solid #555;
+    border-radius: 7px;
+    box-shadow: 0 12px 40px rgba(0,0,0,.6);
+}
+
+#modal-header {
+    background: #500000;
+    padding: 10px;
     font-weight: bold;
-    font-size: 12px;
+    border-radius: 7px 7px 0 0;
 }
 
-.small-button:hover {
-    background: linear-gradient(#fff, #c8c8c8);
+#modal-body {
+    padding: 14px;
+    font-size: 13px;
+    color: #ccc;
+    line-height: 1.5;
 }
 
-.danger {
-    color: #800000;
+#modal-footer {
+    padding: 9px;
+    border-top: 1px solid #3a3a3a;
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.modal-button {
+    height: 30px;
+    padding: 0 12px;
+    background: #333;
+    border: 1px solid #555;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.modal-button.primary {
+    background: #500000;
+    border-color: #750000;
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #151515;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ÜST MENÜ -->
-<div class="topbar">
+<div id="app">
 
-    <div class="logo">
-        TürkBlocks Studio
+    <!-- =====================================================
+         ÜST BAR
+         ===================================================== -->
+
+    <div id="topbar">
+
+        <div class="logo">
+            TürkBlocks Studio
+        </div>
+
+        <button class="top-button" onclick="newProject()">
+            Yeni
+        </button>
+
+        <button class="top-button" onclick="saveProject()">
+            Kaydet
+        </button>
+
+        <button class="top-button" onclick="exportTBP()">
+            TBP Dışa Aktar
+        </button>
+
+        <button class="top-button" onclick="playScene()">
+            Çalıştır
+        </button>
+
+        <div class="spacer"></div>
+
+        <div class="status" id="status">
+            Hazır
+        </div>
+
     </div>
 
-    <div class="menu">
-        <button onclick="newProject()">Yeni</button>
-        <button onclick="saveProject()">Kaydet</button>
-        <button onclick="loadProject()">Aç</button>
-        <button onclick="previewGame()">▶ Önizle</button>
-        <button onclick="exportTBP()">TBP Dışa Aktar</button>
+
+    <!-- =====================================================
+         ANA ALAN
+         ===================================================== -->
+
+    <div id="main">
+
+        <!-- =================================================
+             SOL NODE PANELİ
+             ================================================= -->
+
+        <aside id="left-panel">
+
+            <div class="panel-title">
+                Düğümler
+            </div>
+
+            <input
+                id="node-search"
+                type="text"
+                placeholder="Düğüm ara..."
+                oninput="filterNodes()"
+            >
+
+            <div id="node-list">
+
+                <div class="node-item" draggable="true" data-type="Character">
+                    Character
+                </div>
+
+                <div class="node-item" draggable="true" data-type="Block">
+                    Block
+                </div>
+
+                <div class="node-item" draggable="true" data-type="Obstacle">
+                    Obstacle
+                </div>
+
+                <div class="node-item" draggable="true" data-type="Camera">
+                    Camera
+                </div>
+
+                <div class="node-item" draggable="true" data-type="Sprite">
+                    Sprite
+                </div>
+
+                <div class="node-item" draggable="true" data-type="Label">
+                    Label
+                </div>
+
+                <div class="node-item" draggable="true" data-type="Area">
+                    Area
+                </div>
+
+                <div class="node-item" draggable="true" data-type="Collision">
+                    Collision
+                </div>
+
+                <div class="node-item" draggable="true" data-type="Platform">
+                    Platform
+                </div>
+
+                <div class="node-item" draggable="true" data-type="Wall">
+                    Wall
+                </div>
+
+                <div class="node-item" draggable="true" data-type="Floor">
+                    Floor
+                </div>
+
+                <div class="node-item" draggable="true" data-type="Light">
+                    Light
+                </div>
+
+                <div class="node-item" draggable="true" data-type="Audio">
+                    Audio
+                </div>
+
+                <div class="node-item" draggable="true" data-type="Timer">
+                    Timer
+                </div>
+
+                <div class="node-item" draggable="true" data-type="Particle">
+                    Particle
+                </div>
+
+                <div class="node-item" draggable="true" data-type="Spawn">
+                    Spawn
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =================================================
+             SAHNE
+             ================================================= -->
+
+        <main id="workspace">
+
+            <div id="scene-toolbar">
+
+                <button
+                    class="tool-button active"
+                    id="select-tool"
+                    onclick="setTool('select')"
+                >
+                    Seç
+                </button>
+
+                <button
+                    class="tool-button"
+                    onclick="setTool('move')"
+                >
+                    Taşı
+                </button>
+
+                <button
+                    class="tool-button"
+                    onclick="setTool('delete')"
+                >
+                    Sil
+                </button>
+
+                <button
+                    class="tool-button"
+                    onclick="clearScene()"
+                >
+                    Sahneyi Temizle
+                </button>
+
+            </div>
+
+
+            <div id="scene-wrapper">
+
+                <div id="scene">
+
+                    <!-- Düğümler buraya gelir -->
+
+                </div>
+
+            </div>
+
+
+            <div id="scene-info">
+                Sahne: MainScene | Nesne: 0 | X: 0 | Y: 0
+            </div>
+
+        </main>
+
+
+        <!-- =================================================
+             SAĞ PANEL
+             ================================================= -->
+
+        <aside id="right-panel">
+
+            <div class="panel-title">
+                Sahne Ağacı
+            </div>
+
+            <div id="tree">
+
+                <div
+                    class="tree-row selected"
+                    id="root-row"
+                    onclick="selectRoot()"
+                >
+                    <span>MainScene</span>
+                </div>
+
+            </div>
+
+
+            <div class="panel-title">
+                Özellikler
+            </div>
+
+            <div id="inspector">
+
+                <div class="inspector-content" id="inspector-content">
+
+                    <div class="info-box">
+                        Bir düğüm seçin.
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
     </div>
 
 </div>
 
-<div class="main">
 
-    <!-- SOL -->
-    <aside class="left-panel">
+<!-- =========================================================
+     MODAL
+     ========================================================= -->
 
-        <div class="panel-title">
-            Düğümler
+<div id="modal-overlay">
+
+    <div id="modal">
+
+        <div id="modal-header">
+            TürkBlocks Studio
         </div>
 
-        <div class="node-list" id="nodeList">
+        <div id="modal-body">
+            Mesaj
+        </div>
 
-            <div class="node" draggable="true" data-type="Character">
-                Character
-            </div>
+        <div id="modal-footer">
 
-            <div class="node" draggable="true" data-type="Engel">
-                Engel
-            </div>
-
-            <div class="node" draggable="true" data-type="Blok">
-                Blok
-            </div>
-
-            <div class="node" draggable="true" data-type="Kamera">
-                Kamera
-            </div>
-
-            <div class="node" draggable="true" data-type="Düşman">
-                Düşman
-            </div>
-
-            <div class="node" draggable="true" data-type="NPC">
-                NPC
-            </div>
-
-            <div class="node" draggable="true" data-type="Eşya">
-                Eşya
-            </div>
-
-            <div class="node" draggable="true" data-type="Kapı">
-                Kapı
-            </div>
-
-            <div class="node" draggable="true" data-type="Spawn">
-                Spawn
-            </div>
-
-            <div class="node" draggable="true" data-type="Checkpoint">
-                Checkpoint
-            </div>
-
-            <div class="node" draggable="true" data-type="Metin">
-                Metin
-            </div>
-
-            <div class="node" draggable="true" data-type="Buton">
-                Buton
-            </div>
-
-            <div class="node" draggable="true" data-type="Ses">
-                Ses
-            </div>
-
-            <div class="node" draggable="true" data-type="Parçacık">
-                Parçacık
-            </div>
-
-            <div class="node" draggable="true" data-type="Alan">
-                Alan
-            </div>
+            <button
+                class="modal-button"
+                onclick="closeModal()"
+            >
+                Kapat
+            </button>
 
         </div>
 
-    </aside>
-
-    <!-- ORTA -->
-    <main class="workspace" id="workspace">
-
-        <div class="workspace-header">
-            2D Çalışma Alanı
-        </div>
-
-        <div class="statusbar" id="statusbar">
-            Hazır — Bir düğümü sürükleyerek çalışma alanına bırakın.
-        </div>
-
-    </main>
-
-    <!-- SAĞ -->
-    <aside class="right-panel">
-
-        <div class="panel-title">
-            Sahne Ağacı
-        </div>
-
-        <div class="tree" id="sceneTree">
-
-            <div class="tree-item active">
-                Ana Sahne
-            </div>
-
-        </div>
-
-        <div class="panel-title">
-            Inspector
-        </div>
-
-        <div class="inspector" id="inspector">
-
-            <div class="empty">
-                Bir düğüm seçin.
-            </div>
-
-        </div>
-
-    </aside>
+    </div>
 
 </div>
 
 
 <script>
+"use strict";
+
+/* ============================================================
+   TÜRBLOCKS STUDIO
+   ============================================================ */
 
 let objects = [];
 let selectedObject = null;
 let objectCounter = 0;
-let draggingObject = null;
-let offsetX = 0;
-let offsetY = 0;
+let currentTool = "select";
+
+const scene = document.getElementById("scene");
+const tree = document.getElementById("tree");
+const inspector = document.getElementById("inspector-content");
+const status = document.getElementById("status");
+const sceneInfo = document.getElementById("scene-info");
 
 
-/* DÜĞÜMLERİ SÜRÜKLE */
-document.querySelectorAll(".node").forEach(node => {
+/* ============================================================
+   NODE LİSTESİ
+   ============================================================ */
 
-    node.addEventListener("dragstart", event => {
+document.querySelectorAll(".node-item").forEach(item => {
+
+    item.addEventListener("dragstart", event => {
 
         event.dataTransfer.setData(
-            "nodeType",
-            node.dataset.type
+            "text/plain",
+            item.dataset.type
         );
 
     });
@@ -469,627 +797,1506 @@ document.querySelectorAll(".node").forEach(node => {
 });
 
 
-/* ÇALIŞMA ALANINA BIRAK */
-const workspace = document.getElementById("workspace");
+/* ============================================================
+   SAHNEYE BIRAKMA
+   ============================================================ */
 
-workspace.addEventListener("dragover", event => {
+scene.addEventListener("dragover", event => {
     event.preventDefault();
 });
 
-workspace.addEventListener("drop", event => {
+
+scene.addEventListener("drop", event => {
 
     event.preventDefault();
 
     const type =
-        event.dataTransfer.getData("nodeType");
+        event.dataTransfer.getData("text/plain");
 
-    if (!type) return;
+    if (!type) {
+        return;
+    }
 
     const rect =
-        workspace.getBoundingClientRect();
+        scene.getBoundingClientRect();
 
     const x =
-        event.clientX - rect.left;
+        Math.max(
+            0,
+            Math.round(event.clientX - rect.left)
+        );
 
     const y =
-        event.clientY - rect.top;
+        Math.max(
+            0,
+            Math.round(event.clientY - rect.top)
+        );
 
     createObject(type, x, y);
 
 });
 
 
-/* NESNE OLUŞTUR */
+/* ============================================================
+   NODE OLUŞTUR
+   ============================================================ */
+
 function createObject(type, x, y) {
 
     objectCounter++;
 
-    const object = document.createElement("div");
+    const object = {
 
-    object.className =
-        "scene-object";
+        id: "node_" + objectCounter,
 
-    object.textContent = type;
-
-    object.style.left =
-        x + "px";
-
-    object.style.top =
-        y + "px";
-
-    object.dataset.id =
-        objectCounter;
-
-    object.dataset.type =
-        type;
-
-    if (type === "Character")
-        object.classList.add("character");
-
-    if (type === "Blok")
-        object.classList.add("block");
-
-    if (type === "Düşman")
-        object.classList.add("enemy");
-
-    workspace.appendChild(object);
-
-    objects.push({
-        id: objectCounter,
         type: type,
+
+        name:
+            type + objectCounter,
+
         x: x,
+
         y: y,
-        width: 90,
-        height: 45
-    });
 
-    setupObject(object);
+        width: getDefaultWidth(type),
 
-    selectObject(object);
+        height: getDefaultHeight(type),
 
-    updateStatus(
-        type + " oluşturuldu."
-    );
-}
+        properties: {
 
-
-/* NESNE DAVRANIŞLARI */
-function setupObject(object) {
-
-    object.addEventListener("mousedown", event => {
-
-        event.stopPropagation();
-
-        selectObject(object);
-
-        draggingObject = object;
-
-        const rect =
-            object.getBoundingClientRect();
-
-        offsetX =
-            event.clientX - rect.left;
-
-        offsetY =
-            event.clientY - rect.top;
-
-    });
-
-}
-
-
-/* NESNEYİ SÜRÜKLE */
-document.addEventListener("mousemove", event => {
-
-    if (!draggingObject) return;
-
-    const rect =
-        workspace.getBoundingClientRect();
-
-    let x =
-        event.clientX -
-        rect.left -
-        offsetX;
-
-    let y =
-        event.clientY -
-        rect.top -
-        offsetY;
-
-    x = Math.max(0, x);
-    y = Math.max(0, y);
-
-    draggingObject.style.left =
-        x + "px";
-
-    draggingObject.style.top =
-        y + "px";
-
-    const id =
-        Number(draggingObject.dataset.id);
-
-    const data =
-        objects.find(o => o.id === id);
-
-    if (data) {
-
-        data.x = x;
-        data.y = y;
-
-    }
-
-});
-
-
-document.addEventListener("mouseup", () => {
-
-    draggingObject = null;
-
-});
-
-
-/* NESNE SEÇ */
-function selectObject(object) {
-
-    document.querySelectorAll(
-        ".scene-object"
-    ).forEach(obj => {
-
-        obj.classList.remove("selected");
-
-    });
-
-    object.classList.add("selected");
-
-    selectedObject = object;
-
-    updateInspector(object);
-
-    updateTree(object);
-}
-
-
-/* INSPECTOR */
-function updateInspector(object) {
-
-    const type =
-        object.dataset.type;
-
-    const data =
-        objects.find(
-            o => o.id === Number(object.dataset.id)
-        );
-
-    let html = "";
-
-    html += `
-        <div class="inspector-section">
-
-            <div class="inspector-title">
-                ${type}
-            </div>
-
-            <div class="inspector-content">
-
-                <div class="field">
-                    <label>Ad</label>
-                    <input
-                        value="${type}"
-                        onchange="renameObject(this.value)"
-                    >
-                </div>
-
-                <div class="field">
-                    <label>X</label>
-                    <input
-                        type="number"
-                        value="${Math.round(data.x)}"
-                        onchange="changePosition('x', this.value)"
-                    >
-                </div>
-
-                <div class="field">
-                    <label>Y</label>
-                    <input
-                        type="number"
-                        value="${Math.round(data.y)}"
-                        onchange="changePosition('y', this.value)"
-                    >
-                </div>
-
-            </div>
-
-        </div>
-    `;
-
-
-    if (type === "Character") {
-
-        html += `
-
-        <div class="inspector-section">
-
-            <div class="inspector-title">
-                Character Ayarları
-            </div>
-
-            <div class="inspector-content">
-
-                <div class="field">
-                    <label>Hareket</label>
-                    <select>
-                        <option>WASD</option>
-                        <option>Ok Tuşları</option>
-                    </select>
-                </div>
-
-                <div class="field">
-                    <label>Zıplama</label>
-                    <select>
-                        <option>Boşluk</option>
-                        <option>Devre Dışı</option>
-                    </select>
-                </div>
-
-                <div class="field">
-                    <label>Hız</label>
-                    <input type="number" value="200">
-                </div>
-
-                <div class="field">
-                    <label>Zıplama Gücü</label>
-                    <input type="number" value="400">
-                </div>
-
-                <div class="field">
-                    <label>Yerçekimi</label>
-                    <select>
-                        <option>Açık</option>
-                        <option>Kapalı</option>
-                    </select>
-                </div>
-
-            </div>
-
-        </div>
-
-        `;
-
-    }
-
-
-    html += `
-
-        <div class="inspector-section">
-
-            <div class="inspector-title">
-                İşlemler
-            </div>
-
-            <div class="inspector-content">
-
-                <button
-                    class="small-button danger"
-                    onclick="deleteSelected()"
-                >
-                    Düğümü Sil
-                </button>
-
-            </div>
-
-        </div>
-
-    `;
-
-
-    document.getElementById(
-        "inspector"
-    ).innerHTML = html;
-
-}
-
-
-/* SAHNE AĞACI */
-function updateTree(object) {
-
-    const tree =
-        document.getElementById("sceneTree");
-
-    tree.innerHTML = `
-        <div class="tree-item">
-            Ana Sahne
-        </div>
-    `;
-
-    objects.forEach(data => {
-
-        const item =
-            document.createElement("div");
-
-        item.className =
-            "tree-item";
-
-        if (
-            selectedObject &&
-            Number(selectedObject.dataset.id)
-            === data.id
-        ) {
-
-            item.classList.add("active");
+            visible: true
 
         }
 
-        item.textContent =
-            data.type;
+    };
 
-        item.onclick = () => {
+    if (type === "Character") {
 
-            const obj =
-                document.querySelector(
-                    '[data-id="' + data.id + '"]'
-                );
+        object.width = 50;
+        object.height = 70;
 
-            if (obj)
-                selectObject(obj);
+        object.properties.speed = 220;
+        object.properties.jump = true;
+
+        object.properties.controls =
+            "WASD + Space";
+
+    }
+
+    objects.push(object);
+
+    renderObject(object);
+
+    rebuildTree();
+
+    selectObject(object.id);
+
+    updateSceneInfo();
+
+    setStatus(
+        type + " oluşturuldu."
+    );
+
+}
+
+
+/* ============================================================
+   VARSAYILAN BOYUT
+   ============================================================ */
+
+function getDefaultWidth(type) {
+
+    const sizes = {
+
+        Block: 100,
+        Obstacle: 80,
+        Camera: 80,
+        Sprite: 70,
+        Label: 100,
+        Area: 120,
+        Collision: 100,
+        Platform: 140,
+        Wall: 50,
+        Floor: 180,
+        Light: 45,
+        Audio: 70,
+        Timer: 70,
+        Particle: 80,
+        Spawn: 60
+
+    };
+
+    return sizes[type] || 80;
+}
+
+
+function getDefaultHeight(type) {
+
+    const sizes = {
+
+        Block: 50,
+        Obstacle: 80,
+        Camera: 50,
+        Sprite: 70,
+        Label: 35,
+        Area: 90,
+        Collision: 60,
+        Platform: 35,
+        Wall: 150,
+        Floor: 35,
+        Light: 45,
+        Audio: 50,
+        Timer: 40,
+        Particle: 70,
+        Spawn: 60
+
+    };
+
+    return sizes[type] || 50;
+}
+
+
+/* ============================================================
+   NESNEYİ SAHNEYE ÇİZ
+   ============================================================ */
+
+function renderObject(object) {
+
+    const element =
+        document.createElement("div");
+
+    element.className =
+        "scene-object " +
+        object.type.toLowerCase();
+
+    element.dataset.id =
+        object.id;
+
+    element.textContent =
+        object.name;
+
+    element.style.left =
+        object.x + "px";
+
+    element.style.top =
+        object.y + "px";
+
+    element.style.width =
+        object.width + "px";
+
+    element.style.height =
+        object.height + "px";
+
+
+    element.addEventListener(
+        "mousedown",
+        event => {
+
+            if (currentTool === "delete") {
+
+                deleteObject(object.id);
+
+                return;
+            }
+
+            selectObject(object.id);
+
+            startDragging(
+                event,
+                object,
+                element
+            );
+
+        }
+    );
+
+
+    scene.appendChild(element);
+}
+
+
+/* ============================================================
+   SÜRÜKLEME
+   ============================================================ */
+
+function startDragging(
+    event,
+    object,
+    element
+) {
+
+    if (currentTool !== "select" &&
+        currentTool !== "move") {
+
+        return;
+    }
+
+    event.preventDefault();
+
+    const startX = event.clientX;
+    const startY = event.clientY;
+
+    const originalX = object.x;
+    const originalY = object.y;
+
+
+    function move(event) {
+
+        const dx =
+            event.clientX - startX;
+
+        const dy =
+            event.clientY - startY;
+
+        object.x =
+            Math.max(
+                0,
+                originalX + dx
+            );
+
+        object.y =
+            Math.max(
+                0,
+                originalY + dy
+            );
+
+        element.style.left =
+            object.x + "px";
+
+        element.style.top =
+            object.y + "px";
+
+        updateInspector();
+
+        updateSceneInfo();
+    }
+
+
+    function stop() {
+
+        document.removeEventListener(
+            "mousemove",
+            move
+        );
+
+        document.removeEventListener(
+            "mouseup",
+            stop
+        );
+
+        saveHistoryState();
+
+    }
+
+
+    document.addEventListener(
+        "mousemove",
+        move
+    );
+
+    document.addEventListener(
+        "mouseup",
+        stop
+    );
+}
+
+
+/* ============================================================
+   NESNE SEÇ
+   ============================================================ */
+
+function selectObject(id) {
+
+    document
+        .querySelectorAll(".scene-object")
+        .forEach(element => {
+
+            element.classList.remove(
+                "selected"
+            );
+
+        });
+
+
+    const object =
+        objects.find(
+            item => item.id === id
+        );
+
+    if (!object) {
+        return;
+    }
+
+    selectedObject = object;
+
+    const element =
+        document.querySelector(
+            `[data-id="${id}"]`
+        );
+
+    if (element) {
+
+        element.classList.add(
+            "selected"
+        );
+
+    }
+
+    rebuildTree();
+
+    updateInspector();
+
+    updateSceneInfo();
+
+}
+
+
+/* ============================================================
+   ROOT SEÇ
+   ============================================================ */
+
+function selectRoot() {
+
+    selectedObject = null;
+
+    document
+        .querySelectorAll(".scene-object")
+        .forEach(element => {
+
+            element.classList.remove(
+                "selected"
+            );
+
+        });
+
+    rebuildTree();
+
+    inspector.innerHTML = `
+        <div class="info-box">
+            MainScene seçili.<br><br>
+            Sahneye düğüm eklemek için
+            soldaki düğümleri sürükleyin.
+        </div>
+    `;
+
+    updateSceneInfo();
+}
+
+
+/* ============================================================
+   AĞACI YENİLE
+   ============================================================ */
+
+function rebuildTree() {
+
+    tree.innerHTML = "";
+
+    const root =
+        document.createElement("div");
+
+    root.className =
+        "tree-row";
+
+    if (!selectedObject) {
+        root.classList.add("selected");
+    }
+
+    root.textContent =
+        "MainScene";
+
+    root.onclick =
+        selectRoot;
+
+    tree.appendChild(root);
+
+
+    objects.forEach(object => {
+
+        const row =
+            document.createElement("div");
+
+        row.className =
+            "tree-row";
+
+        if (
+            selectedObject &&
+            selectedObject.id === object.id
+        ) {
+
+            row.classList.add(
+                "selected"
+            );
+
+        }
+
+        row.innerHTML = `
+            <span class="tree-indent"></span>
+            <span>${escapeHtml(object.name)}</span>
+        `;
+
+        row.onclick = () => {
+
+            selectObject(
+                object.id
+            );
 
         };
 
-        tree.appendChild(item);
+        tree.appendChild(row);
 
     });
 
 }
 
 
-/* POZİSYON DEĞİŞTİR */
-function changePosition(axis, value) {
+/* ============================================================
+   INSPECTOR
+   ============================================================ */
 
-    if (!selectedObject) return;
+function updateInspector() {
 
-    const number =
-        Number(value);
+    if (!selectedObject) {
 
-    selectedObject.style[axis] =
-        number + "px";
+        inspector.innerHTML = `
+            <div class="info-box">
+                Bir düğüm seçin.
+            </div>
+        `;
 
-    const data =
-        objects.find(
-            o =>
-            o.id ===
-            Number(selectedObject.dataset.id)
-        );
+        return;
+    }
 
-    if (data)
-        data[axis] = number;
+
+    const object =
+        selectedObject;
+
+
+    let extra = "";
+
+
+    if (object.type === "Character") {
+
+        extra = `
+
+            <div class="property">
+                <label>Hız</label>
+
+                <input
+                    type="number"
+                    value="${object.properties.speed}"
+                    onchange="
+                        updateProperty(
+                            'speed',
+                            this.value
+                        )
+                    "
+                >
+            </div>
+
+            <div class="property">
+
+                <label>Kontroller</label>
+
+                <input
+                    value="${escapeHtml(
+                        object.properties.controls
+                    )}"
+                    readonly
+                >
+
+            </div>
+
+            <div class="info-box">
+                Character düğümünde
+                WASD hareketi ve Space
+                zıplama sistemi otomatik
+                olarak etkinleştirilir.
+            </div>
+        `;
+    }
+
+
+    inspector.innerHTML = `
+
+        <div class="property">
+
+            <label>Ad</label>
+
+            <input
+                value="${escapeHtml(object.name)}"
+                onchange="
+                    updateProperty(
+                        'name',
+                        this.value
+                    )
+                "
+            >
+
+        </div>
+
+
+        <div class="property">
+
+            <label>Düğüm Türü</label>
+
+            <input
+                value="${escapeHtml(object.type)}"
+                readonly
+            >
+
+        </div>
+
+
+        <div class="property">
+
+            <label>X</label>
+
+            <input
+                type="number"
+                value="${object.x}"
+                onchange="
+                    updateProperty(
+                        'x',
+                        this.value
+                    )
+                "
+            >
+
+        </div>
+
+
+        <div class="property">
+
+            <label>Y</label>
+
+            <input
+                type="number"
+                value="${object.y}"
+                onchange="
+                    updateProperty(
+                        'y',
+                        this.value
+                    )
+                "
+            >
+
+        </div>
+
+
+        <div class="property">
+
+            <label>Genişlik</label>
+
+            <input
+                type="number"
+                value="${object.width}"
+                onchange="
+                    updateProperty(
+                        'width',
+                        this.value
+                    )
+                "
+            >
+
+        </div>
+
+
+        <div class="property">
+
+            <label>Yükseklik</label>
+
+            <input
+                type="number"
+                value="${object.height}"
+                onchange="
+                    updateProperty(
+                        'height',
+                        this.value
+                    )
+                "
+            >
+
+        </div>
+
+
+        ${extra}
+
+
+        <button
+            class="modal-button primary"
+            style="width:100%;"
+            onclick="deleteObject('${object.id}')"
+        >
+            Düğümü Sil
+        </button>
+
+    `;
 
 }
 
 
-/* İSİM DEĞİŞTİR */
-function renameObject(name) {
+/* ============================================================
+   ÖZELLİK GÜNCELLE
+   ============================================================ */
 
-    if (!selectedObject) return;
+function updateProperty(
+    property,
+    value
+) {
 
-    selectedObject.textContent =
-        name;
+    if (!selectedObject) {
+        return;
+    }
+
+
+    if (
+        property === "name"
+    ) {
+
+        selectedObject.name =
+            value;
+
+    } else {
+
+        const number =
+            Number(value);
+
+        if (!Number.isFinite(number)) {
+            return;
+        }
+
+        selectedObject[property] =
+            number;
+    }
+
+
+    redrawSelectedObject();
+
+    rebuildTree();
+
+    updateSceneInfo();
+
+    saveHistoryState();
+}
+
+
+/* ============================================================
+   SEÇİLİ NESNEYİ YENİDEN ÇİZ
+   ============================================================ */
+
+function redrawSelectedObject() {
+
+    if (!selectedObject) {
+        return;
+    }
+
+
+    const element =
+        document.querySelector(
+            `[data-id="${selectedObject.id}"]`
+        );
+
+    if (!element) {
+        return;
+    }
+
+
+    element.textContent =
+        selectedObject.name;
+
+    element.style.left =
+        selectedObject.x + "px";
+
+    element.style.top =
+        selectedObject.y + "px";
+
+    element.style.width =
+        selectedObject.width + "px";
+
+    element.style.height =
+        selectedObject.height + "px";
 
 }
 
 
-/* SEÇİLİYİ SİL */
-function deleteSelected() {
+/* ============================================================
+   SİL
+   ============================================================ */
 
-    if (!selectedObject) return;
+function deleteObject(id) {
 
-    const id =
-        Number(selectedObject.dataset.id);
-
-    selectedObject.remove();
-
-    objects =
-        objects.filter(
-            o => o.id !== id
+    const index =
+        objects.findIndex(
+            item => item.id === id
         );
+
+    if (index === -1) {
+        return;
+    }
+
+
+    const object =
+        objects[index];
+
+
+    objects.splice(
+        index,
+        1
+    );
+
+
+    const element =
+        document.querySelector(
+            `[data-id="${id}"]`
+        );
+
+    if (element) {
+        element.remove();
+    }
+
 
     selectedObject = null;
 
-    document.getElementById(
-        "inspector"
-    ).innerHTML =
-        `<div class="empty">
-            Bir düğüm seçin.
-        </div>`;
+    rebuildTree();
 
-    updateTree();
+    updateInspector();
 
-    updateStatus(
-        "Düğüm silindi."
+    updateSceneInfo();
+
+    setStatus(
+        object.name + " silindi."
     );
 
 }
 
 
-/* YENİ PROJE */
-function newProject() {
+/* ============================================================
+   SAHNEYİ TEMİZLE
+   ============================================================ */
 
-    if (
-        objects.length > 0 &&
-        !confirm("Yeni proje oluşturulsun mu?")
-    ) return;
+function clearScene() {
 
-    document.querySelectorAll(
-        ".scene-object"
-    ).forEach(o => o.remove());
+    if (objects.length === 0) {
+        return;
+    }
+
 
     objects = [];
+
     selectedObject = null;
+
+    scene
+        .querySelectorAll(".scene-object")
+        .forEach(element => {
+            element.remove();
+        });
+
+
+    rebuildTree();
+
+    updateInspector();
+
+    updateSceneInfo();
+
+    setStatus(
+        "Sahne temizlendi."
+    );
+
+}
+
+
+/* ============================================================
+   NODE ARAMA
+   ============================================================ */
+
+function filterNodes() {
+
+    const query =
+        document
+            .getElementById("node-search")
+            .value
+            .toLowerCase();
+
+
+    document
+        .querySelectorAll(".node-item")
+        .forEach(item => {
+
+            item.style.display =
+                item.textContent
+                    .toLowerCase()
+                    .includes(query)
+                    ? "flex"
+                    : "none";
+
+        });
+
+}
+
+
+/* ============================================================
+   ARAÇ
+   ============================================================ */
+
+function setTool(tool) {
+
+    currentTool =
+        tool;
+
+
+    document
+        .querySelectorAll(".tool-button")
+        .forEach(button => {
+
+            button.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    if (tool === "select") {
+
+        document
+            .getElementById("select-tool")
+            .classList.add("active");
+
+    }
+
+
+    setStatus(
+        "Araç: " + tool
+    );
+
+}
+
+
+/* ============================================================
+   YENİ PROJE
+   ============================================================ */
+
+function newProject() {
+
+    clearScene();
+
     objectCounter = 0;
 
-    document.getElementById(
-        "inspector"
-    ).innerHTML =
-        `<div class="empty">
-            Bir düğüm seçin.
-        </div>`;
-
-    updateTree();
-
-    updateStatus(
+    setStatus(
         "Yeni proje oluşturuldu."
     );
 
 }
 
 
-/* KAYDET */
+/* ============================================================
+   KAYDET
+   ============================================================ */
+
 function saveProject() {
 
     const project = {
+
+        format: "TBP",
+
         version: 1,
-        engine: "TürkBlocks Studio",
-        objects: objects
+
+        name: "TürkBlocks Project",
+
+        scene: {
+
+            name: "MainScene",
+
+            objects: objects
+
+        }
+
     };
+
 
     localStorage.setItem(
         "turkblocks_project",
         JSON.stringify(project)
     );
 
-    updateStatus(
+
+    setStatus(
         "Proje tarayıcıya kaydedildi."
     );
 
 }
 
 
-/* AÇ */
-function loadProject() {
+/* ============================================================
+   TBP DIŞA AKTAR
+   ============================================================ */
 
-    const saved =
-        localStorage.getItem(
-            "turkblocks_project"
-        );
-
-    if (!saved) {
-
-        alert("Kayıtlı proje bulunamadı.");
-        return;
-
-    }
-
-    newProject();
-
-    const project =
-        JSON.parse(saved);
-
-    project.objects.forEach(data => {
-
-        createObject(
-            data.type,
-            data.x,
-            data.y
-        );
-
-    });
-
-    updateStatus(
-        "Proje yüklendi."
-    );
-
-}
-
-
-/* ÖNİZLEME */
-function previewGame() {
-
-    alert(
-        "TürkBlocks Studio önizlemesi yakında burada çalışacak."
-    );
-
-}
-
-
-/* TBP */
 function exportTBP() {
 
-    const project = {
-        format: "TBP",
-        version: 1,
-        engine: "TürkBlocks Studio",
-        objects: objects
-    };
+    const html =
+        generateTBP();
+
 
     const blob =
         new Blob(
-            [JSON.stringify(project, null, 2)],
+            [html],
             {
-                type: "application/json"
+                type: "text/html"
             }
         );
 
-    const url =
-        URL.createObjectURL(blob);
 
-    const a =
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
         document.createElement("a");
 
-    a.href = url;
 
-    a.download =
-        "turkblocks-project.tbp";
+    link.href =
+        url;
 
-    a.click();
+    link.download =
+        "turkblocks-oyunu.tbp";
 
-    URL.revokeObjectURL(url);
 
-    updateStatus(
+    document.body.appendChild(
+        link
+    );
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(
+        url
+    );
+
+
+    setStatus(
         "TBP dışa aktarıldı."
     );
 
 }
 
 
-/* DURUM */
-function updateStatus(message) {
+/* ============================================================
+   TBP HTML OLUŞTUR
+   ============================================================ */
 
-    document.getElementById(
-        "statusbar"
-    ).textContent =
-        message;
+function generateTBP() {
+
+    const safeObjects =
+        JSON.stringify(
+            objects
+        );
+
+
+    return `<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>TürkBlocks Oyunu</title>
+
+<style>
+
+html,
+body {
+
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    background: #111;
+    color: white;
+
+    font-family: Arial, sans-serif;
+
+}
+
+#game {
+
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+    background: #111;
+
+}
+
+.game-object {
+
+    position: absolute;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    user-select: none;
+
+}
+
+.character {
+
+    width: 50px;
+    height: 70px;
+
+    background: #500000;
+
+}
+
+.block {
+
+    background: #555;
+
+}
+
+.obstacle {
+
+    background: #333;
+
+}
+
+.camera {
+
+    display: none;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div id="game"></div>
+
+
+<script>
+
+const TBP_OBJECTS =
+    ${safeObjects};
+
+
+const game =
+    document.getElementById("game");
+
+
+const keys =
+    new Set();
+
+
+window.addEventListener(
+    "keydown",
+    event => {
+
+        keys.add(
+            event.key.toLowerCase()
+        );
+
+    }
+);
+
+
+window.addEventListener(
+    "keyup",
+    event => {
+
+        keys.delete(
+            event.key.toLowerCase()
+        );
+
+    }
+);
+
+
+const runtimeObjects = [];
+
+
+TBP_OBJECTS.forEach(
+    object => {
+
+        const element =
+            document.createElement("div");
+
+
+        element.className =
+            "game-object " +
+            object.type.toLowerCase();
+
+
+        element.textContent =
+            object.name;
+
+
+        element.style.left =
+            object.x + "px";
+
+
+        element.style.top =
+            object.y + "px";
+
+
+        element.style.width =
+            object.width + "px";
+
+
+        element.style.height =
+            object.height + "px";
+
+
+        game.appendChild(
+            element
+        );
+
+
+        runtimeObjects.push({
+
+            data: object,
+
+            element: element,
+
+            velocityY: 0
+
+        });
+
+    }
+);
+
+
+function update() {
+
+    const characters =
+        runtimeObjects.filter(
+            item =>
+                item.data.type ===
+                "Character"
+        );
+
+
+    characters.forEach(
+        character => {
+
+            const data =
+                character.data;
+
+
+            const element =
+                character.element;
+
+
+            const speed =
+                Number(
+                    data.properties &&
+                    data.properties.speed
+                ) || 220;
+
+
+            const delta =
+                1 / 60;
+
+
+            if (
+                keys.has("a")
+            ) {
+
+                data.x -=
+                    speed * delta;
+
+            }
+
+
+            if (
+                keys.has("d")
+            ) {
+
+                data.x +=
+                    speed * delta;
+
+            }
+
+
+            if (
+                keys.has("w")
+            ) {
+
+                data.y -=
+                    speed * delta;
+
+            }
+
+
+            if (
+                keys.has("s")
+            ) {
+
+                data.y +=
+                    speed * delta;
+
+            }
+
+
+            if (
+                keys.has(" ")
+            ) {
+
+                data.y -=
+                    speed * delta;
+
+            }
+
+
+            element.style.left =
+                data.x + "px";
+
+
+            element.style.top =
+                data.y + "px";
+
+        }
+    );
+
+
+    requestAnimationFrame(
+        update
+    );
 
 }
 
 
-/* ÇALIŞMA ALANINA TIKLAMA */
-workspace.addEventListener(
-    "mousedown",
-    event => {
+update();
+
+
+/*
+ TürkBlocks çıkış köprüsü.
+ TürkBlocks uygulaması isterse
+ kendi WebView köprüsünü kullanabilir.
+*/
+
+window.TurkBlocks =
+    window.TurkBlocks || {};
+
+
+window.TurkBlocks.exitGame =
+    function () {
 
         if (
-            event.target === workspace
+            window.ipc &&
+            typeof window.ipc.postMessage ===
+            "function"
         ) {
 
-            document.querySelectorAll(
-                ".scene-object"
-            ).forEach(obj =>
-                obj.classList.remove(
-                    "selected"
-                )
+            window.ipc.postMessage(
+                "TB_EXIT_GAME"
             );
-
-            selectedObject = null;
-
-            document.getElementById(
-                "inspector"
-            ).innerHTML =
-                `<div class="empty">
-                    Bir düğüm seçin.
-                </div>`;
 
         }
 
+    };
+
+</script>
+
+</body>
+</html>`;
+}
+
+
+/* ============================================================
+   ÇALIŞTIR
+   ============================================================ */
+
+function playScene() {
+
+    const html =
+        generateTBP();
+
+
+    const blob =
+        new Blob(
+            [html],
+            {
+                type: "text/html"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+
+    setStatus(
+        "Sahne çalıştırıldı."
+    );
+
+}
+
+
+/* ============================================================
+   DURUM
+   ============================================================ */
+
+function setStatus(text) {
+
+    status.textContent =
+        text;
+
+}
+
+
+/* ============================================================
+   SAHNE BİLGİSİ
+   ============================================================ */
+
+function updateSceneInfo() {
+
+    if (!selectedObject) {
+
+        sceneInfo.textContent =
+            "Sahne: MainScene | Nesne: " +
+            objects.length;
+
+        return;
     }
-);
+
+
+    sceneInfo.textContent =
+        "Sahne: MainScene | " +
+        "Nesne: " +
+        selectedObject.name +
+        " | X: " +
+        Math.round(selectedObject.x) +
+        " | Y: " +
+        Math.round(selectedObject.y);
+
+}
+
+
+/* ============================================================
+   BASİT GEÇMİŞ KAYDI
+   ============================================================ */
+
+function saveHistoryState() {
+
+    /*
+       İleride gerçek Undo/Redo sistemi
+       burada genişletilebilir.
+    */
+
+}
+
+
+/* ============================================================
+   HTML GÜVENLİK
+   ============================================================ */
+
+function escapeHtml(value) {
+
+    return String(value)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+
+function closeModal() {
+
+    document
+        .getElementById(
+            "modal-overlay"
+        )
+        .style.display =
+        "none";
+
+}
+
+
+function showModal(
+    title,
+    message
+) {
+
+    document
+        .getElementById(
+            "modal-header"
+        )
+        .textContent =
+        title;
+
+
+    document
+        .getElementById(
+            "modal-body"
+        )
+        .textContent =
+        message;
+
+
+    document
+        .getElementById(
+            "modal-overlay"
+        )
+        .style.display =
+        "flex";
+
+}
+
+
+/* ============================================================
+   BAŞLANGIÇ
+   ============================================================ */
+
+updateSceneInfo();
 
 </script>
 
