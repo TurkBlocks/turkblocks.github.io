@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TürkBlocks Studio</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    :root {
+        --red: #500000;
+        --red-light: #720000;
+        --black: #090909;
+        --panel: #111111;
+        --panel-2: #171717;
+        --border: #292929;
+        --text: #f5f5f5;
+        --muted: #a5a5a5;
+        --selected: rgba(80, 0, 0, .45);
+    }
+
+    body {
+        font-family: "Google Sans", "Segoe UI", Arial, sans-serif;
+        background: var(--black);
+        color: var(--text);
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    button,
+    input,
+    select {
+        font: inherit;
+    }
+
+    button {
+        border: 0;
+        cursor: pointer;
+        color: var(--text);
+    }
+
+    /* TOP BAR */
+
+    .topbar {
+        height: 58px;
+        background: #0d0d0d;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        font-weight: 700;
+        font-size: 17px;
+    }
+
+    .brand-mark {
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+        background: var(--red);
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+    }
+
+    .toolbar {
+        display: flex;
+        gap: 8px;
+    }
+
+    .toolbar button {
+        background: #181818;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 8px 13px;
+        transition: .15s;
+    }
+
+    .toolbar button:hover {
+        background: #222;
+        border-color: #444;
+    }
+
+    .toolbar .primary {
+        background: var(--red);
+        border-color: var(--red);
+    }
+
+    .toolbar .primary:hover {
+        background: var(--red-light);
+    }
+
+    /* MAIN */
+
+    .editor {
+        height: calc(100vh - 58px);
+        display: grid;
+        grid-template-columns: 245px 1fr 280px;
+    }
+
+    /* LEFT */
+
+    .sidebar {
+        background: var(--panel);
+        border-right: 1px solid var(--border);
+        overflow-y: auto;
+    }
+
+    .section {
+        padding: 15px;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .section-title {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .7px;
+        margin-bottom: 11px;
+    }
+
+    .node-list {
+        display: grid;
+        gap: 6px;
+    }
+
+    .node-button {
+        width: 100%;
+        text-align: left;
+        padding: 10px 11px;
+        border-radius: 9px;
+        background: #171717;
+        border: 1px solid transparent;
+        transition: .15s;
+    }
+
+    .node-button:hover {
+        background: #202020;
+        border-color: #3b3b3b;
+        transform: translateX(2px);
+    }
+
+    .node-button span {
+        color: #aaa;
+        font-size: 11px;
+        display: block;
+        margin-top: 2px;
+    }
+
+    /* SCENE TREE */
+
+    .tree {
+        display: grid;
+        gap: 3px;
+    }
+
+    .tree-item {
+        padding: 8px 9px;
+        border-radius: 8px;
+        cursor: pointer;
+        color: #ddd;
+    }
+
+    .tree-item:hover {
+        background: #1e1e1e;
+    }
+
+    .tree-item.selected {
+        background: var(--selected);
+        color: white;
+    }
+
+    .tree-empty {
+        color: #777;
+        font-size: 13px;
+    }
+
+    /* CENTER */
+
+    .workspace {
+        position: relative;
+        overflow: hidden;
+        background:
+            linear-gradient(#1a1a1a 1px, transparent 1px),
+            linear-gradient(90deg, #1a1a1a 1px, transparent 1px),
+            #101010;
+        background-size: 32px 32px;
+    }
+
+    .workspace-info {
+        position: absolute;
+        left: 16px;
+        top: 14px;
+        background: rgba(10,10,10,.85);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 8px 11px;
+        color: #aaa;
+        font-size: 12px;
+        z-index: 20;
+    }
+
+    .game-object {
+        position: absolute;
+        min-width: 80px;
+        min-height: 50px;
+        border: 2px solid #777;
+        background: #292929;
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        padding: 10px;
+        cursor: pointer;
+        user-select: none;
+        color: white;
+        font-size: 13px;
+        transition: border-color .1s;
+    }
+
+    .game-object.selected {
+        border-color: #b40000;
+        box-shadow: 0 0 0 2px rgba(180,0,0,.22);
+    }
+
+    .game-object.character {
+        background: #500000;
+    }
+
+    .game-object.block,
+    .game-object.obstacle {
+        background: #242424;
+    }
+
+    .game-object.camera {
+        background: #333;
+        border-style: dashed;
+    }
+
+    /* RIGHT */
+
+    .inspector {
+        background: var(--panel);
+        border-left: 1px solid var(--border);
+        overflow-y: auto;
+    }
+
+    .inspector-header {
+        padding: 16px;
+        border-bottom: 1px solid var(--border);
+        font-weight: 700;
+    }
+
+    .inspector-content {
+        padding: 15px;
+    }
+
+    .property {
+        margin-bottom: 15px;
+    }
+
+    .property label {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 6px;
+    }
+
+    .property input,
+    .property select {
+        width: 100%;
+        background: #181818;
+        color: white;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 9px;
+        outline: none;
+    }
+
+    .property input:focus,
+    .property select:focus {
+        border-color: var(--red);
+    }
+
+    .position-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+    }
+
+    .hint {
+        background: #171717;
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        padding: 10px;
+        font-size: 12px;
+        color: #aaa;
+        line-height: 1.5;
+    }
+
+    .danger {
+        width: 100%;
+        background: #241010;
+        border: 1px solid #481818;
+        color: #ffb5b5;
+        padding: 9px;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+
+    .danger:hover {
+        background: #321414;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 900px) {
+        .editor {
+            grid-template-columns: 210px 1fr;
+        }
+
+        .inspector {
+            display: none;
+        }
+    }
+
+    @media (max-width: 650px) {
+        .editor {
+            grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+            display: none;
+        }
+
+        .toolbar button:not(.primary) {
+            display: none;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <div class="brand-mark">TB</div>
+        <span>TürkBlocks Studio</span>
+    </div>
+
+    <div class="toolbar">
+        <button onclick="saveProject()">Kaydet</button>
+        <button onclick="clearScene()">Temizle</button>
+        <button class="primary" onclick="previewGame()">▶ Önizle</button>
+    </div>
+</header>
+
+<main class="editor">
+
+    <!-- LEFT -->
+    <aside class="sidebar">
+
+        <section class="section">
+            <div class="section-title">Düğümler</div>
+
+            <div class="node-list">
+
+                <button class="node-button" onclick="addNode('Character')">
+                    Character
+                    <span>WASD + Boşluk</span>
+                </button>
+
+                <button class="node-button" onclick="addNode('Engel')">
+                    Engel
+                    <span>Çarpışılabilir nesne</span>
+                </button>
+
+                <button class="node-button" onclick="addNode('Blok')">
+                    Blok
+                    <span>Zemin / platform</span>
+                </button>
+
+                <button class="node-button" onclick="addNode('Kamera')">
+                    Kamera
+                    <span>2D kamera</span>
+                </button>
+
+                <button class="node-button" onclick="addNode('Düşman')">
+                    Düşman
+                    <span>Temel düşman</span>
+                </button>
+
+                <button class="node-button" onclick="addNode('NPC')">
+                    NPC
+                    <span>Etkileşimli karakter</span>
+                </button>
+
+                <button class="node-button" onclick="addNode('Eşya')">
+                    Eşya
+                    <span>Toplanabilir nesne</span>
+                </button>
+
+                <button class="node-button" onclick="addNode('Kapı')">
+                    Kapı
+                    <span>Açılıp kapanabilir</span>
+                </button>
+
+                <button class="node-button" onclick="addNode('Spawn')">
+                    Spawn
+                    <span>Başlangıç noktası</span>
+                </button>
+
+                <button class="node-button" onclick="addNode('Checkpoint')">
+                    Checkpoint
+                    <span>Kayıt noktası</span>
+                </button>
+
+                <button class="node-button" onclick="addNode('Metin')">
+                    Metin
+                    <span>Yazı</span>
+                </button>
+
+                <button class="node-button" onclick="addNode('Buton')">
+                    Buton
+                    <span>UI düğmesi</span>
+                </button>
+
+                <button class="node-button" onclick="addNode('Ses')">
+                    Ses
+                    <span>Müzik / efekt</span>
+                </button>
+
+                <button class="node-button" onclick="addNode('Parçacık')">
+                    Parçacık
+                    <span>Efekt sistemi</span>
+                </button>
+
+                <button class="node-button" onclick="addNode('Alan')">
+                    Alan
+                    <span>Tetikleme bölgesi</span>
+                </button>
+
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-title">Sahne</div>
+            <div id="sceneTree" class="tree">
+                <div class="tree-empty">Henüz düğüm yok.</div>
+            </div>
+        </section>
+
+    </aside>
+
+    <!-- CENTER -->
+    <section class="workspace" id="workspace">
+
+        <div class="workspace-info">
+            2D Çalışma Alanı
+        </div>
+
+    </section>
+
+    <!-- RIGHT -->
+    <aside class="inspector">
+
+        <div class="inspector-header">
+            Inspector
+        </div>
+
+        <div id="inspectorContent" class="inspector-content">
+            <div class="hint">
+                Bir düğüm seçtiğinde özellikleri burada görünecek.
+            </div>
+        </div>
+
+    </aside>
+
+</main>
+
+<script>
+let nodes = [];
+let selectedNode = null;
+let nodeId = 0;
+
+const workspace = document.getElementById("workspace");
+const sceneTree = document.getElementById("sceneTree");
+const inspectorContent = document.getElementById("inspectorContent");
+
+const nodeDefaults = {
+    Character: {
+        className: "character",
+        width: 80,
+        height: 80,
+        speed: 200,
+        jump: 400
+    },
+
+    Engel: {
+        className: "obstacle",
+        width: 120,
+        height: 60
+    },
+
+    Blok: {
+        className: "block",
+        width: 150,
+        height: 50
+    },
+
+    Kamera: {
+        className: "camera",
+        width: 100,
+        height: 70
+    }
+};
+
+function addNode(type) {
+
+    nodeId++;
+
+    const node = {
+        id: nodeId,
+        type: type,
+        name: type + " " + nodeId,
+        x: 180 + (nodeId * 20) % 300,
+        y: 140 + (nodeId * 15) % 220,
+        width: 100,
+        height: 60,
+        speed: 200,
+        jump: 400,
+        controls: "WASD",
+        jumpKey: "Space"
+    };
+
+    if (nodeDefaults[type]) {
+        Object.assign(node, nodeDefaults[type]);
+    }
+
+    nodes.push(node);
+
+    createObject(node);
+    updateTree();
+    selectNode(node.id);
+}
+
+function createObject(node) {
+
+    const object = document.createElement("div");
+
+    object.className = "game-object";
+
+    if (nodeDefaults[node.type]?.className) {
+        object.classList.add(nodeDefaults[node.type].className);
+    }
+
+    object.id = "object-" + node.id;
+
+    object.textContent = node.name;
+
+    object.style.left = node.x + "px";
+    object.style.top = node.y + "px";
+    object.style.width = node.width + "px";
+    object.style.height = node.height + "px";
+
+    object.onclick = function(event) {
+        event.stopPropagation();
+        selectNode(node.id);
+    };
+
+    workspace.appendChild(object);
+}
+
+function selectNode(id) {
+
+    selectedNode = nodes.find(n => n.id === id);
+
+    if (!selectedNode) return;
+
+    document.querySelectorAll(".game-object").forEach(obj => {
+        obj.classList.remove("selected");
+    });
+
+    const object = document.getElementById("object-" + id);
+
+    if (object) {
+        object.classList.add("selected");
+    }
+
+    updateTree();
+    showInspector();
+}
+
+function updateTree() {
+
+    sceneTree.innerHTML = "";
+
+    if (nodes.length === 0) {
+
+        sceneTree.innerHTML =
+            '<div class="tree-empty">Henüz düğüm yok.</div>';
+
+        return;
+    }
+
+    nodes.forEach(node => {
+
+        const item = document.createElement("div");
+
+        item.className = "tree-item";
+
+        if (selectedNode && selectedNode.id === node.id) {
+            item.classList.add("selected");
+        }
+
+        item.textContent = node.name;
+
+        item.onclick = () => selectNode(node.id);
+
+        sceneTree.appendChild(item);
+    });
+}
+
+function showInspector() {
+
+    if (!selectedNode) return;
+
+    const n = selectedNode;
+
+    inspectorContent.innerHTML = `
+        <div class="property">
+            <label>Ad</label>
+            <input value="${n.name}"
+                onchange="changeProperty('name', this.value)">
+        </div>
+
+        <div class="property">
+            <label>Düğüm Türü</label>
+            <input value="${n.type}" disabled>
+        </div>
+
+        <div class="property">
+            <label>Konum</label>
+
+            <div class="position-grid">
+                <input type="number" value="${n.x}"
+                    onchange="changeProperty('x', Number(this.value))">
+
+                <input type="number" value="${n.y}"
+                    onchange="changeProperty('y', Number(this.value))">
+            </div>
+        </div>
+
+        <div class="property">
+            <label>Genişlik</label>
+            <input type="number" value="${n.width}"
+                onchange="changeProperty('width', Number(this.value))">
+        </div>
+
+        <div class="property">
+            <label>Yükseklik</label>
+            <input type="number" value="${n.height}"
+                onchange="changeProperty('height', Number(this.value))">
+        </div>
+
+        ${n.type === "Character" ? `
+            <div class="property">
+                <label>Hareket</label>
+                <select onchange="changeProperty('controls', this.value)">
+                    <option ${n.controls === "WASD" ? "selected" : ""}>WASD</option>
+                    <option>Ok Tuşları</option>
+                </select>
+            </div>
+
+            <div class="property">
+                <label>Zıplama Tuşu</label>
+                <input value="Boşluk" disabled>
+            </div>
+
+            <div class="property">
+                <label>Hız</label>
+                <input type="number" value="${n.speed}"
+                    onchange="changeProperty('speed', Number(this.value))">
+            </div>
+
+            <div class="property">
+                <label>Zıplama Gücü</label>
+                <input type="number" value="${n.jump}"
+                    onchange="changeProperty('jump', Number(this.value))">
+            </div>
+
+            <div class="hint">
+                Character düğümü otomatik olarak
+                <strong>WASD</strong> hareketi ve
+                <strong>Boşluk</strong> ile zıplamayı kullanır.
+            </div>
+        ` : ""}
+
+        <button class="danger" onclick="deleteSelected()">
+            Düğümü Sil
+        </button>
+    `;
+}
+
+function changeProperty(property, value) {
+
+    if (!selectedNode) return;
+
+    selectedNode[property] = value;
+
+    if (property === "name") {
+        const object = document.getElementById(
+            "object-" + selectedNode.id
+        );
+
+        if (object) {
+            object.textContent = value;
+        }
+    }
+
+    updateObject();
+    updateTree();
+}
+
+function updateObject() {
+
+    if (!selectedNode) return;
+
+    const n = selectedNode;
+
+    const object =
+        document.getElementById("object-" + n.id);
+
+    if (!object) return;
+
+    object.style.left = n.x + "px";
+    object.style.top = n.y + "px";
+    object.style.width = n.width + "px";
+    object.style.height = n.height + "px";
+}
+
+function deleteSelected() {
+
+    if (!selectedNode) return;
+
+    const id = selectedNode.id;
+
+    nodes = nodes.filter(node => node.id !== id);
+
+    const object =
+        document.getElementById("object-" + id);
+
+    if (object) object.remove();
+
+    selectedNode = null;
+
+    updateTree();
+
+    inspectorContent.innerHTML = `
+        <div class="hint">
+            Bir düğüm seçtiğinde özellikleri burada görünecek.
+        </div>
+    `;
+}
+
+function clearScene() {
+
+    if (!confirm("Sahnedeki bütün düğümler silinsin mi?")) {
+        return;
+    }
+
+    nodes = [];
+    selectedNode = null;
+
+    document.querySelectorAll(".game-object")
+        .forEach(object => object.remove());
+
+    updateTree();
+
+    inspectorContent.innerHTML = `
+        <div class="hint">
+            Bir düğüm seçtiğinde özellikleri burada görünecek.
+        </div>
+    `;
+}
+
+function saveProject() {
+
+    const project = {
+        format: "TürkBlocks Studio",
+        version: 1,
+        nodes: nodes
+    };
+
+    localStorage.setItem(
+        "turkblocks-studio-project",
+        JSON.stringify(project)
+    );
+
+    alert("Proje tarayıcıya kaydedildi.");
+}
+
+function previewGame() {
+
+    alert(
+        "Önizleme sistemi sonraki sürümde çalıştırılacak.\n\n" +
+        "Character için WASD + Boşluk sistemi hazır."
+    );
+}
+
+workspace.addEventListener("click", function() {
+
+    selectedNode = null;
+
+    document.querySelectorAll(".game-object")
+        .forEach(obj => obj.classList.remove("selected"));
+
+    updateTree();
+
+    inspectorContent.innerHTML = `
+        <div class="hint">
+            Bir düğüm seçtiğinde özellikleri burada görünecek.
+        </div>
+    `;
+});
+</script>
+
+</body>
+</html>
