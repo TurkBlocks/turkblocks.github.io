@@ -8,7 +8,7 @@
 
     <meta
         name="description"
-        content="TürkBlocks tPanel — TBP yönetimi"
+        content="TürkBlocks tPanel — PCK yönetimi"
     >
 
     <style>
@@ -115,6 +115,16 @@
         }
 
         /* ================================
+           HEADER SAĞ
+        ================================= */
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ================================
            USER
         ================================= */
 
@@ -148,6 +158,52 @@
 
             font-size: 12px;
             color: #d4d4d8;
+        }
+
+        /* ================================
+           HESAP SİL
+        ================================= */
+
+        .delete-account {
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(239,68,68,0.22);
+            border-radius: 50%;
+
+            background: rgba(239,68,68,0.08);
+
+            color: #fca5a5;
+
+            cursor: pointer;
+
+            transition:
+                background 0.18s ease,
+                border-color 0.18s ease,
+                transform 0.18s ease;
+        }
+
+        .delete-account:hover {
+            background: rgba(239,68,68,0.16);
+
+            border-color:
+                rgba(239,68,68,0.45);
+
+            transform: translateY(-1px);
+        }
+
+        .delete-account:active {
+            transform: translateY(0);
+        }
+
+        .delete-account:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
         }
 
         /* ================================
@@ -234,7 +290,7 @@
             transform: translateY(-3px);
 
             border-color:
-                rgba(128, 20, 20, 0.7);
+                rgba(128,20,20,0.7);
 
             background: var(--card-2);
 
@@ -369,6 +425,10 @@
                 gap: 12px;
             }
 
+            .header-right {
+                gap: 5px;
+            }
+
             .user span {
                 display: none;
             }
@@ -412,17 +472,35 @@
 
         </div>
 
-        <div class="user">
 
-            <img
-                id="userPhoto"
-                src=""
-                alt="Profil"
+        <div class="header-right">
+
+            <div class="user">
+
+                <img
+                    id="userPhoto"
+                    src=""
+                    alt="Profil"
+                >
+
+                <span id="userEmail">
+                    Yükleniyor...
+                </span>
+
+            </div>
+
+
+            <!-- HESABI SİL -->
+
+            <button
+                class="delete-account"
+                id="deleteAccountButton"
+                type="button"
+                title="Hesabı Sil"
+                aria-label="Hesabı Sil"
             >
-
-            <span id="userEmail">
-                Yükleniyor...
-            </span>
+                ×
+            </button>
 
         </div>
 
@@ -436,7 +514,7 @@
             <h2>Oyun Yönetimi</h2>
 
             <p>
-                Oyununun TBP dosyasını buradan
+                Oyununun PCK dosyasını buradan
                 güncelleyebilir veya silebilirsin.
             </p>
 
@@ -445,7 +523,7 @@
 
         <div class="actions">
 
-            <!-- TBP SİL -->
+            <!-- PCK SİL -->
 
             <button
                 class="action"
@@ -460,17 +538,17 @@
                     −
                 </div>
 
-                <h3>TBP Sil</h3>
+                <h3>PCK Sil</h3>
 
                 <p>
-                    Hesabına bağlı mevcut TBP
+                    Hesabına bağlı mevcut PCK
                     dosyasını GitHub'dan kaldır.
                 </p>
 
             </button>
 
 
-            <!-- TBP GÜNCELLE -->
+            <!-- PCK GÜNCELLE -->
 
             <button
                 class="action"
@@ -485,10 +563,10 @@
                     ↻
                 </div>
 
-                <h3>TBP Güncelle</h3>
+                <h3>PCK Güncelle</h3>
 
                 <p>
-                    Yeni bir TBP seçerek mevcut
+                    Yeni bir PCK seçerek mevcut
                     oyunun dosyasını güncelle.
                 </p>
 
@@ -500,7 +578,7 @@
         <input
             type="file"
             id="fileInput"
-            accept=".tbp"
+            accept=".pck"
             hidden
         >
 
@@ -576,18 +654,24 @@
     // APPS SCRIPT
     // ==========================================
 
-    const TBP_SIL_URL =
+    const PCK_SIL_URL =
         "https://script.google.com/macros/s/AKfycbwx6w_KU8PMIYRHw41RcJDEh1JEw0p0nYDyd7Omc-5x2Lka5TN0gFmMoL2vq-6ntAqezA/exec";
 
-    const TBP_GUNCELLE_URL =
+    const PCK_GUNCELLE_URL =
         "https://script.google.com/macros/s/AKfycbykDkGYd_kJFcfrK8JCmZVxBospFbUBGgJtrK2OLbA00RepsT7L4aF8ElN5SQAzcqRM/exec";
+
+
+    // HESAP SİLME APPS SCRIPT ENDPOINTİ
+
+    const HESAP_SIL_URL =
+        "BURAYA_HESAP_SIL_APPS_SCRIPT_URL";
 
 
     // ==========================================
     // AYARLAR
     // ==========================================
 
-    const MAX_TBP_SIZE =
+    const MAX_PCK_SIZE =
         35 * 1024 * 1024;
 
     const REQUEST_TIMEOUT =
@@ -609,6 +693,9 @@
 
     const updateButton =
         document.getElementById("updateButton");
+
+    const deleteAccountButton =
+        document.getElementById("deleteAccountButton");
 
     const fileInput =
         document.getElementById("fileInput");
@@ -656,6 +743,9 @@
             disabled;
 
         updateButton.disabled =
+            disabled;
+
+        deleteAccountButton.disabled =
             disabled;
     }
 
@@ -794,7 +884,7 @@
 
 
     // ==========================================
-    // TBP SİL
+    // PCK SİL
     // ==========================================
 
     deleteButton.addEventListener(
@@ -814,7 +904,7 @@
 
             const confirmed =
                 window.confirm(
-                    "Hesabına bağlı TBP dosyasını silmek istediğine emin misin?"
+                    "Hesabına bağlı PCK dosyasını silmek istediğine emin misin?"
                 );
 
 
@@ -827,7 +917,7 @@
 
 
             showStatus(
-                "TBP siliniyor...",
+                "PCK siliniyor...",
                 "loading"
             );
 
@@ -836,7 +926,7 @@
 
                 const result =
                     await requestJSON(
-                        TBP_SIL_URL,
+                        PCK_SIL_URL,
                         {
                             email:
                                 currentUser.email
@@ -851,13 +941,13 @@
 
                     throw new Error(
                         result?.error ||
-                        "TBP silinemedi."
+                        "PCK silinemedi."
                     );
                 }
 
 
                 showStatus(
-                    "TBP silindi.",
+                    "PCK silindi.",
                     "success"
                 );
 
@@ -865,13 +955,13 @@
             } catch (error) {
 
                 console.error(
-                    "TBP silme hatası:",
+                    "PCK silme hatası:",
                     error
                 );
 
 
                 showStatus(
-                    "TBP silinemedi: " +
+                    "PCK silinemedi: " +
                     error.message,
                     "error"
                 );
@@ -886,7 +976,7 @@
 
 
     // ==========================================
-    // TBP GÜNCELLE
+    // PCK GÜNCELLE
     // ==========================================
 
     updateButton.addEventListener(
@@ -928,18 +1018,14 @@
                 file.name.trim();
 
 
-            // ==================================
-            // DOSYA ADI
-            // ==================================
-
             if (
                 !fileName
                     .toLowerCase()
-                    .endsWith(".tbp")
+                    .endsWith(".pck")
             ) {
 
                 showStatus(
-                    "Sadece .tbp dosyaları kullanılabilir.",
+                    "Sadece .pck dosyaları kullanılabilir.",
                     "error"
                 );
 
@@ -949,17 +1035,13 @@
             }
 
 
-            // ==================================
-            // DOSYA BOYUTU
-            // ==================================
-
             if (
                 file.size >
-                MAX_TBP_SIZE
+                MAX_PCK_SIZE
             ) {
 
                 showStatus(
-                    "TBP dosyası 35 MB'dan büyük olamaz.",
+                    "PCK dosyası 35 MB'dan büyük olamaz.",
                     "error"
                 );
 
@@ -974,7 +1056,7 @@
             ) {
 
                 showStatus(
-                    "Boş bir TBP dosyası yüklenemez.",
+                    "Boş bir PCK dosyası yüklenemez.",
                     "error"
                 );
 
@@ -1001,7 +1083,7 @@
 
 
             showStatus(
-                "TBP hazırlanıyor...",
+                "PCK hazırlanıyor...",
                 "loading"
             );
 
@@ -1013,14 +1095,14 @@
 
 
                 showStatus(
-                    "TBP güncelleniyor...",
+                    "PCK güncelleniyor...",
                     "loading"
                 );
 
 
                 const result =
                     await requestJSON(
-                        TBP_GUNCELLE_URL,
+                        PCK_GUNCELLE_URL,
                         {
                             email:
                                 currentUser.email,
@@ -1041,13 +1123,13 @@
 
                     throw new Error(
                         result?.error ||
-                        "TBP güncellenemedi."
+                        "PCK güncellenemedi."
                     );
                 }
 
 
                 showStatus(
-                    "TBP değiştirildi.",
+                    "PCK değiştirildi.",
                     "success"
                 );
 
@@ -1055,13 +1137,13 @@
             } catch (error) {
 
                 console.error(
-                    "TBP güncelleme hatası:",
+                    "PCK güncelleme hatası:",
                     error
                 );
 
 
                 showStatus(
-                    "TBP güncellenemedi: " +
+                    "PCK güncellenemedi: " +
                     error.message,
                     "error"
                 );
@@ -1071,6 +1153,125 @@
                 setButtonsDisabled(false);
 
                 fileInput.value = "";
+            }
+
+        }
+    );
+
+
+    // ==========================================
+    // HESAP SİL
+    // ==========================================
+
+    deleteAccountButton.addEventListener(
+        "click",
+        async () => {
+
+            if (!currentUser) {
+
+                showStatus(
+                    "Oturum bulunamadı.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            const confirmed =
+                window.confirm(
+                    "HESABIN KALICI OLARAK SİLİNECEK.\n\n" +
+                    "• Google E-Tablolar'daki hesabın ve verilerin\n" +
+                    "• Hesabına bağlı PCK oyunun\n" +
+                    "• TürkBlocks hesabın\n\n" +
+                    "silinir.\n\n" +
+                    "Bu işlem geri alınamaz. Devam etmek istiyor musun?"
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            setButtonsDisabled(true);
+
+
+            showStatus(
+                "Hesabın ve verilerin siliniyor...",
+                "loading"
+            );
+
+
+            try {
+
+                const result =
+                    await requestJSON(
+                        HESAP_SIL_URL,
+                        {
+                            email:
+                                currentUser.email,
+
+                            uid:
+                                currentUser.uid
+                        }
+                    );
+
+
+                if (
+                    !result ||
+                    result.success !== true
+                ) {
+
+                    throw new Error(
+                        result?.error ||
+                        "Hesap silinemedi."
+                    );
+                }
+
+
+                showStatus(
+                    "Hesabın tamamen silindi.",
+                    "success"
+                );
+
+
+                /*
+                 * Firebase hesabı Apps Script tarafından
+                 * silindiyse mevcut oturum artık geçersizdir.
+                 *
+                 * Kısa bir bekleme sonrası giriş sayfasına
+                 * gönderiyoruz.
+                 */
+
+                setTimeout(
+                    () => {
+
+                        window.location.replace(
+                            "login.html"
+                        );
+
+                    },
+                    1500
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Hesap silme hatası:",
+                    error
+                );
+
+
+                showStatus(
+                    "Hesap silinemedi: " +
+                    error.message,
+                    "error"
+                );
+
+
+                setButtonsDisabled(false);
             }
 
         }
