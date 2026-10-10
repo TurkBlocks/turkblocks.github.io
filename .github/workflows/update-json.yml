@@ -1,0 +1,78 @@
+
+name: Update games.json
+
+on:
+  push:
+    paths:
+      - "*.html"
+      - "*.HTML"
+      - "*.Html"
+      - "games.json"
+      - ".github/workflows/update-games.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository'yi indir
+        uses: actions/checkout@v4
+
+      - name: HTML oyunlarını bul ve JSON oluştur
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path(".")
+          games = []
+
+          for file in root.iterdir():
+              if not file.is_file():
+                  continue
+
+              if file.suffix.lower() != ".html":
+                  continue
+
+              games.append({
+                  "name": file.name[:-len(file.suffix)],
+                  "path": file.name
+              })
+
+          games.sort(key=lambda game: game["name"].casefold())
+
+          with open("games.json", "w", encoding="utf-8") as output:
+              json.dump(games, output, ensure_ascii=False, indent=2)
+              output.write("\n")
+
+          print(f"Bulunan HTML oyunu: {len(games)}")
+          print(json.dumps(games, ensure_ascii=False, indent=2))
+          PY
+
+      - name: JSON doğrula
+        run: |
+          python3 -m json.tool games.json
+          echo "games.json geçerli."
+
+      - name: Git ayarları
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Değişiklikleri kaydet
+        run: |
+          git add games.json
+
+          if git diff --cached --quiet; then
+            echo "games.json değişmedi."
+          else
+            git commit -m "Update games.json"
+            git push
+          fi
