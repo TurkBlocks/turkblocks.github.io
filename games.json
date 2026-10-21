@@ -1,5 +1,9 @@
 [
   {
+    "name": "Snake",
+    "path": "Snake.html"
+  },
+  {
     "name": "XOX",
     "path": "XOX.html"
   }
