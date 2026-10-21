@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flappy Bird</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #000000;
+            --surface: #0a0a0a;
+            --surface-2: #141414;
+            --border: #222222;
+            --text: #f8f9fa;
+            --text-secondary: #9ca3af;
+            --primary: #500000;
+            --primary-hover: #780000;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+            --radius: 16px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Google Sans", Arial, sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        h1 { font-size: 24px; margin-bottom: 4px; }
+        .subtitle { color: var(--text-secondary); font-size: 13px; margin-bottom: 16px; }
+
+        .scoreboard {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 16px;
+            background: var(--surface-2);
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .score-item { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; }
+        .score-item span { display: block; font-size: 18px; font-weight: 700; color: var(--text); margin-top: 2px; }
+
+        canvas {
+            background: #050505;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: block;
+            margin: 0 auto 16px auto;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+            cursor: pointer;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: var(--primary-hover); }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Kanatlı Kuş</h1>
+        <p class="subtitle">Engellerin Arasından Geç</p>
+
+        <div class="scoreboard">
+            <div class="score-item">Skor <span id="score">0</span></div>
+            <div class="score-item">En Yüksek <span id="highScore">0</span></div>
+        </div>
+
+        <canvas id="gameCanvas" width="320" height="400"></canvas>
+        <button class="btn" id="startBtn">Zıplat / Başlat</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const scoreEl = document.getElementById("score");
+        const highScoreEl = document.getElementById("highScore");
+        const startBtn = document.getElementById("startBtn");
+
+        let bird = { x: 50, y: 150, radius: 12, gravity: 0.6, lift: -9, velocity: 0 };
+        let pipes = [];
+        let score = 0;
+        let highScore = localStorage.getItem("flappy_high") || 0;
+        let isPlaying = false;
+        let frameCount = 0;
+
+        highScoreEl.textContent = highScore;
+
+        function startGame() {
+            bird.y = 150;
+            bird.velocity = 0;
+            pipes = [];
+            score = 0;
+            scoreEl.textContent = score;
+            isPlaying = true;
+            loop();
+        }
+
+        function jump() {
+            if (!isPlaying) {
+                startGame();
+            } else {
+                bird.velocity = bird.lift;
+            }
+        }
+
+        canvas.addEventListener("click", jump);
+        window.addEventListener("keydown", e => { if(e.code === "Space") jump(); });
+        startBtn.addEventListener("click", jump);
+
+        function update() {
+            bird.velocity += bird.gravity;
+            bird.y += bird.velocity;
+
+            // Zemin ve tavan kontrolü
+            if (bird.y + bird.radius >= canvas.height || bird.y - bird.radius <= 0) {
+                gameOver();
+            }
+
+            if (frameCount % 90 === 0) {
+                let gap = 110;
+                let topHeight = Math.floor(Math.random() * (canvas.height - gap - 100)) + 50;
+                pipes.push({ x: canvas.width, top: topHeight, bottom: canvas.height - topHeight - gap, width: 50, passed: false });
+            }
+
+            for (let i = pipes.length - 1; i >= 0; i--) {
+                pipes[i].x -= 3;
+
+                // Çarpışma kontrolü
+                if (
+                    bird.x + bird.radius > pipes[i].x && 
+                    bird.x - bird.radius < pipes[i].x + pipes[i].width &&
+                    (bird.y - bird.radius < pipes[i].top || bird.y + bird.radius > canvas.height - pipes[i].bottom)
+                ) {
+                    gameOver();
+                }
+
+                if (!pipes[i].passed && pipes[i].x + pipes[i].width < bird.x) {
+                    score++;
+                    scoreEl.textContent = score;
+                    if (score > highScore) {
+                        highScore = score;
+                        highScoreEl.textContent = highScore;
+                        localStorage.setItem("flappy_high", highScore);
+                    }
+                    pipes[i].passed = true;
+                }
+
+                if (pipes[i].x + pipes[i].width < 0) {
+                    pipes.splice(i, 1);
+                }
+            }
+            frameCount++;
+        }
+
+        function draw() {
+            ctx.fillStyle = "#050505";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Borular
+            ctx.fillStyle = "#22c55e";
+            pipes.forEach(p => {
+                ctx.fillRect(p.x, 0, p.width, p.top);
+                ctx.fillRect(p.x, canvas.height - p.bottom, p.width, p.bottom);
+            });
+
+            // Kuş
+            ctx.fillStyle = "#eab308";
+            ctx.beginPath();
+            ctx.arc(bird.x, bird.y, bird.radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function loop() {
+            if (!isPlaying) return;
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        function gameOver() {
+            isPlaying = false;
+        }
+
+        draw();
+    </script>
+</body>
+</html>
