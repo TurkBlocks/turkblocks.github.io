@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hafıza Oyunu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #000000;
+            --surface: #0a0a0a;
+            --surface-2: #141414;
+            --border: #222222;
+            --text: #f8f9fa;
+            --text-secondary: #9ca3af;
+            --primary: #500000;
+            --primary-hover: #780000;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Google Sans", Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .scoreboard {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 16px;
+            background: var(--surface-2);
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .score-item {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .score-item span {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            margin-top: 2px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            aspect-ratio: 1;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 24px;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.2s, background 0.2s, border-color 0.2s;
+            transform-style: preserve-3d;
+        }
+
+        .card:hover {
+            border-color: var(--text-secondary);
+        }
+
+        .card.flipped {
+            background: rgba(80, 0, 0, 0.2);
+            border-color: var(--primary-hover);
+            transform: rotateY(180deg);
+        }
+
+        .card.matched {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: #22c55e;
+            cursor: default;
+            opacity: 0.8;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>Hafıza Oyunu</h1>
+        <p class="subtitle">Kartları Eşleştir</p>
+
+        <div class="scoreboard">
+            <div class="score-item">Hamle <span id="moves">0</span></div>
+            <div class="score-item">Eşleşen <span id="matches">0 / 8</span></div>
+        </div>
+
+        <div class="grid" id="cardGrid"></div>
+
+        <button class="btn" id="restartBtn">Oyunu Yeniden Başlat</button>
+    </div>
+
+    <script>
+        const gridEl = document.getElementById("cardGrid");
+        const movesEl = document.getElementById("moves");
+        const matchesEl = document.getElementById("matches");
+        const restartBtn = document.getElementById("restartBtn");
+
+        const emojis = ["🚀", "🎮", "⭐", "🔥", "💎", "🎯", "⚡", "🍀"];
+        let cards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let moves = 0;
+        let isLocked = false;
+
+        function initGame() {
+            gridEl.innerHTML = "";
+            flippedCards = [];
+            matchedPairs = 0;
+            moves = 0;
+            isLocked = false;
+            movesEl.textContent = moves;
+            matchesEl.textContent = `${matchedPairs} / 8`;
+
+            // Kartları çiftle ve karıştır
+            let deck = [...emojis, ...emojis]
+                .sort(() => Math.random() - 0.5)
+                .map((emoji, index) => ({ id: index, emoji, isFlipped: false, isMatched: false }));
+
+            cards = deck;
+            renderCards();
+        }
+
+        function renderCards() {
+            gridEl.innerHTML = "";
+            cards.forEach(card => {
+                const cardEl = document.createElement("div");
+                cardEl.className = "card";
+                if (card.isFlipped || card.isMatched) {
+                    cardEl.classList.add(card.isMatched ? "matched" : "flipped");
+                    cardEl.textContent = card.emoji;
+                } else {
+                    cardEl.textContent = "?";
+                }
+
+                cardEl.addEventListener("click", () => handleCardClick(card.id));
+                gridEl.appendChild(cardEl);
+            });
+        }
+
+        function handleCardClick(id) {
+            if (isLocked) return;
+            const clickedCard = cards.find(c => c.id === id);
+
+            if (clickedCard.isFlipped || clickedCard.isMatched) return;
+
+            clickedCard.isFlipped = true;
+            flippedCards.push(clickedCard);
+            renderCards();
+
+            if (flippedCards.length === 2) {
+                moves++;
+                movesEl.textContent = moves;
+                checkForMatch();
+            }
+        }
+
+        function checkForMatch() {
+            const [card1, card2] = flippedCards;
+
+            if (card1.emoji === card2.emoji) {
+                card1.isMatched = true;
+                card2.isMatched = true;
+                matchedPairs++;
+                matchesEl.textContent = `${matchedPairs} / 8`;
+                flippedCards = [];
+
+                if (matchedPairs === emojis.length) {
+                    setTimeout(() => {
+                        alert(`Tebrikler! Oyunu ${moves} hamlede bitirdin! 🎉`);
+                    }, 300);
+                }
+            } else {
+                isLocked = true;
+                setTimeout(() => {
+                    card1.isFlipped = false;
+                    card2.isFlipped = false;
+                    flippedCards = [];
+                    isLocked = false;
+                    renderCards();
+                }, 800);
+            }
+        }
+
+        restartBtn.addEventListener("click", initGame);
+        initGame();
+    </script>
+</body>
+</html>
