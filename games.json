@@ -16,6 +16,10 @@
     "path": "Hafiza-Oyunu.html"
   },
   {
+    "name": "Pong",
+    "path": "Pong.html"
+  },
+  {
     "name": "Snake",
     "path": "Snake.html"
   },
