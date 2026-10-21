@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masa Tenisi (Pong)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #000000;
+            --surface: #0a0a0a;
+            --surface-2: #141414;
+            --border: #222222;
+            --text: #f8f9fa;
+            --text-secondary: #9ca3af;
+            --primary: #500000;
+            --primary-hover: #780000;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+            --radius: 16px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Google Sans", Arial, sans-serif; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        h1 { font-size: 24px; margin-bottom: 4px; }
+        .subtitle { color: var(--text-secondary); font-size: 13px; margin-bottom: 16px; }
+
+        .scoreboard {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 16px;
+            background: var(--surface-2);
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .score-item { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; }
+        .score-item span { display: block; font-size: 18px; font-weight: 700; color: var(--text); margin-top: 2px; }
+
+        canvas {
+            background: #050505;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: block;
+            margin: 0 auto 16px auto;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: var(--primary-hover); }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Masa Tenisi</h1>
+        <p class="subtitle">Raketi Kontrol Et</p>
+
+        <div class="scoreboard">
+            <div class="score-item">Oyuncu <span id="playerScore">0</span></div>
+            <div class="score-item">Bot <span id="botScore">0</span></div>
+        </div>
+
+        <canvas id="gameCanvas" width="340" height="400"></canvas>
+        <button class="btn" id="startBtn">Oyunu Başlat</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const pScoreEl = document.getElementById("playerScore");
+        const bScoreEl = document.getElementById("botScore");
+        const startBtn = document.getElementById("startBtn");
+
+        let pScore = 0, bScore = 0;
+        let isRunning = false;
+
+        let player = { x: 120, y: 370, width: 100, height: 12, color: "#3b82f6" };
+        let bot = { x: 120, y: 18, width: 100, height: 12, color: "#ef4444" };
+        let ball = { x: 170, y: 200, radius: 8, speedX: 4, speedY: 4, color: "#f8f9fa" };
+
+        function resetBall() {
+            ball.x = canvas.width / 2;
+            ball.y = canvas.height / 2;
+            ball.speedY = -ball.speedY;
+        }
+
+        function update() {
+            if (!isRunning) return;
+
+            ball.x += ball.speedX;
+            ball.y += ball.speedY;
+
+            // Duvar çarpışmaları
+            if (ball.x - ball.radius < 0 || ball.x + ball.radius > canvas.width) {
+                ball.speedX = -ball.speedX;
+            }
+
+            // Bot yapay zekası
+            bot.x += (ball.x - (bot.x + bot.width / 2)) * 0.08;
+
+            // Oyuncu raket çarpışması
+            if (
+                ball.y + ball.radius >= player.y &&
+                ball.x >= player.x && ball.x <= player.x + player.width
+            ) {
+                ball.speedY = -ball.speedY;
+                let deltaX = ball.x - (player.x + player.width / 2);
+                ball.speedX = deltaX * 0.2;
+            }
+
+            // Bot raket çarpışması
+            if (
+                ball.y - ball.radius <= bot.y + bot.height &&
+                ball.x >= bot.x && ball.x <= bot.x + bot.width
+            ) {
+                ball.speedY = -ball.speedY;
+            }
+
+            // Skor kontrolü
+            if (ball.y < 0) {
+                pScore++;
+                pScoreEl.textContent = pScore;
+                resetBall();
+            } else if (ball.y > canvas.height) {
+                bScore++;
+                bScoreEl.textContent = bScore;
+                resetBall();
+            }
+        }
+
+        function draw() {
+            ctx.fillStyle = "#050505";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Orta çizgi
+            ctx.strokeStyle = "#222222";
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(0, canvas.height / 2);
+            ctx.lineTo(canvas.width, canvas.height / 2);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Raketler ve Top
+            ctx.fillStyle = player.color;
+            ctx.fillRect(player.x, player.y, player.width, player.height);
+
+            ctx.fillStyle = bot.color;
+            ctx.fillRect(bot.x, bot.y, bot.width, bot.height);
+
+            ctx.fillStyle = ball.color;
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function loop() {
+            update();
+            draw();
+            if (isRunning) requestAnimationFrame(loop);
+        }
+
+        window.addEventListener("mousemove", e => {
+            let rect = canvas.getBoundingClientRect();
+            let mouseX = e.clientX - rect.left;
+            player.x = mouseX - player.width / 2;
+            if (player.x < 0) player.x = 0;
+            if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
+        });
+
+        // Mobilde dokunmatik kontrol desteği
+        canvas.addEventListener("touchmove", e => {
+            let rect = canvas.getBoundingClientRect();
+            let touchX = e.touches[0].clientX - rect.left;
+            player.x = touchX - player.width / 2;
+            if (player.x < 0) player.x = 0;
+            if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
+        });
+
+        startBtn.addEventListener("click", () => {
+            pScore = 0; bScore = 0;
+            pScoreEl.textContent = pScore;
+            bScoreEl.textContent = bScore;
+            isRunning = true;
+            loop();
+        });
+
+        draw();
+    </script>
+</body>
+</html>
