@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Araba Yarışı</title>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #000000;
+            --surface: #0a0a0a;
+            --surface-2: #141414;
+            --border: #222222;
+            --text: #f8f9fa;
+            --text-secondary: #9ca3af;
+            --primary: #500000;
+            --primary-hover: #780000;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Google Sans", Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .mode-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary-hover);
+        }
+
+        .scoreboard {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 16px;
+            background: var(--surface-2);
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .score-item {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .score-item span {
+            display: block;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            margin-top: 2px;
+        }
+
+        canvas {
+            background: #050505;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: block;
+            margin: 0 auto 16px auto;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+        }
+
+        .controls-hint {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>Araba Yarışı</h1>
+        <p class="subtitle">Retro Arcade Sürüşü</p>
+
+        <div class="mode-selector">
+            <button class="mode-btn active" id="modeBotBtn">Bota Karşı</button>
+            <button class="mode-btn" id="modePvPBtn">İnsana Karşı (2P)</button>
+        </div>
+
+        <div class="scoreboard">
+            <div class="score-item">Skor / Tur <span id="score">0</span></div>
+            <div class="score-item">Yol Hızı <span id="speed">Yavaş</span></div>
+        </div>
+
+        <canvas id="gameCanvas" width="360" height="420"></canvas>
+
+        <div class="controls-hint" id="controlsHint">
+            Kontroller: <b>Sol / Sağ Ok</b> (veya A / D) ile aracı sür.
+        </div>
+
+        <button class="btn" id="startBtn">Yarışı Başlat</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+        const scoreEl = document.getElementById("score");
+        const speedEl = document.getElementById("speed");
+        const startBtn = document.getElementById("startBtn");
+        const modeBotBtn = document.getElementById("modeBotBtn");
+        const modePvPBtn = document.getElementById("modePvPBtn");
+        const controlsHint = document.getElementById("controlsHint");
+
+        let gameMode = "bot"; // 'bot' veya 'pvp'
+        let isRunning = false;
+        let score = 0;
+        let gameSpeed = 4;
+        let roadOffset = 0;
+
+        // Oyuncu 1 (Kırmızı Araba)
+        let p1 = { x: 130, y: 330, width: 30, height: 55, color: "#ef4444", speed: 5 };
+        // Oyuncu 2 veya Bot (Mavi Araba)
+        let p2 = { x: 200, y: 330, width: 30, height: 55, color: "#3b82f6", speed: 5 };
+
+        let obstacles = [];
+        let keys = {};
+
+        // Mod Değiştirme
+        modeBotBtn.addEventListener("click", () => {
+            if (isRunning) return;
+            gameMode = "bot";
+            modeBotBtn.classList.add("active");
+            modePvPBtn.classList.remove("active");
+            controlsHint.innerHTML = "Kontroller: <b>Sol / Sağ Ok</b> ile aracı sür.";
+            drawStatic();
+        });
+
+        modePvPBtn.addEventListener("click", () => {
+            if (isRunning) return;
+            gameMode = "pvp";
+            modePvPBtn.classList.add("active");
+            modeBotBtn.classList.remove("active");
+            controlsHint.innerHTML = "P1: <b>A / D</b> | P2: <b>Sol / Sağ Ok</b>";
+            drawStatic();
+        });
+
+        window.addEventListener("keydown", e => keys[e.key] = true);
+        window.addEventListener("keyup", e => keys[e.key] = false);
+
+        function startGame() {
+            isRunning = true;
+            score = 0;
+            gameSpeed = 4;
+            roadOffset = 0;
+            obstacles = [];
+
+            if (gameMode === "bot") {
+                p1.x = 165;
+                p1.y = 330;
+            } else {
+                p1.x = 110;
+                p1.y = 330;
+                p2.x = 220;
+                p2.y = 330;
+            }
+            loop();
+        }
+
+        function spawnObstacle() {
+            let laneWidth = 100;
+            let lanes = [65, 165, 265];
+            let randomLane = lanes[Math.floor(Math.random() * lanes.length)];
+            
+            obstacles.push({
+                x: randomLane - 15,
+                y: -70,
+                width: 30,
+                height: 55,
+                color: gameMode === "bot" ? ["#eab308", "#a855f7", "#06b6d4"][Math.floor(Math.random() * 3)] : "#3b82f6",
+                speed: gameMode === "bot" ? 2 : 4
+            });
+        }
+
+        function update() {
+            if (!isRunning) return;
+
+            score++;
+            scoreEl.textContent = Math.floor(score / 10);
+            
+            // Hız kademeli artar
+            gameSpeed = 4 + Math.floor(score / 300);
+            speedEl.textContent = gameSpeed > 7 ? "Çok Hızlı" : (gameSpeed > 5 ? "Orta" : "Normal");
+
+            roadOffset = (roadOffset + gameSpeed) % 40;
+
+            // P1 Kontrolleri (Ok tuşları veya A/D)
+            if (gameMode === "bot") {
+                if ((keys["ArrowLeft"] || keys["a"] || keys["A"]) && p1.x > 50) p1.x -= p1.speed;
+                if ((keys["ArrowRight"] || keys["d"] || keys["D"]) && p1.x < 280) p1.x += p1.speed;
+            } else {
+                // PvP Modu P1: A/D
+                if ((keys["a"] || keys["A"]) && p1.x > 50) p1.x -= p1.speed;
+                if ((keys["d"] || keys["D"]) && p1.x < 170) p1.x += p1.speed;
+
+                // PvP Modu P2: Ok Tuşları
+                if (keys["ArrowLeft"] && p2.x > 180) p2.x -= p2.speed;
+                if (keys["ArrowRight"] && p2.x < 300) p2.x += p2.speed;
+            }
+
+            // Engel üretimi
+            if (Math.random() < 0.035) {
+                spawnObstacle();
+            }
+
+            // Engelleri hareket ettir
+            for (let i = obstacles.length - 1; i >= 0; i--) {
+                obstacles[i].y += gameSpeed + (gameMode === "bot" ? obstacles[i].speed - 2 : 0);
+
+                // Çarpışma kontrolü P1
+                if (
+                    p1.x < obstacles[i].x + obstacles[i].width &&
+                    p1.x + p1.width > obstacles[i].x &&
+                    p1.y < obstacles[i].y + obstacles[i].height &&
+                    p1.y + p1.height > obstacles[i].y
+                ) {
+                    endGame(gameMode === "bot" ? "Kaza Yaptın! Skorun: " + Math.floor(score / 10) : "Oyuncu 2 Kazandı! (P1 Kaza Yaptı)");
+                    return;
+                }
+
+                // Çarpışma kontrolü P2 (PvP Modunda)
+                if (gameMode === "pvp") {
+                    if (
+                        p2.x < obstacles[i].x + obstacles[i].width &&
+                        p2.x + p2.width > obstacles[i].x &&
+                        p2.y < obstacles[i].y + obstacles[i].height &&
+                        p2.y + p2.height > obstacles[i].y
+                    ) {
+                        endGame("Oyuncu 1 Kazandı! (P2 Kaza Yaptı)");
+                        return;
+                    }
+                }
+
+                // Ekrandan çıkanları sil
+                if (obstacles[i].y > canvas.height) {
+                    obstacles.splice(i, 1);
+                }
+            }
+        }
+
+        function drawCar(car) {
+            ctx.fillStyle = car.color;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = car.color;
+            ctx.fillRect(car.x, car.y, car.width, car.height);
+
+            // Ön cam
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(car.x + 5, car.y + 10, car.width - 10, 12);
+            ctx.shadowBlur = 0;
+        }
+
+        function draw() {
+            // Yol arka planı
+            ctx.fillStyle = "#111111";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Yol sınırları (Çimen/Kenar)
+            ctx.fillStyle = "#222222";
+            ctx.fillRect(0, 0, 40, canvas.height);
+            ctx.fillRect(320, 0, 40, canvas.height);
+
+            // Orta şerit çizgileri (hareketli)
+            ctx.strokeStyle = "#f3f4f6";
+            ctx.lineWidth = 4;
+            ctx.setLineDash([20, 20]);
+            ctx.lineDashOffset = -roadOffset;
+
+            if (gameMode === "bot") {
+                ctx.beginPath();
+                ctx.moveTo(160, 0);
+                ctx.lineTo(160, canvas.height);
+                ctx.moveTo(200, 0);
+                ctx.lineTo(200, canvas.height);
+                ctx.stroke();
+            } else {
+                ctx.beginPath();
+                ctx.moveTo(180, 0);
+                ctx.lineTo(180, canvas.height);
+                ctx.stroke();
+            }
+            ctx.setLineDash([]); // Sıfırla
+
+            // Arabaları çiz
+            drawCar(p1);
+            if (gameMode === "pvp") {
+                drawCar(p2);
+            }
+
+            // Engelleri çiz
+            obstacles.forEach(obs => {
+                drawCar(obs);
+            });
+        }
+
+        function loop() {
+            if (!isRunning) return;
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        function endGame(msg) {
+            isRunning = false;
+            alert(msg);
+        }
+
+        function drawStatic() {
+            ctx.fillStyle = "#111111";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            drawCar(p1);
+            if (gameMode === "pvp") drawCar(p2);
+        }
+
+        startBtn.addEventListener("click", startGame);
+        drawStatic();
+    </script>
+</body>
+</html>
